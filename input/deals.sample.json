@@ -1,0 +1,53 @@
+[
+  {
+    "deal": {
+      "title": "Casque audio Bluetooth Sony WH-CH520",
+      "price_sale": 39.99,
+      "price_regular": 59.99,
+      "source": "Amazon FR"
+    },
+    "market": {
+      "amazon_price": 59.9,
+      "ebay_price": 54.5
+    },
+    "keepa": {
+      "sales_per_month": 120,
+      "avg_price": 61.2,
+      "rank": 850
+    }
+  },
+  {
+    "deal": {
+      "title": "Mixeur plongeant Bosch ErgoMixx",
+      "price_sale": 24.9,
+      "price_regular": 44.9,
+      "source": "Cdiscount"
+    },
+    "market": {
+      "amazon_price": 44.0,
+      "ebay_price": 39.0
+    },
+    "keepa": {
+      "sales_per_month": 80,
+      "avg_price": 42.7,
+      "rank": 2100
+    }
+  },
+  {
+    "deal": {
+      "title": "Lampe de bureau LED dimmable",
+      "price_sale": 18.5,
+      "price_regular": 29.9,
+      "source": "Fnac"
+    },
+    "market": {
+      "amazon_price": 28.9,
+      "ebay_price": 27.0
+    },
+    "keepa": {
+      "sales_per_month": 65,
+      "avg_price": 30.1,
+      "rank": 5400
+    }
+  }
+]
