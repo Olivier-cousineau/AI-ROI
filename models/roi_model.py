@@ -8,7 +8,7 @@ from models.keepa_model import KeepaManualInput
 from models.market_model import MarketInput
 
 
-class ComputeRoiRequest(BaseModel):
+class ComputeROIRequest(BaseModel):
     """Request payload for ROI computation."""
 
     deal: DealInput
