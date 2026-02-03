@@ -16,15 +16,12 @@ def generate_ebay_query(title: str, brand: str | None, sku: str | None, upc: str
     return " ".join(part for part in parts if part)
 
 
-def match_confidence(title: str, brand: str | None, sku: str | None, upc: str | None) -> float:
-    """Compute a simple confidence score for matching (0-1)."""
-    score = 0.0
-    if title:
-        score += 0.4
-    if brand:
-        score += 0.2
-    if sku:
-        score += 0.2
-    if upc:
-        score += 0.2
-    return round(min(score, 1.0), 2)
+def mvp_match(title: str, brand: str | None, sku: str | None, upc: str | None) -> dict[str, str | float | None]:
+    """Return a minimal match payload without external calls."""
+    normalized_title = normalize_title(title)
+    return {
+        "asin": None,
+        "confidence": 0.0,
+        "ebay_query": generate_ebay_query(title, brand, sku, upc),
+        "normalized_title": normalized_title,
+    }

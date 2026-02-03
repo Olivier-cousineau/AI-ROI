@@ -7,9 +7,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from core.roi_engine import compute_roi
-from models.deal_model import Deal
-from models.keepa_model import KeepaData
-from models.market_model import Market
+from models.deal_model import DealInput
+from models.keepa_model import KeepaManualInput
+from models.market_model import MarketInput
 
 
 def parse_args() -> argparse.Namespace:
@@ -38,17 +38,20 @@ def compute_results(items: list[dict[str, object]]) -> list[dict[str, object]]:
         if not isinstance(entry, dict):
             raise ValueError("Each deal entry must be an object.")
 
-        deal = Deal.model_validate(entry.get("deal", {}))
-        market = Market.model_validate(entry.get("market", {}))
-        keepa = KeepaData.model_validate(entry.get("keepa", {}))
+        deal = DealInput.model_validate(entry.get("deal", {}))
+        market = MarketInput.model_validate(entry.get("market", {}))
+        keepa = KeepaManualInput.model_validate(entry.get("keepa", {}))
 
-        roi_output = compute_roi(deal.price_sale, market, keepa)
+        roi_output = compute_roi(deal, market, keepa)
         results.append(
             {
-                "deal": deal.model_dump(),
-                "market": market.model_dump(),
-                "keepa": keepa.model_dump(),
-                "roi": roi_output,
+                "deal_title": deal.title,
+                "profit_est": roi_output.profit_est,
+                "roi_pct": roi_output.roi_pct,
+                "score": roi_output.score,
+                "revenue_source": roi_output.revenue_source,
+                "keepa_sales_per_month": keepa.sales_per_month,
+                "match_confidence": market.match_confidence,
             }
         )
 
@@ -59,6 +62,7 @@ def write_output(path: Path, results: list[dict[str, object]]) -> None:
     """Write output JSON to path."""
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "count": len(results),
         "results": results,
     }
     path.parent.mkdir(parents=True, exist_ok=True)
