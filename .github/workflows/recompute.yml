@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: '5 8 * * *'
 
+permissions:
+  contents: write
+
 jobs:
   recompute:
     runs-on: ubuntu-latest
@@ -36,5 +39,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add output/roi_results.json
-          git commit -m "chore: update ROI results [skip ci]"
+          git commit -m "chore: recompute ROI [skip ci]"
           git push

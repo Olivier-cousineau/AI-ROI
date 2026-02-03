@@ -3,8 +3,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+SCRIPT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.append(str(SCRIPT_ROOT))
 
 from core.roi_engine import compute_roi
 from models.deal_model import DealInput
@@ -45,7 +49,7 @@ def compute_results(items: list[dict[str, object]]) -> list[dict[str, object]]:
         roi_output = compute_roi(deal, market, keepa)
         results.append(
             {
-                "deal_title": deal.title,
+                "title": deal.title,
                 "profit_est": roi_output.profit_est,
                 "roi_pct": roi_output.roi_pct,
                 "score": roi_output.score,

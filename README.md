@@ -42,6 +42,15 @@ curl -X POST http://127.0.0.1:8000/v1/match \
 
 ## GitHub Actions: recompute ROI
 
-Le workflow `Recompute ROI` exécute `scripts/recompute_roi.py` via cron et manuel. Il lit
-`input/deals.sample.json`, calcule les ROI, écrit `output/roi_results.json`, puis commit/push
-le fichier seulement en cas de changement (commit avec `[skip ci]`). 
+### CI (tests)
+
+Le workflow `CI` lance les tests à chaque push ou pull request sur `main`.
+
+### Recompute ROI
+
+Le workflow `Recompute ROI` exécute `scripts/recompute_roi.py` via cron (`5 8 * * *`) et manuel
+(`workflow_dispatch`). Il lit `input/deals.sample.json`, calcule les ROI, écrit
+`output/roi_results.json`, puis commit/push le fichier seulement en cas de changement
+(commit avec `[skip ci]`).
+
+Pour déclencher manuellement: GitHub > Actions > Recompute ROI > Run workflow.

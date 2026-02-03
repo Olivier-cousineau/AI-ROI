@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-02-03T23:50:33.649701+00:00",
+  "count": 3,
+  "results": [
+    {
+      "title": "Casque audio Bluetooth Sony WH-CH520",
+      "profit_est": -13.06,
+      "roi_pct": -28.4,
+      "score": 35,
+      "revenue_source": "amazon",
+      "keepa_sales_per_month": 120,
+      "match_confidence": 0.92
+    },
+    {
+      "title": "Caméra de sécurité intérieure TP-Link Tapo",
+      "profit_est": -11.64,
+      "roi_pct": -50.87,
+      "score": 22,
+      "revenue_source": "ebay",
+      "keepa_sales_per_month": 18,
+      "match_confidence": 0.74
+    },
+    {
+      "title": "Machine à café expresso compacte",
+      "profit_est": -68.92,
+      "roi_pct": -46.47,
+      "score": 14,
+      "revenue_source": "amazon",
+      "keepa_sales_per_month": 6,
+      "match_confidence": 0.61
+    }
+  ]
+}

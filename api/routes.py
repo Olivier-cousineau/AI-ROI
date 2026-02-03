@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 from ai.product_matcher import mvp_match
 from config.assumptions import Assumptions
 from core.roi_engine import compute_roi
-from models.roi_model import ComputeRoiRequest, ROIResult
+from models.roi_model import ComputeROIRequest, ROIResult
 
 router = APIRouter()
 
@@ -31,7 +31,7 @@ class MatchResponse(BaseModel):
 
 
 @router.post("/compute-roi", response_model=ROIResult)
-def compute_roi_endpoint(payload: ComputeRoiRequest) -> ROIResult:
+def compute_roi_endpoint(payload: ComputeROIRequest) -> ROIResult:
     """Compute ROI and scoring based on deal and market data."""
     try:
         assumptions = Assumptions()
