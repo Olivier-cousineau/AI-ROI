@@ -95,9 +95,12 @@ def _is_sorted_by_discount(entries: list[dict[str, Any]]) -> bool:
     return True
 
 
+DEFAULT_MAX_MARKETPLACE_ITEMS = 300
+
+
 def _apply_marketplace_cap(
     entries: list[dict[str, Any]],
-    max_marketplace_items: int | None,
+    max_marketplace_items: int,
 ) -> list[dict[str, Any]]:
     filtered = []
     for entry in entries:
@@ -115,7 +118,7 @@ def _apply_marketplace_cap(
             reverse=True,
         )
 
-    if max_marketplace_items is not None and max_marketplace_items > 0:
+    if max_marketplace_items > 0:
         filtered = filtered[:max_marketplace_items]
     return filtered
 
@@ -123,9 +126,30 @@ def _apply_marketplace_cap(
 def build_market_ready(
     deals: list[dict[str, Any]],
     keepa_index: dict[str, int],
-    max_marketplace_items: int | None,
+    max_marketplace_items: int | None = DEFAULT_MAX_MARKETPLACE_ITEMS,
 ) -> tuple[list[dict[str, Any]], dict[str, int]]:
     """Build the market-ready list and stats."""
+    env_value = os.getenv("MAX_MARKETPLACE_ITEMS")
+    use_env = env_value is not None and (
+        max_marketplace_items is None or max_marketplace_items == DEFAULT_MAX_MARKETPLACE_ITEMS
+    )
+    max_items_source: int | str | None
+    if use_env:
+        max_items_source = env_value
+    else:
+        max_items_source = max_marketplace_items
+
+    if max_items_source is None:
+        max_items_source = DEFAULT_MAX_MARKETPLACE_ITEMS
+
+    try:
+        max_items = int(max_items_source)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("max_marketplace_items must be an integer.") from exc
+
+    if max_items < 1:
+        max_items = 1
+
     output: list[dict[str, Any]] = []
     count_with_keepa_sales = 0
 
@@ -198,7 +222,7 @@ def build_market_ready(
             }
         )
 
-    capped_output = _apply_marketplace_cap(output, max_marketplace_items)
+    capped_output = _apply_marketplace_cap(output, max_items)
     stats = {
         "count_total": len(deals),
         "count_after_filter": len(capped_output),
@@ -221,19 +245,11 @@ def main() -> None:
     deals_path = Path(args.deals)
     keepa_path = Path(args.keepa)
     output_path = Path(args.out)
-    max_items = args.max_marketplace_items
-    if max_items is None:
-        env_value = os.getenv("MAX_MARKETPLACE_ITEMS")
-        if env_value:
-            try:
-                max_items = int(env_value)
-            except ValueError:
-                raise SystemExit("MAX_MARKETPLACE_ITEMS must be an integer.")
 
     deals = _load_json_list(deals_path)
     keepa_entries = _load_json_list(keepa_path)
     keepa_index = _build_keepa_index(keepa_entries)
-    market_ready, stats = build_market_ready(deals, keepa_index, max_items)
+    market_ready, stats = build_market_ready(deals, keepa_index, args.max_marketplace_items)
     write_output(output_path, market_ready)
 
     print(
