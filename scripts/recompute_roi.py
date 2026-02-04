@@ -121,6 +121,7 @@ def compute_results(
                 "key": deal_payload.get("key"),
                 "title": deal.title,
                 "part_number": deal_payload.get("part_number"),
+                "model_number": deal_payload.get("model_number"),
                 "url": deal_payload.get("url"),
                 "image": deal_payload.get("image"),
                 "price_sale": deal.price_sale,
