@@ -95,7 +95,7 @@ def _is_sorted_by_discount(entries: list[dict[str, Any]]) -> bool:
     return True
 
 
-DEFAULT_MAX_MARKETPLACE_ITEMS = 300
+DEFAULT_MAX_MARKETPLACE_ITEMS = 25
 
 
 def _apply_marketplace_cap(

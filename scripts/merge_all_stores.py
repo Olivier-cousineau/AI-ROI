@@ -18,9 +18,22 @@ def load_deals(path: Path) -> list:
     return []
 
 
-def merge_all_stores(input_dir: Path) -> list:
+def merge_all_stores(input_dir: Path, store_only: str | None = None) -> list:
     deals: list = []
-    for store_file in sorted(input_dir.rglob("*.json")):
+    if store_only:
+        store_path = Path(store_only)
+        if not store_path.is_absolute():
+            store_path = input_dir / store_only
+        if store_path.is_dir():
+            store_files = sorted(store_path.rglob("*.json"))
+        elif store_path.is_file():
+            store_files = [store_path]
+        else:
+            raise SystemExit(f"Store path not found: {store_path}")
+    else:
+        store_files = sorted(input_dir.rglob("*.json"))
+
+    for store_file in store_files:
         deals.extend(load_deals(store_file))
     return deals
 
@@ -39,13 +52,17 @@ def main() -> None:
         default="input/canadiantire_all_liquidations.json",
         help="Output JSON file path.",
     )
+    parser.add_argument(
+        "--store-only",
+        help="Store folder or file to process (ex: 0271-st-jerome-qc).",
+    )
     args = parser.parse_args()
 
     input_dir = Path(args.input_dir)
     if not input_dir.exists():
         raise SystemExit(f"Input directory not found: {input_dir}")
 
-    merged = merge_all_stores(input_dir)
+    merged = merge_all_stores(input_dir, args.store_only)
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(

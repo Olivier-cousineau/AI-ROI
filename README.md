@@ -68,7 +68,19 @@ MAX_MARKETPLACE_ITEMS=50
 ```
 
 Laisser `CT_STORE_FOLDER` vide pour traiter toutes les villes. Si `CT_STORE_FOLDER` est défini,
-le workflow limite automatiquement les items marketplace (par défaut 50, sinon 300).
+le workflow limite automatiquement les items marketplace (par défaut 50, sinon 25).
+
+Pour fusionner une seule ville côté script:
+
+```bash
+python scripts/merge_all_stores.py --store-only 0271-st-jerome-qc
+```
+
+Variables d'environnement utiles:
+
+- `MAX_MARKETPLACE_ITEMS` (défaut: 25)
+- `EBAY_CONCURRENCY` (défaut: 1)
+- `EBAY_MIN_DELAY_MS` (défaut: 1200)
 
 ## Output principal
 
