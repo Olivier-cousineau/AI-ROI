@@ -12,6 +12,8 @@ env:
   PYTHONPATH: .
   EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
   EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
+  CT_STORE_FOLDER: ""
+  MAX_MARKETPLACE_ITEMS: ""
 
 jobs:
   recompute:
@@ -29,6 +31,16 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Set marketplace defaults
+        run: |
+          if [ -z "${MAX_MARKETPLACE_ITEMS}" ]; then
+            if [ -n "${CT_STORE_FOLDER}" ]; then
+              echo "MAX_MARKETPLACE_ITEMS=50" >> "$GITHUB_ENV"
+            else
+              echo "MAX_MARKETPLACE_ITEMS=300" >> "$GITHUB_ENV"
+            fi
+          fi
+
       - name: Fetch all Canadian Tire stores from EconoPlus
         env:
           ECONOPLUS_TOKEN: ${{ secrets.ECONOPLUS }}
@@ -37,7 +49,12 @@ jobs:
           git clone https://x-access-token:${ECONOPLUS_TOKEN}@github.com/Olivier-cousineau/EconoPlus.git econoplus
           rm -rf input/canadiantire
           mkdir -p input/canadiantire
-          cp -R econoplus/public/canadiantire/* input/canadiantire/
+          if [ -n "${CT_STORE_FOLDER}" ]; then
+            mkdir -p "input/canadiantire/${CT_STORE_FOLDER}"
+            cp -R "econoplus/public/canadiantire/${CT_STORE_FOLDER}/" "input/canadiantire/${CT_STORE_FOLDER}/"
+          else
+            cp -R econoplus/public/canadiantire/* input/canadiantire/
+          fi
 
       - name: Merge all Canadian Tire stores
         run: python scripts/merge_all_stores.py --input-dir input/canadiantire --output input/canadiantire_all_liquidations.json
@@ -48,6 +65,7 @@ jobs:
           --deals input/canadiantire_all_liquidations.json
           --keepa input/keepa_sales.json
           --out input/market_ready.json
+          --max-marketplace-items ${MAX_MARKETPLACE_ITEMS}
 
       - name: Fetch eBay OAuth token
         continue-on-error: true
@@ -58,7 +76,7 @@ jobs:
           python scripts/enrich_ebay.py
           --input input/market_ready.json
           --output output/marketplace.json
-          --max-ebay-queries 300
+          --max-ebay-queries ${MAX_MARKETPLACE_ITEMS}
 
       - name: Recompute ROI
         run: python scripts/recompute_roi.py --input output/marketplace.json --output output/marketplace.json --top 300
