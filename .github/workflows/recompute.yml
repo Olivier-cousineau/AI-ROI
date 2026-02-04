@@ -49,13 +49,19 @@ jobs:
           --keepa input/keepa_sales.json
           --out input/market_ready.json
 
-      # Must run after building market-ready input and before recomputing ROI.
       - name: Fetch eBay OAuth token
         continue-on-error: true
         run: python scripts/fetch_ebay_token.py
 
+      - name: Enrich eBay marketplace data
+        run: >-
+          python scripts/enrich_ebay.py
+          --input input/market_ready.json
+          --output output/marketplace.json
+          --max-ebay-queries 300
+
       - name: Recompute ROI
-        run: python scripts/recompute_roi.py --input input/market_ready.json --output output/marketplace.json --top 300
+        run: python scripts/recompute_roi.py --input output/marketplace.json --output output/marketplace.json --top 300
 
       - name: Alias marketplace output
         run: cp output/marketplace.json output/roi_results.json
