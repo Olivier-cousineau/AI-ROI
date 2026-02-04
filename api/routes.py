@@ -26,7 +26,9 @@ class MatchResponse(BaseModel):
 
     asin: str | None
     confidence: float = Field(..., ge=0, le=1)
+    amazon_query: str
     ebay_query: str
+    key_tokens: dict[str, str | list[str] | None]
     normalized_title: str
 
 
