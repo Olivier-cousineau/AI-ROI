@@ -14,6 +14,7 @@ env:
   EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
   CT_STORE_FOLDER: ""
   MAX_MARKETPLACE_ITEMS: ""
+  TEST_CT_STORE_SLUG: ""
 
 jobs:
   recompute:
@@ -49,7 +50,10 @@ jobs:
           git clone https://x-access-token:${ECONOPLUS_TOKEN}@github.com/Olivier-cousineau/EconoPlus.git econoplus
           rm -rf input/canadiantire
           mkdir -p input/canadiantire
-          if [ -n "${CT_STORE_FOLDER}" ]; then
+          if [ -n "${TEST_CT_STORE_SLUG}" ]; then
+            mkdir -p "input/canadiantire/${TEST_CT_STORE_SLUG}"
+            cp -R "econoplus/public/canadiantire/${TEST_CT_STORE_SLUG}/" "input/canadiantire/${TEST_CT_STORE_SLUG}/"
+          elif [ -n "${CT_STORE_FOLDER}" ]; then
             mkdir -p "input/canadiantire/${CT_STORE_FOLDER}"
             cp -R "econoplus/public/canadiantire/${CT_STORE_FOLDER}/" "input/canadiantire/${CT_STORE_FOLDER}/"
           else

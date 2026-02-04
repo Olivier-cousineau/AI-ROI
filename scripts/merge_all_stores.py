@@ -20,7 +20,7 @@ def load_deals(path: Path) -> list:
 
 def merge_all_stores(input_dir: Path) -> list:
     deals: list = []
-    for store_file in sorted(input_dir.glob("*.json")):
+    for store_file in sorted(input_dir.rglob("*.json")):
         deals.extend(load_deals(store_file))
     return deals
 
