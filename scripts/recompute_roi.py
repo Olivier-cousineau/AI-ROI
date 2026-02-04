@@ -19,7 +19,11 @@ from models.market_model import MarketInput
 def parse_args() -> argparse.Namespace:
     """Parse CLI arguments."""
     parser = argparse.ArgumentParser(description="Recompute ROI outputs from JSON input.")
-    parser.add_argument("--input", required=True, help="Path to input JSON file.")
+    parser.add_argument(
+        "--input",
+        default="input/market_ready.json",
+        help="Path to input JSON file.",
+    )
     parser.add_argument(
         "--output",
         default="output/marketplace.json",
