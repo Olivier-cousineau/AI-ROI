@@ -67,7 +67,6 @@ jobs:
         run: >-
           python scripts/build_market_ready.py
           --deals input/canadiantire_all_liquidations.json
-          --keepa input/keepa_sales.json
           --out input/market_ready.json
           --max-marketplace-items ${MAX_MARKETPLACE_ITEMS}
 

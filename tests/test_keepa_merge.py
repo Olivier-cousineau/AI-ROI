@@ -1,7 +1,7 @@
 from scripts.build_market_ready import build_market_ready
 
 
-def test_keepa_sales_merge() -> None:
+def test_market_ready_keys() -> None:
     deals = [
         {
             "title": "Widget A",
@@ -16,15 +16,12 @@ def test_keepa_sales_merge() -> None:
             "price_regular": 30.0,
         },
     ]
-    keepa_index = {"ct|sku:123": 25}
 
-    output, stats = build_market_ready(deals, keepa_index)
+    output, stats = build_market_ready(deals)
 
     assert stats["count_total"] == 2
     assert output[0]["deal"]["key"] == "ct|sku:123"
     assert output[1]["deal"]["key"] == "ct|sku:456"
-    assert output[0]["keepa"]["sales_per_month"] == 25
-    assert output[1]["keepa"]["sales_per_month"] is None
 
 
 def test_env_marketplace_cap(monkeypatch) -> None:
@@ -42,12 +39,11 @@ def test_env_marketplace_cap(monkeypatch) -> None:
             "price_regular": 30.0,
         },
     ]
-    keepa_index = {"ct|sku:123": 25}
 
-    monkeypatch.setenv("MAX_MARKETPLACE_ITEMS", "1")
+    monkeypatch.setenv("MAX_MARKETPLACE_ITEMS", "")
 
-    output, stats = build_market_ready(deals, keepa_index)
+    output, stats = build_market_ready(deals)
 
     assert stats["count_total"] == 2
-    assert stats["count_after_filter"] == 1
-    assert len(output) == 1
+    assert stats["count_after_filter"] == 2
+    assert len(output) == 2
