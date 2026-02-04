@@ -145,6 +145,7 @@ def merge_deals(
                     "ebay_price": ebay_price,
                     "match_confidence": match_confidence or 0.0,
                     "asin": asin,
+                    "is_confirmed": False,
                 },
                 "keepa": {
                     "sales_per_month": keepa.get("sales_per_month") if keepa else None,
