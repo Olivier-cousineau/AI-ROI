@@ -35,6 +35,18 @@ def parse_args() -> argparse.Namespace:
         default=300,
         help="Number of top results to include.",
     )
+    parser.add_argument(
+        "--shipping-floor",
+        type=float,
+        default=8.99,
+        help="Minimum shipping estimate applied to ROI computations.",
+    )
+    parser.add_argument(
+        "--shipping-rate",
+        type=float,
+        default=0.10,
+        help="Shipping estimate rate applied to sell price.",
+    )
     return parser.parse_args()
 
 
@@ -49,7 +61,11 @@ def load_deals(path: Path) -> list[dict[str, object]]:
     return payload
 
 
-def compute_results(items: list[dict[str, object]]) -> list[dict[str, object]]:
+def compute_results(
+    items: list[dict[str, object]],
+    shipping_floor: float,
+    shipping_rate: float,
+) -> list[dict[str, object]]:
     """Compute ROI results for each item."""
     results: list[dict[str, object]] = []
     for entry in items:
@@ -73,6 +89,22 @@ def compute_results(items: list[dict[str, object]]) -> list[dict[str, object]]:
             if roi_output.revenue_source == "amazon"
             else market.ebay_price
         )
+        if sell_price is None:
+            continue
+        fees_est = sell_price * 0.15
+        shipping_est = max(shipping_floor, sell_price * shipping_rate)
+        profit_net = sell_price - fees_est - shipping_est - deal.price_sale
+        if deal.price_sale:
+            roi_pct_net = (profit_net / deal.price_sale) * 100
+        else:
+            roi_pct_net = None
+        low_cost_outlier = False
+        if deal.price_sale is not None and deal.price_sale < 5 and roi_pct_net is not None:
+            roi_pct_net = min(roi_pct_net, 500)
+            low_cost_outlier = True
+        score = roi_output.score
+        if market.match_confidence is not None and market.match_confidence < 0.7:
+            score -= 1000
         discount_pct = deal_payload.get("discount_pct")
         if discount_pct is None and deal.price_regular:
             discount_pct = round((1 - deal.price_sale / deal.price_regular) * 100, 2)
@@ -88,7 +120,12 @@ def compute_results(items: list[dict[str, object]]) -> list[dict[str, object]]:
                 "discount_pct": discount_pct,
                 "profit_est": roi_output.profit_est,
                 "roi_pct": roi_output.roi_pct,
-                "score": roi_output.score,
+                "fees_est": round(fees_est, 2),
+                "shipping_est": round(shipping_est, 2),
+                "profit_net": round(profit_net, 2),
+                "roi_pct_net": None if roi_pct_net is None else round(roi_pct_net, 2),
+                "low_cost_outlier": low_cost_outlier,
+                "score": score,
                 "revenue_source": roi_output.revenue_source,
                 "sell_price": sell_price,
                 "keepa_sales_per_month": keepa.sales_per_month,
@@ -99,6 +136,32 @@ def compute_results(items: list[dict[str, object]]) -> list[dict[str, object]]:
     return results
 
 
+def dedupe_results(results: list[dict[str, object]]) -> list[dict[str, object]]:
+    """Dedupe results by key using match confidence then profit net."""
+    deduped: dict[str, dict[str, object]] = {}
+    extras: list[dict[str, object]] = []
+    for item in results:
+        key = item.get("key")
+        if not key:
+            extras.append(item)
+            continue
+        if key not in deduped:
+            deduped[key] = item
+            continue
+        current = deduped[key]
+        current_conf = current.get("match_confidence") or 0
+        new_conf = item.get("match_confidence") or 0
+        if new_conf > current_conf:
+            deduped[key] = item
+            continue
+        if new_conf == current_conf:
+            current_profit = current.get("profit_net") or 0
+            new_profit = item.get("profit_net") or 0
+            if new_profit > current_profit:
+                deduped[key] = item
+    return list(deduped.values()) + extras
+
+
 def write_output(
     path: Path,
     results: list[dict[str, object]],
@@ -106,8 +169,9 @@ def write_output(
     top: int,
 ) -> None:
     """Write output JSON to path."""
+    deduped_results = dedupe_results(results)
     sorted_results = sorted(
-        results,
+        deduped_results,
         key=lambda item: (item["score"], item["roi_pct"], item["profit_est"]),
         reverse=True,
     )
@@ -116,9 +180,38 @@ def write_output(
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source": "Canadian Tire",
         "count_total": count_total,
-        "count_scored": len(results),
+        "count_scored": len(deduped_results),
         "top": top_count,
         "results": sorted_results[:top_count],
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        json.dump(payload, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
+
+
+def write_roi_output(
+    path: Path,
+    results: list[dict[str, object]],
+) -> None:
+    """Write filtered ROI output JSON to path."""
+    deduped_results = dedupe_results(results)
+    filtered = [
+        item
+        for item in deduped_results
+        if item.get("profit_net", 0) > 20
+        and (item.get("match_confidence") or 0) >= 0.7
+    ]
+    sorted_results = sorted(
+        filtered,
+        key=lambda item: (item["profit_net"], item["roi_pct_net"]),
+        reverse=True,
+    )
+    payload = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "count_scored": len(deduped_results),
+        "count_filtered": len(sorted_results),
+        "results": sorted_results,
     }
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as handle:
@@ -131,10 +224,12 @@ def main() -> None:
     args = parse_args()
     input_path = Path(args.input)
     output_path = Path(args.output)
+    roi_output_path = Path("output/roi_results.json")
 
     items = load_deals(input_path)
-    results = compute_results(items)
+    results = compute_results(items, args.shipping_floor, args.shipping_rate)
     write_output(output_path, results, count_total=len(items), top=args.top)
+    write_roi_output(roi_output_path, results)
 
 
 if __name__ == "__main__":
