@@ -208,7 +208,8 @@ def write_roi_output(
     filtered = [
         item
         for item in deduped_results
-        if item.get("profit_net", 0) > 20
+        if item.get("is_confirmed")
+        and item.get("profit_net", 0) > 20
         and (item.get("match_confidence") or 0) >= 0.7
     ]
     sorted_results = sorted(
