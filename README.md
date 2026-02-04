@@ -40,6 +40,9 @@ curl -X POST http://127.0.0.1:8000/v1/match \
   }'
 ```
 
+Cet endpoint ne fait aucun lookup externe. Il normalise le titre, extrait des signaux (marque, modèle, taille, etc.)
+et renvoie des requêtes génériques pour Amazon/eBay ainsi qu'une confiance heuristique.
+
 ## GitHub Actions: recompute ROI
 
 ### CI (tests)
