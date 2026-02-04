@@ -49,6 +49,7 @@ jobs:
           --keepa input/keepa_sales.json
           --out input/market_ready.json
 
+      # Must run after building market-ready input and before recomputing ROI.
       - name: Fetch eBay OAuth token
         continue-on-error: true
         run: python scripts/fetch_ebay_token.py
