@@ -6,13 +6,13 @@ def test_keepa_sales_merge() -> None:
         {
             "title": "Widget A",
             "sku": "123",
-            "price_sale": 10.0,
+            "price_sale": 8.0,
             "price_regular": 20.0,
         },
         {
             "title": "Widget B",
             "sku": "456",
-            "price_sale": 15.0,
+            "price_sale": 12.0,
             "price_regular": 30.0,
         },
     ]
@@ -25,3 +25,29 @@ def test_keepa_sales_merge() -> None:
     assert output[1]["deal"]["key"] == "ct|sku:456"
     assert output[0]["keepa"]["sales_per_month"] == 25
     assert output[1]["keepa"]["sales_per_month"] is None
+
+
+def test_env_marketplace_cap(monkeypatch) -> None:
+    deals = [
+        {
+            "title": "Widget A",
+            "sku": "123",
+            "price_sale": 8.0,
+            "price_regular": 20.0,
+        },
+        {
+            "title": "Widget B",
+            "sku": "456",
+            "price_sale": 12.0,
+            "price_regular": 30.0,
+        },
+    ]
+    keepa_index = {"ct|sku:123": 25}
+
+    monkeypatch.setenv("MAX_MARKETPLACE_ITEMS", "1")
+
+    output, stats = build_market_ready(deals, keepa_index)
+
+    assert stats["count_total"] == 2
+    assert stats["count_after_filter"] == 1
+    assert len(output) == 1
