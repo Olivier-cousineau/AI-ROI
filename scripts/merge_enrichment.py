@@ -6,6 +6,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from ai.title_normalizer import normalize_title
+from core.ct_extractors import extract_part_number
 from core.keying import make_deal_key
 
 
@@ -20,6 +22,22 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--out", required=True, help="Path to output JSON file.")
     return parser.parse_args()
+
+
+def _coerce_float(value: Any) -> float | None:
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        cleaned = value.strip()
+        if not cleaned:
+            return None
+        try:
+            return float(cleaned.replace(",", ""))
+        except ValueError:
+            return None
+    return None
 
 
 def _load_json_list(path: Path) -> list[dict[str, Any]]:
@@ -62,10 +80,32 @@ def merge_deals(
     for deal in deals:
         if not isinstance(deal, dict):
             raise ValueError("Each deal entry must be an object.")
-        title = deal.get("title")
-        sku = deal.get("sku")
-        url = deal.get("url")
-        key = make_deal_key("Canadian Tire", sku, url, title)
+        title = deal.get("title") or deal.get("name") or deal.get("productName") or "Unknown"
+        url = deal.get("url") or deal.get("link")
+        image = deal.get("image") or deal.get("imageUrl")
+        price_sale = (
+            deal.get("price_sale")
+            if deal.get("price_sale") is not None
+            else deal.get("salePrice")
+            if deal.get("salePrice") is not None
+            else deal.get("price")
+        )
+        price_regular = (
+            deal.get("price_regular")
+            if deal.get("price_regular") is not None
+            else deal.get("regularPrice")
+            if deal.get("regularPrice") is not None
+            else deal.get("wasPrice")
+        )
+        discount_pct = _coerce_float(deal.get("discount_pct"))
+        price_sale_float = _coerce_float(price_sale)
+        price_regular_float = _coerce_float(price_regular)
+        if discount_pct is None and price_sale_float and price_regular_float:
+            discount_pct = round((1 - price_sale_float / price_regular_float) * 100, 2)
+
+        part_number = extract_part_number(deal)
+        normalized_title = normalize_title(title) if isinstance(title, str) else ""
+        key = make_deal_key("Canadian Tire", part_number, url, normalized_title)
         enrichment = index.get(key)
         if enrichment:
             count_enriched += 1
@@ -78,6 +118,7 @@ def merge_deals(
         amazon_price = amazon.get("price") if amazon else None
         ebay_price = ebay.get("price") if ebay else None
         match_confidence = amazon.get("match_confidence") if amazon else None
+        asin = amazon.get("asin") if amazon else None
 
         if amazon_price is not None:
             count_with_amazon_price += 1
@@ -90,19 +131,20 @@ def merge_deals(
             {
                 "deal": {
                     "title": title,
-                    "price_sale": deal.get("price_sale"),
-                    "price_regular": deal.get("price_regular"),
+                    "key": key,
+                    "part_number": part_number,
+                    "price_sale": price_sale_float,
+                    "price_regular": price_regular_float,
+                    "discount_pct": discount_pct,
                     "source": "Canadian Tire",
-                    "sku": sku,
                     "url": url,
-                    "image": deal.get("image"),
-                    "brand": deal.get("brand"),
-                    "upc": deal.get("upc"),
+                    "image": image,
                 },
                 "market": {
                     "amazon_price": amazon_price,
                     "ebay_price": ebay_price,
                     "match_confidence": match_confidence or 0.0,
+                    "asin": asin,
                 },
                 "keepa": {
                     "sales_per_month": keepa.get("sales_per_month") if keepa else None,

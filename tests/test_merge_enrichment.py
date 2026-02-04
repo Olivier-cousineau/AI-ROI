@@ -11,11 +11,9 @@ def test_merge_enrichment_applies_manual_data() -> None:
             "title": "Widget A",
             "price_sale": 10.0,
             "price_regular": 20.0,
-            "sku": "SKU1",
+            "partNumber": "12345",
             "url": "https://example.com/a",
             "image": "https://example.com/a.jpg",
-            "brand": "BrandA",
-            "upc": "111",
         },
         {
             "title": "Widget B",
@@ -25,8 +23,8 @@ def test_merge_enrichment_applies_manual_data() -> None:
         },
     ]
 
-    key = make_deal_key("Canadian Tire", "SKU1", "https://example.com/a", "Widget A")
-    assert key == "ct|sku:SKU1"
+    key = make_deal_key("Canadian Tire", "12345", "https://example.com/a", "widget a")
+    assert key == "ct|pn:12345"
 
     enrichment = [
         {
@@ -48,6 +46,7 @@ def test_merge_enrichment_applies_manual_data() -> None:
     assert first["market"]["amazon_price"] == 99.99
     assert first["market"]["ebay_price"] == 89.99
     assert first["market"]["match_confidence"] == 0.9
+    assert first["market"]["asin"] == "B0TEST"
     assert first["keepa"]["sales_per_month"] == 12
     assert first["keepa"]["avg_price"] == 95.0
     assert first["keepa"]["rank"] == 5000
@@ -56,6 +55,7 @@ def test_merge_enrichment_applies_manual_data() -> None:
     assert second["market"]["amazon_price"] is None
     assert second["market"]["ebay_price"] is None
     assert second["market"]["match_confidence"] == 0.0
+    assert second["market"]["asin"] is None
     assert second["keepa"]["sales_per_month"] is None
 
     assert stats["count_total"] == 2

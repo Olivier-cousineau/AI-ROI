@@ -83,7 +83,7 @@ Exemple (voir `input/manual_enrichment.sample.json`) :
 ```json
 [
   {
-    "key": "ct|sku:123456",
+    "key": "ct|pn:123456",
     "title_hint": "ProForm 550R",
     "amazon": { "asin": "B0XXXX", "price": 349.99, "match_confidence": 0.85 },
     "ebay": { "price": 329.99 },
@@ -95,9 +95,13 @@ Exemple (voir `input/manual_enrichment.sample.json`) :
 
 ### Comment déterminer la clé
 
-- Si le deal a un SKU: `ct|sku:<SKU>`
+- Si le deal a un part number: `ct|pn:<PART_NUMBER>`
 - Sinon, si une URL est présente: `ct|url:<URL>`
-- Sinon: `ct|title:<titre_normalisé>` (fallback automatisé côté script)
+- Sinon: `ct|title:<titre_normalisé>` (fallback automatisé côté script, basé sur la normalisation du titre)
+
+Le part number est extrait automatiquement depuis plusieurs champs possibles (ex: `partNumber`,
+`itemNumber`, `productNumber`, etc.). Si aucun part number n'est détecté, le script utilise l'URL
+ou le titre normalisé.
 
 ### Lancement local
 

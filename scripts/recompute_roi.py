@@ -73,13 +73,14 @@ def compute_results(items: list[dict[str, object]]) -> list[dict[str, object]]:
             if roi_output.revenue_source == "amazon"
             else market.ebay_price
         )
-        discount_pct = None
-        if deal.price_regular:
+        discount_pct = deal_payload.get("discount_pct")
+        if discount_pct is None and deal.price_regular:
             discount_pct = round((1 - deal.price_sale / deal.price_regular) * 100, 2)
         results.append(
             {
+                "key": deal_payload.get("key"),
                 "title": deal.title,
-                "sku": deal.sku,
+                "part_number": deal_payload.get("part_number"),
                 "url": deal_payload.get("url"),
                 "image": deal_payload.get("image"),
                 "price_sale": deal.price_sale,

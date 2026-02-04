@@ -1,6 +1,6 @@
 [
   {
-    "key": "ct|sku:123456",
+    "key": "ct|pn:123456",
     "title_hint": "ProForm 550R",
     "amazon": { "asin": "B0XXXX", "price": 349.99, "match_confidence": 0.85 },
     "ebay": { "price": 329.99 },
