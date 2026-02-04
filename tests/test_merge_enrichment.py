@@ -24,7 +24,7 @@ def test_merge_enrichment_applies_manual_data() -> None:
     ]
 
     key = make_deal_key("Canadian Tire", "12345", "https://example.com/a", "widget a")
-    assert key == "ct|pn:12345"
+    assert key == "ct|sku:12345"
 
     enrichment = [
         {

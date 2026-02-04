@@ -1,0 +1,4 @@
+[
+  { "key": "ct|sku:1234567", "sales_per_month": 25 },
+  { "key": "ct|url:https://...", "sales_per_month": 10 }
+]
