@@ -50,7 +50,17 @@ Le workflow `CI` lance les tests à chaque push ou pull request sur `main`.
 
 Le workflow `Recompute ROI` exécute `scripts/recompute_roi.py` via cron (`5 8 * * *`) et manuel
 (`workflow_dispatch`). Il lit `input/deals.sample.json`, calcule les ROI, écrit
-`output/roi_results.json`, puis commit/push le fichier seulement en cas de changement
+`output/marketplace.json`, puis commit/push le fichier seulement en cas de changement
 (commit avec `[skip ci]`).
 
 Pour déclencher manuellement: GitHub > Actions > Recompute ROI > Run workflow.
+
+## Output principal
+
+Le fichier principal généré par le pipeline est `output/marketplace.json`.
+
+Exemple de commande:
+
+```bash
+python scripts/recompute_roi.py --input input/deals.sample.json --output output/marketplace.json --top 300
+```
