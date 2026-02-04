@@ -14,7 +14,6 @@ from ai.product_matcher import build_queries
 from ai.title_normalizer import normalize_title
 from core.ct_extractors import extract_part_number
 from core.keying import make_deal_key
-from lib.enrich.market_enricher import enrich_market
 
 
 def parse_args() -> argparse.Namespace:
@@ -73,7 +72,6 @@ def build_market_ready(
 ) -> tuple[list[dict[str, Any]], dict[str, int]]:
     """Build the market-ready list and stats."""
     output: list[dict[str, Any]] = []
-    query_payloads: list[dict[str, str | None]] = []
     count_with_keepa_sales = 0
 
     for deal in deals:
@@ -110,12 +108,6 @@ def build_market_ready(
             sku=sku,
             upc=deal.get("upc"),
         )
-        query_payloads.append(
-            {
-                "amazon_query": match_payload.get("amazon_query"),
-                "ebay_query": match_payload.get("ebay_query"),
-            }
-        )
 
         keepa_sales = keepa_index.get(key)
         if keepa_sales is not None:
@@ -147,23 +139,8 @@ def build_market_ready(
             }
         )
 
-    enriched = enrich_market(query_payloads)
-    count_with_amazon_price = 0
-    count_with_ebay_price = 0
-    for entry, enriched_market in zip(output, enriched):
-        amazon_price = enriched_market.get("amazon_price")
-        ebay_price = enriched_market.get("ebay_price")
-        if amazon_price is not None:
-            count_with_amazon_price += 1
-        if ebay_price is not None:
-            count_with_ebay_price += 1
-        entry["market"]["amazon_price"] = amazon_price
-        entry["market"]["ebay_price"] = ebay_price
-
     stats = {
         "count_total": len(deals),
-        "count_with_amazon_price": count_with_amazon_price,
-        "count_with_ebay_price": count_with_ebay_price,
         "count_with_keepa_sales": count_with_keepa_sales,
     }
     return output, stats
@@ -191,10 +168,7 @@ def main() -> None:
     write_output(output_path, market_ready)
 
     print(
-        "total={count_total} with_amazon_price={count_with_amazon_price} "
-        "with_ebay_price={count_with_ebay_price} with_keepa_sales={count_with_keepa_sales}".format(
-            **stats
-        )
+        "total={count_total} with_keepa_sales={count_with_keepa_sales}".format(**stats)
     )
 
 
