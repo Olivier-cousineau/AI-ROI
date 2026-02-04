@@ -40,18 +40,21 @@ jobs:
       - name: Recompute ROI
         run: python scripts/recompute_roi.py --input input/market_ready.json --output output/marketplace.json --top 300
 
+      - name: Alias marketplace output
+        run: cp output/marketplace.json output/roi_results.json
+
       - name: Commit results
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if git diff --quiet -- output/marketplace.json; then
+          if git diff --quiet -- output/marketplace.json output/roi_results.json; then
             echo "No changes to commit."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add output/marketplace.json
+          git add output/marketplace.json output/roi_results.json
           if ! git diff --quiet -- input/market_ready.json; then
             git add input/market_ready.json
           fi
