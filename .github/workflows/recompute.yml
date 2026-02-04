@@ -27,6 +27,19 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Fetch all Canadian Tire stores from EconoPlus
+        env:
+          ECONOPLUS_TOKEN: ${{ secrets.ECONOPLUS }}
+        run: |
+          rm -rf econoplus
+          git clone https://x-access-token:${ECONOPLUS_TOKEN}@github.com/Olivier-cousineau/EconoPlus.git econoplus
+          rm -rf input/canadiantire
+          mkdir -p input/canadiantire
+          cp -R econoplus/public/canadiantire/* input/canadiantire/
+
+      - name: Merge all Canadian Tire stores
+        run: python scripts/merge_all_stores.py --input-dir input/canadiantire --output input/canadiantire_all_liquidations.json
+
       - name: Fetch eBay OAuth token
         run: python scripts/get_ebay_token.py
 
