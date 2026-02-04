@@ -80,6 +80,7 @@ def fetch_token() -> dict[str, object] | None:
         return None
 
     _write_cache(access_token, expires_at)
+    LOGGER.info("token fetched (expires_in=%s)", expires_in)
     return {"access_token": access_token, "expires_in": expires_in}
 
 
