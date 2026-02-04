@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 
 from lib.enrich.amazon_paapi import get_amazon_price
-from lib.enrich.ebay_browse import get_ebay_active_median_price
+from lib.enrich.ebay_browse import fetch_active_prices
 
 
 LOGGER = logging.getLogger(__name__)
@@ -17,6 +17,6 @@ def enrich_market(items: list[dict[str, str | None]]) -> list[dict[str, float | 
         amazon_query = item.get("amazon_query") if isinstance(item, dict) else None
         ebay_query = item.get("ebay_query") if isinstance(item, dict) else None
         amazon_price = get_amazon_price(amazon_query)
-        ebay_price = get_ebay_active_median_price(ebay_query)
+        ebay_price = fetch_active_prices(ebay_query) if ebay_query else None
         enriched.append({"amazon_price": amazon_price, "ebay_price": ebay_price})
     return enriched
