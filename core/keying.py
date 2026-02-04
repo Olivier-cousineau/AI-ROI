@@ -1,31 +1,21 @@
 """Utilities for generating deal keys."""
 from __future__ import annotations
 
-import re
-
-
-def _normalize_title(title: str) -> str:
-    """Normalize a title for keying."""
-    cleaned = re.sub(r"[^a-z0-9]+", " ", title.lower())
-    return re.sub(r"\s+", " ", cleaned).strip()
-
 
 def make_deal_key(
     source: str,
-    sku: str | None,
+    part_number: str | None,
     url: str | None,
-    title: str | None = None,
+    normalized_title: str | None,
 ) -> str:
     """Build a stable deal key for enrichment joins."""
     source_key = source.strip().lower()
     if source_key in {"canadian tire", "canadiantire", "ct"}:
         source_key = "ct"
 
-    if sku:
-        return f"{source_key}|sku:{sku}"
+    if part_number:
+        return f"{source_key}|pn:{part_number}"
     if url:
         return f"{source_key}|url:{url}"
-    if title:
-        normalized = _normalize_title(title)
-        return f"{source_key}|title:{normalized}"
-    return f"{source_key}|title:unknown"
+    normalized = normalized_title or ""
+    return f"{source_key}|title:{normalized}"
