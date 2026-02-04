@@ -25,19 +25,19 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Recompute ROI
-        run: python scripts/recompute_roi.py --input input/deals.sample.json --output output/roi_results.json
+        run: python scripts/recompute_roi.py --input input/deals.sample.json --output output/marketplace.json
 
       - name: Commit results
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if git diff --quiet -- output/roi_results.json; then
+          if git diff --quiet -- output/marketplace.json; then
             echo "No changes to commit."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add output/roi_results.json
-          git commit -m "chore: recompute ROI [skip ci]"
+          git add output/marketplace.json
+          git commit -m "chore: update marketplace [skip ci]"
           git push
