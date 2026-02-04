@@ -77,7 +77,7 @@ def main() -> int:
     logging.basicConfig(level=logging.INFO)
     payload = fetch_token()
     if payload:
-        print(json.dumps(payload))
+        print(json.dumps({"token_cached": True, "expires_in": payload.get("expires_in")}))
     return 0
 
 

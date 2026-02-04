@@ -4,6 +4,9 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
+import random
+import threading
 import time
 from pathlib import Path
 from typing import Any
@@ -17,8 +20,30 @@ from lib.ebay_auth import get_valid_token
 LOGGER = logging.getLogger(__name__)
 EBAY_BROWSE_ENDPOINT = "https://api.ebay.com/buy/browse/v1/item_summary/search"
 CACHE_PATH = Path(".cache/ebay_browse_cache.json")
-RATE_LIMIT_SLEEP_SECONDS = 0.5
-MAX_RETRIES = 5
+DEFAULT_EBAY_MIN_DELAY_MS = 1200
+DEFAULT_EBAY_CONCURRENCY = 1
+MAX_RETRIES = 6
+CACHE_TTL_SECONDS = 24 * 60 * 60
+
+EBAY_MIN_DELAY_MS = int(os.getenv("EBAY_MIN_DELAY_MS", str(DEFAULT_EBAY_MIN_DELAY_MS)))
+EBAY_CONCURRENCY = int(os.getenv("EBAY_CONCURRENCY", str(DEFAULT_EBAY_CONCURRENCY)))
+
+
+class RateLimiter:
+    def __init__(self, max_concurrency: int, min_delay_ms: int) -> None:
+        self._semaphore = threading.Semaphore(max(1, max_concurrency))
+        self._min_delay_seconds = max(0, min_delay_ms) / 1000
+
+    def __enter__(self) -> "RateLimiter":
+        self._semaphore.acquire()
+        return self
+
+    def __exit__(self, exc_type, exc, exc_tb) -> None:
+        time.sleep(self._min_delay_seconds)
+        self._semaphore.release()
+
+
+RATE_LIMITER = RateLimiter(EBAY_CONCURRENCY, EBAY_MIN_DELAY_MS)
 
 
 def parse_args() -> argparse.Namespace:
@@ -58,7 +83,7 @@ def _load_json_list(path: Path) -> list[dict[str, Any]]:
     return entries
 
 
-def _load_cache() -> dict[str, float | None]:
+def _load_cache() -> dict[str, dict[str, float | None]]:
     if not CACHE_PATH.exists():
         return {}
     try:
@@ -68,21 +93,31 @@ def _load_cache() -> dict[str, float | None]:
         return {}
     if not isinstance(payload, dict):
         return {}
-    cache: dict[str, float | None] = {}
+    cache: dict[str, dict[str, float | None]] = {}
     for key, value in payload.items():
         if not isinstance(key, str):
             continue
-        if value is None:
-            cache[key] = None
+        if isinstance(value, dict):
+            try:
+                cached_price = value.get("price")
+                cached_ts = float(value.get("ts")) if value.get("ts") is not None else 0.0
+                cache[key] = {
+                    "price": float(cached_price) if cached_price is not None else None,
+                    "ts": cached_ts,
+                }
+            except (TypeError, ValueError):
+                cache[key] = {"price": None, "ts": 0.0}
+        elif value is None:
+            cache[key] = {"price": None, "ts": 0.0}
         else:
             try:
-                cache[key] = float(value)
+                cache[key] = {"price": float(value), "ts": 0.0}
             except (TypeError, ValueError):
-                cache[key] = None
+                cache[key] = {"price": None, "ts": 0.0}
     return cache
 
 
-def _write_cache(cache: dict[str, float | None]) -> None:
+def _write_cache(cache: dict[str, dict[str, float | None]]) -> None:
     CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
     CACHE_PATH.write_text(json.dumps(cache, indent=2, sort_keys=True), encoding="utf-8")
 
@@ -110,27 +145,44 @@ def _extract_price(item: dict[str, Any]) -> float | None:
     return None
 
 
+def _parse_retry_after(value: str | None) -> float | None:
+    if not value:
+        return None
+    try:
+        return max(0.0, float(value))
+    except ValueError:
+        return None
+
+
+def _backoff_sleep(attempt: int) -> None:
+    base = min(32.0, 2 ** (attempt - 1))
+    jitter = random.uniform(0, 0.5)
+    time.sleep(base + jitter)
+
+
 def _fetch_browse_price(query: str, token: str) -> float | None:
     headers = {"Authorization": f"Bearer {token}"}
     params = {"q": query, "limit": "20"}
-    backoff_seconds = 1.0
     for attempt in range(1, MAX_RETRIES + 1):
-        time.sleep(RATE_LIMIT_SLEEP_SECONDS)
-        try:
-            response = requests.get(
-                EBAY_BROWSE_ENDPOINT,
-                headers=headers,
-                params=params,
-                timeout=15,
-            )
-        except requests.RequestException as exc:
-            LOGGER.warning("eBay Browse API request failed: %s", exc)
-            return None
+        with RATE_LIMITER:
+            try:
+                response = requests.get(
+                    EBAY_BROWSE_ENDPOINT,
+                    headers=headers,
+                    params=params,
+                    timeout=15,
+                )
+            except requests.RequestException as exc:
+                LOGGER.warning("eBay Browse API request failed: %s", exc)
+                return None
 
         if response.status_code == 429:
+            retry_after = _parse_retry_after(response.headers.get("Retry-After"))
             LOGGER.warning("eBay Browse API rate limited (429), retry %s/%s.", attempt, MAX_RETRIES)
-            time.sleep(backoff_seconds)
-            backoff_seconds *= 2
+            if retry_after is not None:
+                time.sleep(retry_after + random.uniform(0, 0.5))
+            else:
+                _backoff_sleep(attempt)
             continue
 
         try:
@@ -170,10 +222,17 @@ def _build_ebay_query(entry: dict[str, Any]) -> str | None:
     return match_payload.get("ebay_query")
 
 
+def _is_cache_fresh(entry: dict[str, float | None], now: float) -> bool:
+    ts = entry.get("ts") if entry else None
+    if not isinstance(ts, (int, float)):
+        return False
+    return now - float(ts) < CACHE_TTL_SECONDS
+
+
 def enrich_entries(
     entries: list[dict[str, Any]],
     max_queries: int,
-) -> tuple[list[dict[str, Any]], dict[str, float | None]]:
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, float | None]]]:
     token = get_valid_token()
     if not token:
         LOGGER.warning("Skipping eBay enrichment: missing OAuth token.")
@@ -194,8 +253,9 @@ def enrich_entries(
             market_payload["ebay_price"] = None
             continue
 
-        if query in cache:
-            market_payload["ebay_price"] = cache[query]
+        cache_entry = cache.get(query)
+        if cache_entry and _is_cache_fresh(cache_entry, time.time()):
+            market_payload["ebay_price"] = cache_entry.get("price")
             continue
 
         if queries_made >= max_queries:
@@ -203,7 +263,7 @@ def enrich_entries(
             continue
 
         price = _fetch_browse_price(query, token)
-        cache[query] = price
+        cache[query] = {"price": price, "ts": time.time()}
         market_payload["ebay_price"] = price
         queries_made += 1
 
