@@ -10,6 +10,8 @@ permissions:
 
 env:
   PYTHONPATH: .
+  EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
+  EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
 
 jobs:
   recompute:
@@ -40,15 +42,16 @@ jobs:
       - name: Merge all Canadian Tire stores
         run: python scripts/merge_all_stores.py --input-dir input/canadiantire --output input/canadiantire_all_liquidations.json
 
-      - name: Fetch eBay OAuth token
-        run: python scripts/get_ebay_token.py
-
       - name: Build market-ready input
         run: >-
           python scripts/build_market_ready.py
           --deals input/canadiantire_all_liquidations.json
           --keepa input/keepa_sales.json
           --out input/market_ready.json
+
+      - name: Fetch eBay OAuth token
+        continue-on-error: true
+        run: python scripts/fetch_ebay_token.py
 
       - name: Recompute ROI
         run: python scripts/recompute_roi.py --input input/market_ready.json --output output/marketplace.json --top 300
