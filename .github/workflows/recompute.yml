@@ -13,7 +13,7 @@ env:
   EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
   EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
   CT_STORE_FOLDER: ""
-  MAX_MARKETPLACE_ITEMS: ""
+  MAX_MARKETPLACE_ITEMS: "1000"
   TEST_CT_STORE_SLUG: ""
 
 jobs:
@@ -41,6 +41,9 @@ jobs:
               echo "MAX_MARKETPLACE_ITEMS=300" >> "$GITHUB_ENV"
             fi
           fi
+
+      - name: Echo MAX_MARKETPLACE_ITEMS
+        run: echo "MAX_MARKETPLACE_ITEMS=${MAX_MARKETPLACE_ITEMS}"
 
       - name: Fetch all Canadian Tire stores from EconoPlus
         env:
@@ -83,9 +86,6 @@ jobs:
 
       - name: Recompute ROI
         run: python scripts/recompute_roi.py --input output/marketplace.json --output output/marketplace.json --top 300
-
-      - name: Alias marketplace output
-        run: cp output/marketplace.json output/roi_results.json
 
       - name: Commit results
         env:

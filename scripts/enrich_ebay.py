@@ -15,6 +15,7 @@ from typing import Any
 import requests
 
 from ai.product_matcher import build_queries
+from ai.title_normalizer import normalize_title
 from lib.ebay_auth import get_valid_token
 
 
@@ -22,12 +23,16 @@ LOGGER = logging.getLogger(__name__)
 EBAY_BROWSE_ENDPOINT = "https://api.ebay.com/buy/browse/v1/item_summary/search"
 CACHE_PATH = Path(".cache/ebay_browse_cache.json")
 DEFAULT_EBAY_MIN_DELAY_MS = 1200
+DEFAULT_EBAY_THROTTLE_SECONDS = 0.2
 DEFAULT_EBAY_CONCURRENCY = 1
 MAX_RETRIES = 6
 CACHE_TTL_SECONDS = 24 * 60 * 60
 
 EBAY_MIN_DELAY_MS = int(os.getenv("EBAY_MIN_DELAY_MS", str(DEFAULT_EBAY_MIN_DELAY_MS)))
 EBAY_CONCURRENCY = int(os.getenv("EBAY_CONCURRENCY", str(DEFAULT_EBAY_CONCURRENCY)))
+EBAY_THROTTLE_SECONDS = max(
+    0.0, float(os.getenv("EBAY_THROTTLE_SECONDS", str(DEFAULT_EBAY_THROTTLE_SECONDS)))
+)
 
 
 class RateLimiter:
@@ -63,7 +68,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--max-ebay-queries",
         type=int,
-        default=300,
+        default=None,
         help="Maximum number of eBay Browse API queries to perform.",
     )
     return parser.parse_args()
@@ -171,12 +176,32 @@ def _backoff_sleep(attempt: int) -> None:
     time.sleep(base + jitter)
 
 
+def _resolve_max_queries(max_queries: int | None) -> int:
+    env_value = os.getenv("MAX_MARKETPLACE_ITEMS")
+    env_value = env_value.strip() if env_value is not None else None
+    env_value = env_value if env_value else None
+
+    selected: int | str | None = max_queries
+    if selected is None:
+        selected = env_value or 300
+    elif env_value and selected == 300:
+        selected = env_value
+
+    try:
+        value = int(selected)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("max_ebay_queries must be an integer.") from exc
+    return max(0, value)
+
+
 def _fetch_browse_summary(query: str, token: str) -> dict[str, float | None | list[str]]:
     headers = {"Authorization": f"Bearer {token}"}
     params = {"q": query, "limit": "20"}
     for attempt in range(1, MAX_RETRIES + 1):
         with RATE_LIMITER:
             try:
+                if EBAY_THROTTLE_SECONDS:
+                    time.sleep(EBAY_THROTTLE_SECONDS)
                 response = requests.get(
                     EBAY_BROWSE_ENDPOINT,
                     headers=headers,
@@ -249,6 +274,14 @@ def _normalize_part_number(value: str) -> str:
     return re.sub(r"\D+", "", value)
 
 
+def _has_exact_part_number(part_number: str, title: str) -> bool:
+    if not part_number or not title:
+        return False
+    escaped = re.escape(part_number.strip())
+    pattern = re.compile(rf"(?<![A-Za-z0-9]){escaped}(?![A-Za-z0-9])", re.IGNORECASE)
+    return bool(pattern.search(title))
+
+
 def _build_part_query(deal_payload: dict[str, Any]) -> tuple[str | None, str | None]:
     part_number = deal_payload.get("part_number")
     if not part_number:
@@ -262,18 +295,13 @@ def _build_part_query(deal_payload: dict[str, Any]) -> tuple[str | None, str | N
     return part_value, part_value
 
 
-def _is_part_confirmed(part_number: str, titles: list[str]) -> bool:
-    normalized_part = _normalize_part_number(part_number)
-    part_lower = part_number.lower()
-    part_no_dashes = part_lower.replace("-", "")
-    for title in titles:
-        title_lower = title.lower()
-        title_no_dashes = title_lower.replace("-", "")
-        if normalized_part and normalized_part in _normalize_part_number(title):
-            return True
-        if part_lower and part_lower in title_lower:
-            return True
-        if part_no_dashes and part_no_dashes in title_no_dashes:
+def _is_part_confirmed(part_number: str, ebay_title: str | None, deal_title: str | None) -> bool:
+    if ebay_title and part_number and _has_exact_part_number(part_number, ebay_title):
+        return True
+    if ebay_title and deal_title:
+        normalized_ebay = normalize_title(ebay_title)
+        normalized_deal = normalize_title(deal_title)
+        if normalized_ebay and normalized_deal and normalized_ebay == normalized_deal:
             return True
     return False
 
@@ -289,6 +317,7 @@ def enrich_entries(
 
     cache = _load_cache()
     queries_made = 0
+    resolved_max_queries = _resolve_max_queries(max_queries)
     for entry in entries:
         if not isinstance(entry, dict):
             continue
@@ -303,7 +332,7 @@ def enrich_entries(
             cache_entry = cache.get(query)
             if cache_entry and _is_cache_fresh(cache_entry, time.time()):
                 ebay_price = cache_entry.get("price")
-            elif queries_made < max_queries:
+            elif queries_made < resolved_max_queries:
                 summary = _fetch_browse_summary(query, token)
                 cache[query] = {
                     "price": summary.get("price"),
@@ -328,7 +357,7 @@ def enrich_entries(
             if cache_entry and _is_cache_fresh(cache_entry, time.time()):
                 cached_titles = cache_entry.get("titles")
                 titles = cached_titles if isinstance(cached_titles, list) else []
-            elif queries_made < max_queries:
+            elif queries_made < resolved_max_queries:
                 summary = _fetch_browse_summary(part_query, token)
                 cache[part_query] = {
                     "price": summary.get("price"),
@@ -341,7 +370,9 @@ def enrich_entries(
             titles = [title for title in titles if isinstance(title, str)]
             if titles:
                 ebay_title = titles[0]
-            is_confirmed = _is_part_confirmed(part_number, titles)
+            deal_title = deal_payload.get("title") if isinstance(deal_payload, dict) else None
+            deal_title = deal_title if isinstance(deal_title, str) else None
+            is_confirmed = _is_part_confirmed(part_number, ebay_title, deal_title)
 
         market_payload["ebay_title"] = ebay_title
         market_payload["is_confirmed"] = is_confirmed

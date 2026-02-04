@@ -84,14 +84,13 @@ def _apply_marketplace_cap(
 def _resolve_max_marketplace_items(max_marketplace_items: int | None) -> int:
     env_value = os.getenv("MAX_MARKETPLACE_ITEMS")
     env_value = env_value.strip() if env_value is not None else None
+    env_value = env_value if env_value else None
 
     selected: int | str | None = max_marketplace_items
-    if max_marketplace_items is None or max_marketplace_items == DEFAULT_MAX_MARKETPLACE_ITEMS:
-        if env_value:
-            selected = env_value
-
     if selected is None:
-        selected = DEFAULT_MAX_MARKETPLACE_ITEMS
+        selected = env_value or DEFAULT_MAX_MARKETPLACE_ITEMS
+    elif env_value and selected == DEFAULT_MAX_MARKETPLACE_ITEMS:
+        selected = env_value
 
     try:
         max_items = int(selected)
