@@ -87,7 +87,7 @@ def main() -> int:
     logging.basicConfig(level=logging.INFO)
     payload = fetch_token()
     if payload:
-        print(json.dumps(payload))
+        print(f"token fetched (expires_in={payload['expires_in']})")
     return 0
 
 
