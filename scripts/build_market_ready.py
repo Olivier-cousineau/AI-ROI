@@ -241,6 +241,7 @@ def build_market_ready(
             brand=deal.get("brand"),
             sku=sku,
             upc=deal.get("upc"),
+            part_number=part_number,
         )
 
         output.append(
@@ -266,6 +267,7 @@ def build_market_ready(
                     "amazon_price": None,
                     "ebay_price": None,
                     "match_confidence": match_payload.get("confidence", 0.0),
+                    "is_confirmed": False,
                 },
             }
         )

@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import random
+import re
 import threading
 import time
 from pathlib import Path
@@ -83,7 +84,7 @@ def _load_json_list(path: Path) -> list[dict[str, Any]]:
     return entries
 
 
-def _load_cache() -> dict[str, dict[str, float | None]]:
+def _load_cache() -> dict[str, dict[str, float | None | list[str]]]:
     if not CACHE_PATH.exists():
         return {}
     try:
@@ -93,7 +94,7 @@ def _load_cache() -> dict[str, dict[str, float | None]]:
         return {}
     if not isinstance(payload, dict):
         return {}
-    cache: dict[str, dict[str, float | None]] = {}
+    cache: dict[str, dict[str, float | None | list[str]]] = {}
     for key, value in payload.items():
         if not isinstance(key, str):
             continue
@@ -101,23 +102,26 @@ def _load_cache() -> dict[str, dict[str, float | None]]:
             try:
                 cached_price = value.get("price")
                 cached_ts = float(value.get("ts")) if value.get("ts") is not None else 0.0
+                cached_titles = value.get("titles") if isinstance(value.get("titles"), list) else []
+                titles = [title for title in cached_titles if isinstance(title, str)]
                 cache[key] = {
                     "price": float(cached_price) if cached_price is not None else None,
                     "ts": cached_ts,
+                    "titles": titles,
                 }
             except (TypeError, ValueError):
-                cache[key] = {"price": None, "ts": 0.0}
+                cache[key] = {"price": None, "ts": 0.0, "titles": []}
         elif value is None:
-            cache[key] = {"price": None, "ts": 0.0}
+            cache[key] = {"price": None, "ts": 0.0, "titles": []}
         else:
             try:
-                cache[key] = {"price": float(value), "ts": 0.0}
+                cache[key] = {"price": float(value), "ts": 0.0, "titles": []}
             except (TypeError, ValueError):
-                cache[key] = {"price": None, "ts": 0.0}
+                cache[key] = {"price": None, "ts": 0.0, "titles": []}
     return cache
 
 
-def _write_cache(cache: dict[str, dict[str, float | None]]) -> None:
+def _write_cache(cache: dict[str, dict[str, float | None | list[str]]]) -> None:
     CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
     CACHE_PATH.write_text(json.dumps(cache, indent=2, sort_keys=True), encoding="utf-8")
 
@@ -145,6 +149,13 @@ def _extract_price(item: dict[str, Any]) -> float | None:
     return None
 
 
+def _extract_title(item: dict[str, Any]) -> str | None:
+    title = item.get("title") if isinstance(item, dict) else None
+    if isinstance(title, str) and title.strip():
+        return title.strip()
+    return None
+
+
 def _parse_retry_after(value: str | None) -> float | None:
     if not value:
         return None
@@ -160,7 +171,7 @@ def _backoff_sleep(attempt: int) -> None:
     time.sleep(base + jitter)
 
 
-def _fetch_browse_price(query: str, token: str) -> float | None:
+def _fetch_browse_summary(query: str, token: str) -> dict[str, float | None | list[str]]:
     headers = {"Authorization": f"Bearer {token}"}
     params = {"q": query, "limit": "20"}
     for attempt in range(1, MAX_RETRIES + 1):
@@ -174,7 +185,7 @@ def _fetch_browse_price(query: str, token: str) -> float | None:
                 )
             except requests.RequestException as exc:
                 LOGGER.warning("eBay Browse API request failed: %s", exc)
-                return None
+                return {"price": None, "titles": []}
 
         if response.status_code == 429:
             retry_after = _parse_retry_after(response.headers.get("Retry-After"))
@@ -189,24 +200,28 @@ def _fetch_browse_price(query: str, token: str) -> float | None:
             response.raise_for_status()
         except requests.RequestException as exc:
             LOGGER.warning("eBay Browse API failed: %s", exc)
-            return None
+            return {"price": None, "titles": []}
 
         try:
             payload = response.json()
         except ValueError as exc:
             LOGGER.warning("eBay Browse API response parse failed: %s", exc)
-            return None
+            return {"price": None, "titles": []}
 
         items = payload.get("itemSummaries", [])
         prices: list[float] = []
+        titles: list[str] = []
         for item in items if isinstance(items, list) else []:
             price = _extract_price(item)
             if price is not None:
                 prices.append(price)
-        return _median_price(prices)
+            title = _extract_title(item)
+            if title is not None:
+                titles.append(title)
+        return {"price": _median_price(prices), "titles": titles}
 
     LOGGER.warning("eBay Browse API rate limit retries exhausted.")
-    return None
+    return {"price": None, "titles": []}
 
 
 def _build_ebay_query(entry: dict[str, Any]) -> str | None:
@@ -218,21 +233,55 @@ def _build_ebay_query(entry: dict[str, Any]) -> str | None:
         brand=deal_payload.get("brand"),
         sku=deal_payload.get("sku"),
         upc=deal_payload.get("upc"),
+        part_number=deal_payload.get("part_number"),
     )
     return match_payload.get("ebay_query")
 
 
-def _is_cache_fresh(entry: dict[str, float | None], now: float) -> bool:
+def _is_cache_fresh(entry: dict[str, float | None | list[str]], now: float) -> bool:
     ts = entry.get("ts") if entry else None
     if not isinstance(ts, (int, float)):
         return False
     return now - float(ts) < CACHE_TTL_SECONDS
 
 
+def _normalize_part_number(value: str) -> str:
+    return re.sub(r"\D+", "", value)
+
+
+def _build_part_query(deal_payload: dict[str, Any]) -> tuple[str | None, str | None]:
+    part_number = deal_payload.get("part_number")
+    if not part_number:
+        return None, None
+    part_value = str(part_number).strip()
+    if not part_value:
+        return None, None
+    brand = deal_payload.get("brand")
+    if isinstance(brand, str) and brand.strip():
+        return f"{brand.strip()} {part_value}", part_value
+    return part_value, part_value
+
+
+def _is_part_confirmed(part_number: str, titles: list[str]) -> bool:
+    normalized_part = _normalize_part_number(part_number)
+    part_lower = part_number.lower()
+    part_no_dashes = part_lower.replace("-", "")
+    for title in titles:
+        title_lower = title.lower()
+        title_no_dashes = title_lower.replace("-", "")
+        if normalized_part and normalized_part in _normalize_part_number(title):
+            return True
+        if part_lower and part_lower in title_lower:
+            return True
+        if part_no_dashes and part_no_dashes in title_no_dashes:
+            return True
+    return False
+
+
 def enrich_entries(
     entries: list[dict[str, Any]],
     max_queries: int,
-) -> tuple[list[dict[str, Any]], dict[str, dict[str, float | None]]]:
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, float | None | list[str]]]]:
     token = get_valid_token()
     if not token:
         LOGGER.warning("Skipping eBay enrichment: missing OAuth token.")
@@ -249,23 +298,56 @@ def enrich_entries(
             entry["market"] = market_payload
 
         query = _build_ebay_query(entry)
-        if not query:
-            market_payload["ebay_price"] = None
+        ebay_price = None
+        if query:
+            cache_entry = cache.get(query)
+            if cache_entry and _is_cache_fresh(cache_entry, time.time()):
+                ebay_price = cache_entry.get("price")
+            elif queries_made < max_queries:
+                summary = _fetch_browse_summary(query, token)
+                cache[query] = {
+                    "price": summary.get("price"),
+                    "titles": summary.get("titles", []),
+                    "ts": time.time(),
+                }
+                ebay_price = summary.get("price")
+                queries_made += 1
+        market_payload["ebay_price"] = ebay_price
+
+        deal_payload = entry.get("deal")
+        if not isinstance(deal_payload, dict):
+            market_payload["is_confirmed"] = False
             continue
 
-        cache_entry = cache.get(query)
-        if cache_entry and _is_cache_fresh(cache_entry, time.time()):
-            market_payload["ebay_price"] = cache_entry.get("price")
-            continue
+        part_query, part_number = _build_part_query(deal_payload)
+        is_confirmed = False
+        ebay_title = None
+        if part_query and part_number:
+            cache_entry = cache.get(part_query)
+            titles: list[str] = []
+            if cache_entry and _is_cache_fresh(cache_entry, time.time()):
+                cached_titles = cache_entry.get("titles")
+                titles = cached_titles if isinstance(cached_titles, list) else []
+            elif queries_made < max_queries:
+                summary = _fetch_browse_summary(part_query, token)
+                cache[part_query] = {
+                    "price": summary.get("price"),
+                    "titles": summary.get("titles", []),
+                    "ts": time.time(),
+                }
+                titles = summary.get("titles", []) if isinstance(summary, dict) else []
+                queries_made += 1
 
-        if queries_made >= max_queries:
-            market_payload["ebay_price"] = None
-            continue
+            titles = [title for title in titles if isinstance(title, str)]
+            if titles:
+                ebay_title = titles[0]
+            is_confirmed = _is_part_confirmed(part_number, titles)
 
-        price = _fetch_browse_price(query, token)
-        cache[query] = {"price": price, "ts": time.time()}
-        market_payload["ebay_price"] = price
-        queries_made += 1
+        market_payload["ebay_title"] = ebay_title
+        market_payload["is_confirmed"] = is_confirmed
+        current_confidence = market_payload.get("match_confidence") or 0.0
+        if is_confirmed:
+            market_payload["match_confidence"] = max(current_confidence, 0.8)
 
     _write_cache(cache)
     return entries, cache

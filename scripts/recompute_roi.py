@@ -68,6 +68,10 @@ def compute_results(
 ) -> list[dict[str, object]]:
     """Compute ROI results for each item."""
     results: list[dict[str, object]] = []
+    strong_profit_floor = 50
+    strong_roi_floor = 50
+    unconfirmed_penalty = 30
+    unconfirmed_strong_penalty = 15
     for entry in items:
         if not isinstance(entry, dict):
             raise ValueError("Each deal entry must be an object.")
@@ -103,8 +107,12 @@ def compute_results(
             roi_pct_net = min(roi_pct_net, 500)
             low_cost_outlier = True
         score = roi_output.score
-        if market.match_confidence is not None and market.match_confidence < 0.7:
-            score -= 1000
+        is_confirmed = bool(market_payload.get("is_confirmed"))
+        if not is_confirmed:
+            strong_profit = profit_net >= strong_profit_floor
+            strong_roi = (roi_pct_net or 0) >= strong_roi_floor
+            penalty = unconfirmed_strong_penalty if (strong_profit and strong_roi) else unconfirmed_penalty
+            score = max(score - penalty, 0)
         discount_pct = deal_payload.get("discount_pct")
         if discount_pct is None and deal.price_regular:
             discount_pct = round((1 - deal.price_sale / deal.price_regular) * 100, 2)
@@ -130,6 +138,7 @@ def compute_results(
                 "sell_price": sell_price,
                 "keepa_sales_per_month": keepa.sales_per_month,
                 "match_confidence": market.match_confidence,
+                "is_confirmed": is_confirmed,
             }
         )
 
@@ -219,17 +228,55 @@ def write_roi_output(
         handle.write("\n")
 
 
+def write_roi_segments(
+    confirmed_path: Path,
+    watchlist_path: Path,
+    results: list[dict[str, object]],
+) -> None:
+    """Write confirmed and watchlist ROI outputs."""
+    deduped_results = dedupe_results(results)
+    confirmed = [item for item in deduped_results if item.get("is_confirmed")]
+    watchlist_profit_floor = 30
+    watchlist_roi_floor = 40
+    watchlist = [
+        item
+        for item in deduped_results
+        if not item.get("is_confirmed")
+        and (item.get("profit_net") or 0) >= watchlist_profit_floor
+        and (item.get("roi_pct_net") or 0) >= watchlist_roi_floor
+    ]
+    for path, items in ((confirmed_path, confirmed), (watchlist_path, watchlist)):
+        sorted_items = sorted(
+            items,
+            key=lambda item: (item.get("profit_net") or 0, item.get("roi_pct_net") or 0),
+            reverse=True,
+        )
+        payload = {
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "count_scored": len(deduped_results),
+            "count_filtered": len(sorted_items),
+            "results": sorted_items,
+        }
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("w", encoding="utf-8") as handle:
+            json.dump(payload, handle, ensure_ascii=False, indent=2)
+            handle.write("\n")
+
+
 def main() -> None:
     """CLI entrypoint."""
     args = parse_args()
     input_path = Path(args.input)
     output_path = Path(args.output)
     roi_output_path = Path("output/roi_results.json")
+    roi_confirmed_path = Path("output/roi_confirmed.json")
+    roi_watchlist_path = Path("output/roi_watchlist.json")
 
     items = load_deals(input_path)
     results = compute_results(items, args.shipping_floor, args.shipping_rate)
     write_output(output_path, results, count_total=len(items), top=args.top)
     write_roi_output(roi_output_path, results)
+    write_roi_segments(roi_confirmed_path, roi_watchlist_path, results)
 
 
 if __name__ == "__main__":

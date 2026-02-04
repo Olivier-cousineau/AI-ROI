@@ -31,6 +31,7 @@ def build_queries(
     brand: str | None = None,
     sku: str | None = None,
     upc: str | None = None,
+    part_number: str | None = None,
 ) -> dict[str, str | float | None | dict[str, str | list[str] | None]]:
     """Build query payloads and confidence signals without external calls."""
     normalized_title = normalize_title(title)
@@ -59,10 +60,15 @@ def build_queries(
         confidence += 0.10
     confidence = max(0.0, min(1.0, confidence))
 
+    normalized_part = None
+    if part_number:
+        normalized_part = re.sub(r"\D+", "", str(part_number))
+
     return {
         "normalized_title": normalized_title,
         "amazon_query": query,
         "ebay_query": query,
+        "normalized_part": normalized_part or None,
         "key_tokens": key_tokens,
         "confidence": confidence,
         "asin": None,
