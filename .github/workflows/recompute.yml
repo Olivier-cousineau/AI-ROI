@@ -8,6 +8,9 @@ on:
 permissions:
   contents: write
 
+env:
+  PYTHONPATH: .
+
 jobs:
   recompute:
     runs-on: ubuntu-latest
