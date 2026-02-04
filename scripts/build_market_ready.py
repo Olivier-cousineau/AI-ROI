@@ -1,6 +1,7 @@
 """Build market-ready dataset with optional marketplace enrichment."""
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -22,6 +23,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--deals", required=True, help="Path to deals JSON file.")
     parser.add_argument("--keepa", required=True, help="Path to Keepa sales JSON file.")
     parser.add_argument("--out", required=True, help="Path to output JSON file.")
+    parser.add_argument(
+        "--max-marketplace-items",
+        type=int,
+        default=None,
+        help="Maximum number of marketplace items to keep after filtering.",
+    )
     return parser.parse_args()
 
 
@@ -66,9 +73,57 @@ def _build_keepa_index(entries: list[dict[str, Any]]) -> dict[str, int]:
     return index
 
 
+def _coerce_discount_pct(price_sale: float | None, price_regular: float | None) -> float | None:
+    if price_sale is None or price_regular in (None, 0):
+        return None
+    return round((1 - price_sale / price_regular) * 100, 2)
+
+
+def _is_sorted_by_discount(entries: list[dict[str, Any]]) -> bool:
+    last_discount: float | None = None
+    for entry in entries:
+        deal = entry.get("deal", {})
+        if not isinstance(deal, dict):
+            return False
+        discount = deal.get("discount_pct")
+        if not isinstance(discount, (int, float)):
+            return False
+        discount_value = float(discount)
+        if last_discount is not None and discount_value > last_discount:
+            return False
+        last_discount = discount_value
+    return True
+
+
+def _apply_marketplace_cap(
+    entries: list[dict[str, Any]],
+    max_marketplace_items: int | None,
+) -> list[dict[str, Any]]:
+    filtered = []
+    for entry in entries:
+        deal = entry.get("deal", {})
+        if not isinstance(deal, dict):
+            continue
+        discount = deal.get("discount_pct")
+        if isinstance(discount, (int, float)) and discount >= 60:
+            filtered.append(entry)
+
+    if not _is_sorted_by_discount(filtered):
+        filtered = sorted(
+            filtered,
+            key=lambda item: item["deal"]["discount_pct"],
+            reverse=True,
+        )
+
+    if max_marketplace_items is not None and max_marketplace_items > 0:
+        filtered = filtered[:max_marketplace_items]
+    return filtered
+
+
 def build_market_ready(
     deals: list[dict[str, Any]],
     keepa_index: dict[str, int],
+    max_marketplace_items: int | None,
 ) -> tuple[list[dict[str, Any]], dict[str, int]]:
     """Build the market-ready list and stats."""
     output: list[dict[str, Any]] = []
@@ -96,6 +151,9 @@ def build_market_ready(
         )
         price_sale_float = _coerce_float(price_sale)
         price_regular_float = _coerce_float(price_regular)
+        discount_pct = deal.get("discount_pct")
+        if not isinstance(discount_pct, (int, float)):
+            discount_pct = _coerce_discount_pct(price_sale_float, price_regular_float)
 
         part_number = extract_part_number(deal)
         sku = deal.get("sku") or part_number
@@ -121,6 +179,7 @@ def build_market_ready(
                     "part_number": part_number,
                     "price_sale": price_sale_float,
                     "price_regular": price_regular_float,
+                    "discount_pct": discount_pct,
                     "source": "Canadian Tire",
                     "sku": sku,
                     "url": url,
@@ -139,11 +198,13 @@ def build_market_ready(
             }
         )
 
+    capped_output = _apply_marketplace_cap(output, max_marketplace_items)
     stats = {
         "count_total": len(deals),
+        "count_after_filter": len(capped_output),
         "count_with_keepa_sales": count_with_keepa_sales,
     }
-    return output, stats
+    return capped_output, stats
 
 
 def write_output(path: Path, payload: list[dict[str, Any]]) -> None:
@@ -160,15 +221,25 @@ def main() -> None:
     deals_path = Path(args.deals)
     keepa_path = Path(args.keepa)
     output_path = Path(args.out)
+    max_items = args.max_marketplace_items
+    if max_items is None:
+        env_value = os.getenv("MAX_MARKETPLACE_ITEMS")
+        if env_value:
+            try:
+                max_items = int(env_value)
+            except ValueError:
+                raise SystemExit("MAX_MARKETPLACE_ITEMS must be an integer.")
 
     deals = _load_json_list(deals_path)
     keepa_entries = _load_json_list(keepa_path)
     keepa_index = _build_keepa_index(keepa_entries)
-    market_ready, stats = build_market_ready(deals, keepa_index)
+    market_ready, stats = build_market_ready(deals, keepa_index, max_items)
     write_output(output_path, market_ready)
 
     print(
-        "total={count_total} with_keepa_sales={count_with_keepa_sales}".format(**stats)
+        "total={count_total} after_filter={count_after_filter} with_keepa_sales={count_with_keepa_sales}".format(
+            **stats
+        )
     )
 
 

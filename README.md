@@ -58,6 +58,18 @@ en cas de changement (commit avec `[skip ci]`).
 
 Pour déclencher manuellement: GitHub > Actions > Recompute ROI > Run workflow.
 
+#### Mode test (une seule ville)
+
+Pour réduire la charge (ex: API eBay), définir une seule ville dans le workflow `Recompute ROI`:
+
+```bash
+CT_STORE_FOLDER="0271-st-jerome-qc"
+MAX_MARKETPLACE_ITEMS=50
+```
+
+Laisser `CT_STORE_FOLDER` vide pour traiter toutes les villes. Si `CT_STORE_FOLDER` est défini,
+le workflow limite automatiquement les items marketplace (par défaut 50, sinon 300).
+
 ## Output principal
 
 Le fichier principal généré par le pipeline est `output/marketplace.json`.
