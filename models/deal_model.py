@@ -15,6 +15,8 @@ class DealInput(BaseModel):
     upc: str | None = Field(default=None, min_length=1)
     brand: str | None = Field(default=None, min_length=1)
     model_number: str | None = Field(default=None, min_length=1)
+    model_number_norm: str | None = Field(default=None, min_length=1)
+    store_slug: str | None = Field(default=None, min_length=1)
 
     @field_validator("title")
     @classmethod

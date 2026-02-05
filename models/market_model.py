@@ -12,3 +12,6 @@ class MarketInput(BaseModel):
     match_confidence: float = Field(default=0.0, ge=0, le=1)
     is_confirmed: bool = False
     ebay_title: str | None = None
+    match_method: str | None = None
+    query_used: str | None = None
+    model_number_norm: str | None = None

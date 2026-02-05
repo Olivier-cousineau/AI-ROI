@@ -108,11 +108,14 @@ def compute_results(
             low_cost_outlier = True
         score = roi_output.score
         is_confirmed = bool(market_payload.get("is_confirmed"))
+        low_confidence_unconfirmed = (market.match_confidence or 0) < 0.70 and not is_confirmed
         if not is_confirmed:
             strong_profit = profit_net >= strong_profit_floor
             strong_roi = (roi_pct_net or 0) >= strong_roi_floor
             penalty = unconfirmed_strong_penalty if (strong_profit and strong_roi) else unconfirmed_penalty
             score = max(score - penalty, 0)
+        if low_confidence_unconfirmed:
+            score = 0
         discount_pct = deal_payload.get("discount_pct")
         if discount_pct is None and deal.price_regular:
             discount_pct = round((1 - deal.price_sale / deal.price_regular) * 100, 2)
@@ -122,6 +125,7 @@ def compute_results(
                 "title": deal.title,
                 "part_number": deal_payload.get("part_number"),
                 "model_number": deal_payload.get("model_number"),
+                "model_number_norm": deal_payload.get("model_number_norm"),
                 "url": deal_payload.get("url"),
                 "image": deal_payload.get("image"),
                 "price_sale": deal.price_sale,
@@ -140,6 +144,8 @@ def compute_results(
                 "keepa_sales_per_month": keepa.sales_per_month,
                 "match_confidence": market.match_confidence,
                 "is_confirmed": is_confirmed,
+                "match_method": market_payload.get("match_method"),
+                "query_used": market_payload.get("query_used"),
             }
         )
 
@@ -180,8 +186,13 @@ def write_output(
 ) -> None:
     """Write output JSON to path."""
     deduped_results = dedupe_results(results)
+    filtered_results = [
+        item
+        for item in deduped_results
+        if not ((item.get("match_confidence") or 0) < 0.70 and not item.get("is_confirmed"))
+    ]
     sorted_results = sorted(
-        deduped_results,
+        filtered_results,
         key=lambda item: (item["score"], item["roi_pct"], item["profit_est"]),
         reverse=True,
     )

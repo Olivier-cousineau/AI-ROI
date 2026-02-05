@@ -1,6 +1,7 @@
 """Canadian Tire-specific extractors."""
 from __future__ import annotations
 
+import re
 from typing import Any
 
 
@@ -58,3 +59,11 @@ def extract_model_number(raw: dict[str, Any]) -> str | None:
             if cleaned:
                 return cleaned
     return None
+
+
+def normalize_model_number(value: str | None) -> str | None:
+    """Normalize model numbers for matching."""
+    if not value:
+        return None
+    cleaned = re.sub(r"[^A-Z0-9]", "", str(value).strip().upper())
+    return cleaned or None
