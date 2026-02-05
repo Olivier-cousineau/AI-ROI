@@ -14,8 +14,8 @@ from typing import Any
 
 import requests
 
-from ai.product_matcher import build_queries
 from ai.title_normalizer import normalize_title
+from core.ct_extractors import normalize_model_number
 from lib.ebay_auth import get_valid_token
 
 
@@ -249,20 +249,6 @@ def _fetch_browse_summary(query: str, token: str) -> dict[str, float | None | li
     return {"price": None, "titles": []}
 
 
-def _build_ebay_query(entry: dict[str, Any]) -> str | None:
-    deal_payload = entry.get("deal", {})
-    if not isinstance(deal_payload, dict):
-        return None
-    match_payload = build_queries(
-        title=str(deal_payload.get("title") or ""),
-        brand=deal_payload.get("brand"),
-        sku=deal_payload.get("sku"),
-        upc=deal_payload.get("upc"),
-        part_number=deal_payload.get("part_number"),
-    )
-    return match_payload.get("ebay_query")
-
-
 def _is_cache_fresh(entry: dict[str, float | None | list[str]], now: float) -> bool:
     ts = entry.get("ts") if entry else None
     if not isinstance(ts, (int, float)):
@@ -270,8 +256,10 @@ def _is_cache_fresh(entry: dict[str, float | None | list[str]], now: float) -> b
     return now - float(ts) < CACHE_TTL_SECONDS
 
 
-def _normalize_part_number(value: str) -> str:
-    return re.sub(r"\D+", "", value)
+def _normalize_match_text(value: str | None) -> str:
+    if not value:
+        return ""
+    return re.sub(r"[^A-Z0-9]", "", str(value).upper())
 
 
 def _has_exact_part_number(part_number: str, title: str) -> bool:
@@ -282,28 +270,59 @@ def _has_exact_part_number(part_number: str, title: str) -> bool:
     return bool(pattern.search(title))
 
 
-def _build_part_query(deal_payload: dict[str, Any]) -> tuple[str | None, str | None]:
-    part_number = deal_payload.get("part_number")
-    if not part_number:
-        return None, None
-    part_value = str(part_number).strip()
-    if not part_value:
-        return None, None
+def _build_query_context(deal_payload: dict[str, Any]) -> dict[str, str | float | None]:
     brand = deal_payload.get("brand")
-    if isinstance(brand, str) and brand.strip():
-        return f"{brand.strip()} {part_value}", part_value
-    return part_value, part_value
+    brand_value = brand.strip() if isinstance(brand, str) and brand.strip() else None
+    model_number = deal_payload.get("model_number")
+    model_number_value = str(model_number).strip() if model_number else None
+    model_number_norm = normalize_model_number(model_number_value)
+    part_number = deal_payload.get("part_number")
+    part_value = str(part_number).strip() if part_number else None
+
+    if model_number_norm:
+        query = f"{brand_value} {model_number_value}".strip() if brand_value else model_number_value
+        return {
+            "query_used": query,
+            "match_method": "model_number",
+            "base_confidence": 0.85,
+            "model_number_norm": model_number_norm,
+        }
+
+    if part_value:
+        query = f"{brand_value} {part_value}".strip() if brand_value else part_value
+        return {
+            "query_used": query,
+            "match_method": "part_number",
+            "base_confidence": 0.70,
+            "model_number_norm": None,
+        }
+
+    title = deal_payload.get("title") or ""
+    normalized_title = normalize_title(str(title))
+    query = normalized_title if normalized_title else None
+    return {
+        "query_used": query,
+        "match_method": "title",
+        "base_confidence": 0.45,
+        "model_number_norm": None,
+    }
 
 
-def _is_part_confirmed(part_number: str, ebay_title: str | None, deal_title: str | None) -> bool:
-    if ebay_title and part_number and _has_exact_part_number(part_number, ebay_title):
+def _has_direct_model_number(model_number_norm: str | None, ebay_title: str | None) -> bool:
+    if not model_number_norm or not ebay_title:
+        return False
+    normalized_title = _normalize_match_text(ebay_title)
+    return model_number_norm in normalized_title
+
+
+def _has_direct_part_number(part_number: str | None, ebay_title: str | None) -> bool:
+    if not part_number or not ebay_title:
+        return False
+    if _has_exact_part_number(part_number, ebay_title):
         return True
-    if ebay_title and deal_title:
-        normalized_ebay = normalize_title(ebay_title)
-        normalized_deal = normalize_title(deal_title)
-        if normalized_ebay and normalized_deal and normalized_ebay == normalized_deal:
-            return True
-    return False
+    normalized_part = _normalize_match_text(part_number)
+    normalized_title = _normalize_match_text(ebay_title)
+    return bool(normalized_part and normalized_part in normalized_title)
 
 
 def enrich_entries(
@@ -326,12 +345,28 @@ def enrich_entries(
             market_payload = {}
             entry["market"] = market_payload
 
-        query = _build_ebay_query(entry)
+        deal_payload = entry.get("deal")
+        if not isinstance(deal_payload, dict):
+            market_payload["is_confirmed"] = False
+            continue
+
+        match_context = _build_query_context(deal_payload)
+        query = match_context.get("query_used")
+        match_method = match_context.get("match_method")
+        base_confidence = match_context.get("base_confidence", 0.0)
+        model_number_norm = match_context.get("model_number_norm")
+        market_payload["query_used"] = query
+        market_payload["match_method"] = match_method
+        market_payload["model_number_norm"] = model_number_norm
+
         ebay_price = None
+        titles: list[str] = []
         if query:
             cache_entry = cache.get(query)
             if cache_entry and _is_cache_fresh(cache_entry, time.time()):
                 ebay_price = cache_entry.get("price")
+                cached_titles = cache_entry.get("titles")
+                titles = cached_titles if isinstance(cached_titles, list) else []
             elif queries_made < resolved_max_queries:
                 summary = _fetch_browse_summary(query, token)
                 cache[query] = {
@@ -340,45 +375,34 @@ def enrich_entries(
                     "ts": time.time(),
                 }
                 ebay_price = summary.get("price")
+                titles = summary.get("titles", []) if isinstance(summary, dict) else []
                 queries_made += 1
         market_payload["ebay_price"] = ebay_price
 
-        deal_payload = entry.get("deal")
-        if not isinstance(deal_payload, dict):
-            market_payload["is_confirmed"] = False
-            continue
-
-        part_query, part_number = _build_part_query(deal_payload)
+        titles = [title for title in titles if isinstance(title, str)]
+        ebay_title = titles[0] if titles else None
+        part_number = deal_payload.get("part_number")
+        part_number_value = str(part_number).strip() if part_number else None
         is_confirmed = False
-        ebay_title = None
-        if part_query and part_number:
-            cache_entry = cache.get(part_query)
-            titles: list[str] = []
-            if cache_entry and _is_cache_fresh(cache_entry, time.time()):
-                cached_titles = cache_entry.get("titles")
-                titles = cached_titles if isinstance(cached_titles, list) else []
-            elif queries_made < resolved_max_queries:
-                summary = _fetch_browse_summary(part_query, token)
-                cache[part_query] = {
-                    "price": summary.get("price"),
-                    "titles": summary.get("titles", []),
-                    "ts": time.time(),
-                }
-                titles = summary.get("titles", []) if isinstance(summary, dict) else []
-                queries_made += 1
-
-            titles = [title for title in titles if isinstance(title, str)]
-            if titles:
-                ebay_title = titles[0]
-            deal_title = deal_payload.get("title") if isinstance(deal_payload, dict) else None
-            deal_title = deal_title if isinstance(deal_title, str) else None
-            is_confirmed = _is_part_confirmed(part_number, ebay_title, deal_title)
+        has_model_match = _has_direct_model_number(model_number_norm, ebay_title)
+        has_part_match = _has_direct_part_number(part_number_value, ebay_title)
 
         market_payload["ebay_title"] = ebay_title
-        market_payload["is_confirmed"] = is_confirmed
         current_confidence = market_payload.get("match_confidence") or 0.0
-        if is_confirmed:
-            market_payload["match_confidence"] = max(current_confidence, 0.8)
+        match_confidence = max(current_confidence, float(base_confidence or 0.0))
+
+        if has_model_match:
+            is_confirmed = True
+            match_confidence = max(match_confidence, 0.85)
+        elif not model_number_norm and has_part_match:
+            is_confirmed = True
+            match_confidence = max(match_confidence, 0.70)
+
+        if match_method == "title" and not has_model_match and not has_part_match:
+            match_confidence = min(match_confidence, 0.60)
+
+        market_payload["is_confirmed"] = is_confirmed
+        market_payload["match_confidence"] = match_confidence
 
     _write_cache(cache)
     return entries, cache

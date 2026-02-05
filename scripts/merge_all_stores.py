@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 from pathlib import Path
 
 
@@ -56,13 +57,19 @@ def main() -> None:
         "--store-only",
         help="Store folder or file to process (ex: 0271-st-jerome-qc).",
     )
+    parser.add_argument(
+        "--store-slug",
+        default=os.getenv("CT_STORE_SLUG"),
+        help="Store slug to process (ex: laval-qc).",
+    )
     args = parser.parse_args()
 
     input_dir = Path(args.input_dir)
     if not input_dir.exists():
         raise SystemExit(f"Input directory not found: {input_dir}")
 
-    merged = merge_all_stores(input_dir, args.store_only)
+    store_target = args.store_slug or args.store_only
+    merged = merge_all_stores(input_dir, store_target)
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(

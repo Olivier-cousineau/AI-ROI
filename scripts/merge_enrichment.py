@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from ai.title_normalizer import normalize_title
-from core.ct_extractors import extract_model_number, extract_part_number
+from core.ct_extractors import extract_model_number, extract_part_number, normalize_model_number
 from core.keying import make_deal_key
 
 
@@ -105,6 +105,7 @@ def merge_deals(
 
         part_number = extract_part_number(deal)
         model_number = extract_model_number(deal)
+        model_number_norm = normalize_model_number(model_number)
         normalized_title = normalize_title(title) if isinstance(title, str) else ""
         key = make_deal_key("Canadian Tire", part_number, url, normalized_title)
         enrichment = index.get(key)
@@ -135,6 +136,7 @@ def merge_deals(
                     "key": key,
                     "part_number": part_number,
                     "model_number": model_number,
+                    "model_number_norm": model_number_norm,
                     "price_sale": price_sale_float,
                     "price_regular": price_regular_float,
                     "discount_pct": discount_pct,

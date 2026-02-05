@@ -12,9 +12,8 @@ import json
 from collections import Counter
 from typing import Any
 
-from ai.product_matcher import build_queries
 from ai.title_normalizer import normalize_title
-from core.ct_extractors import extract_part_number
+from core.ct_extractors import extract_model_number, extract_part_number, normalize_model_number
 from core.keying import make_deal_key
 
 
@@ -23,6 +22,11 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build market-ready JSON dataset.")
     parser.add_argument("--deals", required=True, help="Path to deals JSON file.")
     parser.add_argument("--out", required=True, help="Path to output JSON file.")
+    parser.add_argument(
+        "--store-slug",
+        default=os.getenv("CT_STORE_SLUG"),
+        help="Limit processing to a single store slug (ex: laval-qc).",
+    )
     parser.add_argument(
         "--max-marketplace-items",
         type=int,
@@ -61,6 +65,20 @@ def _load_json_list(path: Path) -> list[dict[str, Any]]:
             raise ValueError(f"Expected object entries in {path}.")
         entries.append(entry)
     return entries
+
+
+def _extract_store_slug(deal: dict[str, Any]) -> str | None:
+    store_payload = deal.get("store") if isinstance(deal.get("store"), dict) else {}
+    candidates = (
+        deal.get("store_slug"),
+        deal.get("storeSlug"),
+        store_payload.get("slug"),
+        store_payload.get("store_slug"),
+    )
+    for value in candidates:
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return None
 
 
 def _coerce_discount_pct(price_sale: float | None, price_regular: float | None) -> float | None:
@@ -165,9 +183,11 @@ def _is_out_of_stock(deal: dict[str, Any]) -> bool:
 def build_market_ready(
     deals: list[dict[str, Any]],
     max_marketplace_items: int | None = DEFAULT_MAX_MARKETPLACE_ITEMS,
+    store_slug: str | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Build the market-ready list and stats."""
     max_items = _resolve_max_marketplace_items(max_marketplace_items)
+    target_slug = store_slug.strip() if isinstance(store_slug, str) else None
 
     output: list[dict[str, Any]] = []
     dropped = Counter()
@@ -179,6 +199,11 @@ def build_market_ready(
 
         if _is_out_of_stock(deal):
             dropped["out_of_stock"] += 1
+            continue
+
+        deal_store_slug = _extract_store_slug(deal)
+        if target_slug and deal_store_slug != target_slug:
+            dropped["store_slug_mismatch"] += 1
             continue
 
         title = deal.get("title") or deal.get("name") or deal.get("productName") or "Unknown"
@@ -216,6 +241,8 @@ def build_market_ready(
             continue
 
         part_number = extract_part_number(deal)
+        model_number = extract_model_number(deal)
+        model_number_norm = normalize_model_number(model_number)
         sku = deal.get("sku") or part_number
         product_id = deal.get("product_id") or deal.get("productId") or deal.get("productID")
         store_payload = deal.get("store") if isinstance(deal.get("store"), dict) else {}
@@ -235,13 +262,20 @@ def build_market_ready(
         normalized_title = normalize_title(title) if isinstance(title, str) else ""
         key = make_deal_key("Canadian Tire", sku, url, normalized_title)
 
-        match_payload = build_queries(
-            title=title if isinstance(title, str) else "",
-            brand=deal.get("brand"),
-            sku=sku,
-            upc=deal.get("upc"),
-            part_number=part_number,
-        )
+        brand_value = deal.get("brand")
+        brand_value = brand_value.strip() if isinstance(brand_value, str) and brand_value.strip() else None
+        if model_number:
+            query_used = f"{brand_value} {model_number}".strip() if brand_value else model_number
+            match_method = "model_number"
+            base_confidence = 0.85
+        elif part_number:
+            query_used = f"{brand_value} {part_number}".strip() if brand_value else part_number
+            match_method = "part_number"
+            base_confidence = 0.70
+        else:
+            query_used = normalized_title
+            match_method = "title"
+            base_confidence = 0.45
 
         output.append(
             {
@@ -249,6 +283,8 @@ def build_market_ready(
                     "title": title,
                     "key": key,
                     "part_number": part_number,
+                    "model_number": model_number,
+                    "model_number_norm": model_number_norm,
                     "price_sale": price_sale_float,
                     "price_regular": price_regular_float,
                     "discount_pct": discount_pct,
@@ -261,12 +297,15 @@ def build_market_ready(
                     "upc": deal.get("upc"),
                     "store_id": store_id,
                     "city": city,
+                    "store_slug": deal_store_slug,
                 },
                 "market": {
                     "amazon_price": None,
                     "ebay_price": None,
-                    "match_confidence": match_payload.get("confidence", 0.0),
+                    "match_confidence": base_confidence,
                     "is_confirmed": False,
+                    "match_method": match_method,
+                    "query_used": query_used,
                 },
             }
         )
@@ -296,7 +335,11 @@ def main() -> None:
     output_path = Path(args.out)
 
     deals = _load_json_list(deals_path)
-    market_ready, stats = build_market_ready(deals, args.max_marketplace_items)
+    market_ready, stats = build_market_ready(
+        deals,
+        args.max_marketplace_items,
+        store_slug=args.store_slug,
+    )
     write_output(output_path, market_ready)
 
     print(
