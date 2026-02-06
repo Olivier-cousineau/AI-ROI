@@ -45,31 +45,20 @@ jobs:
       - name: Echo MAX_MARKETPLACE_ITEMS
         run: echo "MAX_MARKETPLACE_ITEMS=${MAX_MARKETPLACE_ITEMS}"
 
-      - name: Fetch all Canadian Tire stores from EconoPlus
+      - name: Fetch BestBuy deals from EconoPlus
         env:
           ECONOPLUS_TOKEN: ${{ secrets.ECONOPLUS }}
         run: |
           rm -rf econoplus
           git clone https://x-access-token:${ECONOPLUS_TOKEN}@github.com/Olivier-cousineau/EconoPlus.git econoplus
-          rm -rf input/canadiantire
-          mkdir -p input/canadiantire
-          if [ -n "${TEST_CT_STORE_SLUG}" ]; then
-            mkdir -p "input/canadiantire/${TEST_CT_STORE_SLUG}"
-            cp -R "econoplus/public/canadiantire/${TEST_CT_STORE_SLUG}/" "input/canadiantire/${TEST_CT_STORE_SLUG}/"
-          elif [ -n "${CT_STORE_FOLDER}" ]; then
-            mkdir -p "input/canadiantire/${CT_STORE_FOLDER}"
-            cp -R "econoplus/public/canadiantire/${CT_STORE_FOLDER}/" "input/canadiantire/${CT_STORE_FOLDER}/"
-          else
-            cp -R econoplus/public/canadiantire/* input/canadiantire/
-          fi
-
-      - name: Merge all Canadian Tire stores
-        run: python scripts/merge_all_stores.py --input-dir input/canadiantire --output input/canadiantire_all_liquidations.json
+          rm -rf input/bestbuy
+          mkdir -p input/bestbuy
+          cp -R econoplus/public/bestbuy/* input/bestbuy/
 
       - name: Build market-ready input
         run: >-
           python scripts/build_market_ready.py
-          --deals input/canadiantire_all_liquidations.json
+          --deals input/bestbuy/index/deals-80.json
           --out input/market_ready.json
           --max-marketplace-items ${MAX_MARKETPLACE_ITEMS}
 
@@ -85,7 +74,12 @@ jobs:
           --max-ebay-queries ${MAX_MARKETPLACE_ITEMS}
 
       - name: Recompute ROI
-        run: python scripts/recompute_roi.py --input output/marketplace.json --output output/marketplace.json --top 300
+        run: >-
+          python scripts/recompute_roi.py
+          --source bestbuy
+          --input output/marketplace.json
+          --output output/marketplace.json
+          --top 300
 
       - name: Commit results
         env:

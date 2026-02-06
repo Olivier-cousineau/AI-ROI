@@ -28,6 +28,11 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument(
+        "--source",
+        default="bestbuy",
+        help="Input source to validate and report (ex: bestbuy, canadiantire).",
+    )
+    parser.add_argument(
         "--output",
         default="output/marketplace.json",
         help="Path to output JSON file.",
@@ -53,10 +58,26 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def resolve_input_path(path: Path) -> Path:
+SOURCE_LABELS = {
+    "bestbuy": "BestBuy",
+    "canadiantire": "Canadian Tire",
+}
+
+
+def normalize_source(value: str | None) -> str:
+    """Normalize source input to a simple token."""
+    if not value:
+        return ""
+    return re.sub(r"[^a-z0-9]+", "", value.lower())
+
+
+def resolve_input_path(path: Path, source: str) -> Path:
     """Resolve the input path, allowing directory shortcuts."""
     if path.is_dir():
+        normalized_source = normalize_source(source)
         candidates = [
+            path / normalized_source / "index" / "deals-80.json",
+            path / normalized_source / "deals-80.json",
             path / "index" / "deals-80.json",
             path / "deals-80.json",
         ]
@@ -82,6 +103,45 @@ def load_deals(path: Path) -> list[dict[str, object]]:
     return payload
 
 
+def _detect_source_token(value: object) -> str | None:
+    if not isinstance(value, str):
+        return None
+    lowered = value.lower()
+    if "bestbuy" in lowered or "best buy" in lowered:
+        return "bestbuy"
+    if "canadiantire" in lowered or "canadian tire" in lowered:
+        return "canadiantire"
+    return None
+
+
+def detect_input_source(items: list[dict[str, object]]) -> str | None:
+    """Detect the input source based on payload hints."""
+    counts = {key: 0 for key in SOURCE_LABELS}
+    for entry in items:
+        if not isinstance(entry, dict):
+            continue
+        deal_payload = entry.get("deal") if isinstance(entry.get("deal"), dict) else {}
+        candidates = [
+            entry.get("source"),
+            entry.get("retailer"),
+            entry.get("retailer_name"),
+            deal_payload.get("source"),
+            deal_payload.get("retailer"),
+        ]
+        for candidate in candidates:
+            token = _detect_source_token(candidate)
+            if token in counts:
+                counts[token] += 1
+        url_token = _detect_source_token(deal_payload.get("url") or entry.get("url"))
+        if url_token in counts:
+            counts[url_token] += 1
+    max_count = max(counts.values(), default=0)
+    if max_count == 0:
+        return None
+    top_sources = [key for key, count in counts.items() if count == max_count]
+    if len(top_sources) != 1:
+        return None
+    return top_sources[0]
 
 
 def _to_number(value: object) -> float | None:
@@ -349,6 +409,8 @@ def write_output(
     results: list[dict[str, object]],
     count_total: int,
     top: int,
+    source: str,
+    input_file: str,
 ) -> None:
     """Write output JSON to path."""
     deduped_results = dedupe_results(results)
@@ -365,7 +427,8 @@ def write_output(
     top_count = min(top, len(sorted_results))
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
-        "source": "Canadian Tire",
+        "source": source,
+        "input_file": input_file,
         "count_total": count_total,
         "count_scored": len(deduped_results),
         "top": top_count,
@@ -380,6 +443,8 @@ def write_output(
 def write_roi_output(
     path: Path,
     results: list[dict[str, object]],
+    source: str,
+    input_file: str,
 ) -> None:
     """Write filtered ROI output JSON to path."""
     deduped_results = dedupe_results(results)
@@ -397,6 +462,8 @@ def write_roi_output(
     )
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "source": source,
+        "input_file": input_file,
         "count_scored": len(deduped_results),
         "count_filtered": len(sorted_results),
         "results": sorted_results,
@@ -445,16 +512,38 @@ def write_roi_segments(
 def main() -> None:
     """CLI entrypoint."""
     args = parse_args()
-    input_path = resolve_input_path(Path(args.input))
+    normalized_source = normalize_source(args.source)
+    if not normalized_source:
+        raise ValueError("--source must be a non-empty string.")
+    input_path = resolve_input_path(Path(args.input), normalized_source)
     output_path = Path(args.output)
     roi_output_path = Path("output/roi_results.json")
     roi_confirmed_path = Path("output/roi_confirmed.json")
     roi_watchlist_path = Path("output/roi_watchlist.json")
 
     items = load_deals(input_path)
+    detected_source = detect_input_source(items)
+    if detected_source and detected_source != normalized_source:
+        detected_label = SOURCE_LABELS.get(detected_source, detected_source)
+        raise ValueError(
+            f"Input is {detected_label} but --source={args.source}. Check input path."
+        )
+    source_label = SOURCE_LABELS.get(normalized_source, args.source)
     results = compute_results(items, args.shipping_floor, args.shipping_rate)
-    write_output(output_path, results, count_total=len(items), top=args.top)
-    write_roi_output(roi_output_path, results)
+    write_output(
+        output_path,
+        results,
+        count_total=len(items),
+        top=args.top,
+        source=source_label,
+        input_file=str(input_path),
+    )
+    write_roi_output(
+        roi_output_path,
+        results,
+        source=source_label,
+        input_file=str(input_path),
+    )
     write_roi_segments(roi_confirmed_path, roi_watchlist_path, results)
 
 
