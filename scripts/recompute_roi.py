@@ -23,7 +23,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--input",
         default="econoplus/public/index/deals-80.json",
-        help="Path to input JSON file.",
+        help=(
+            "Path to input JSON file or a directory containing index/deals-80.json."
+        ),
     )
     parser.add_argument(
         "--output",
@@ -49,6 +51,24 @@ def parse_args() -> argparse.Namespace:
         help="Shipping estimate rate applied to sell price.",
     )
     return parser.parse_args()
+
+
+def resolve_input_path(path: Path) -> Path:
+    """Resolve the input path, allowing directory shortcuts."""
+    if path.is_dir():
+        candidates = [
+            path / "index" / "deals-80.json",
+            path / "deals-80.json",
+        ]
+        for candidate in candidates:
+            if candidate.exists():
+                return candidate
+        candidate_list = ", ".join(str(candidate) for candidate in candidates)
+        raise FileNotFoundError(
+            f"No deals-80.json found under directory {path}. "
+            f"Tried: {candidate_list}"
+        )
+    return path
 
 
 def load_deals(path: Path) -> list[dict[str, object]]:
@@ -425,7 +445,7 @@ def write_roi_segments(
 def main() -> None:
     """CLI entrypoint."""
     args = parse_args()
-    input_path = Path(args.input)
+    input_path = resolve_input_path(Path(args.input))
     output_path = Path(args.output)
     roi_output_path = Path("output/roi_results.json")
     roi_confirmed_path = Path("output/roi_confirmed.json")
