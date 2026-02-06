@@ -89,7 +89,7 @@ def _load_json_list(path: Path) -> list[dict[str, Any]]:
     return entries
 
 
-def _load_cache() -> dict[str, dict[str, float | None | list[str]]]:
+def _load_cache() -> dict[str, dict[str, float | None | list[str] | str]]:
     if not CACHE_PATH.exists():
         return {}
     try:
@@ -99,7 +99,7 @@ def _load_cache() -> dict[str, dict[str, float | None | list[str]]]:
         return {}
     if not isinstance(payload, dict):
         return {}
-    cache: dict[str, dict[str, float | None | list[str]]] = {}
+    cache: dict[str, dict[str, float | None | list[str] | str]] = {}
     for key, value in payload.items():
         if not isinstance(key, str):
             continue
@@ -113,20 +113,21 @@ def _load_cache() -> dict[str, dict[str, float | None | list[str]]]:
                     "price": float(cached_price) if cached_price is not None else None,
                     "ts": cached_ts,
                     "titles": titles,
+                    "top_image": value.get("top_image") if isinstance(value.get("top_image"), str) else None,
                 }
             except (TypeError, ValueError):
-                cache[key] = {"price": None, "ts": 0.0, "titles": []}
+                cache[key] = {"price": None, "ts": 0.0, "titles": [], "top_image": None}
         elif value is None:
-            cache[key] = {"price": None, "ts": 0.0, "titles": []}
+            cache[key] = {"price": None, "ts": 0.0, "titles": [], "top_image": None}
         else:
             try:
-                cache[key] = {"price": float(value), "ts": 0.0, "titles": []}
+                cache[key] = {"price": float(value), "ts": 0.0, "titles": [], "top_image": None}
             except (TypeError, ValueError):
-                cache[key] = {"price": None, "ts": 0.0, "titles": []}
+                cache[key] = {"price": None, "ts": 0.0, "titles": [], "top_image": None}
     return cache
 
 
-def _write_cache(cache: dict[str, dict[str, float | None | list[str]]]) -> None:
+def _write_cache(cache: dict[str, dict[str, float | None | list[str] | str]]) -> None:
     CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
     CACHE_PATH.write_text(json.dumps(cache, indent=2, sort_keys=True), encoding="utf-8")
 
@@ -161,6 +162,46 @@ def _extract_title(item: dict[str, Any]) -> str | None:
     return None
 
 
+
+
+def _extract_image_url(item: dict[str, Any]) -> str | None:
+    image = item.get("image") if isinstance(item, dict) else None
+    if not isinstance(image, dict):
+        return None
+    url = image.get("imageUrl")
+    if isinstance(url, str) and url.strip():
+        return url.strip()
+    return None
+
+
+def _tokenize_image_url(url: str | None) -> set[str]:
+    if not url:
+        return set()
+    return {
+        token
+        for token in re.split(r"[^a-z0-9]+", url.lower())
+        if len(token) >= 3 and token not in {"https", "http", "www", "com", "jpg", "jpeg", "png", "webp", "img", "image"}
+    }
+
+
+def _images_look_similar(deal_image: str | None, ebay_image: str | None, brand: str | None = None) -> bool:
+    deal_tokens = _tokenize_image_url(deal_image)
+    ebay_tokens = _tokenize_image_url(ebay_image)
+    if not deal_tokens or not ebay_tokens:
+        return False
+
+    overlap = deal_tokens & ebay_tokens
+    if len(overlap) >= 3:
+        return True
+
+    if brand:
+        brand_tokens = _tokenize_image_url(brand)
+        if brand_tokens and (brand_tokens & overlap):
+            return True
+
+    min_len = min(len(deal_tokens), len(ebay_tokens))
+    return min_len > 0 and (len(overlap) / min_len) >= 0.45
+
 def _parse_retry_after(value: str | None) -> float | None:
     if not value:
         return None
@@ -194,7 +235,7 @@ def _resolve_max_queries(max_queries: int | None) -> int:
     return max(0, value)
 
 
-def _fetch_browse_summary(query: str, token: str) -> dict[str, float | None | list[str]]:
+def _fetch_browse_summary(query: str, token: str) -> dict[str, float | None | list[str] | str]:
     headers = {"Authorization": f"Bearer {token}"}
     params = {"q": query, "limit": "20"}
     for attempt in range(1, MAX_RETRIES + 1):
@@ -210,7 +251,7 @@ def _fetch_browse_summary(query: str, token: str) -> dict[str, float | None | li
                 )
             except requests.RequestException as exc:
                 LOGGER.warning("eBay Browse API request failed: %s", exc)
-                return {"price": None, "titles": []}
+                return {"price": None, "titles": [], "top_image": None}
 
         if response.status_code == 429:
             retry_after = _parse_retry_after(response.headers.get("Retry-After"))
@@ -225,17 +266,18 @@ def _fetch_browse_summary(query: str, token: str) -> dict[str, float | None | li
             response.raise_for_status()
         except requests.RequestException as exc:
             LOGGER.warning("eBay Browse API failed: %s", exc)
-            return {"price": None, "titles": []}
+            return {"price": None, "titles": [], "top_image": None}
 
         try:
             payload = response.json()
         except ValueError as exc:
             LOGGER.warning("eBay Browse API response parse failed: %s", exc)
-            return {"price": None, "titles": []}
+            return {"price": None, "titles": [], "top_image": None}
 
         items = payload.get("itemSummaries", [])
         prices: list[float] = []
         titles: list[str] = []
+        top_image: str | None = None
         for item in items if isinstance(items, list) else []:
             price = _extract_price(item)
             if price is not None:
@@ -243,10 +285,12 @@ def _fetch_browse_summary(query: str, token: str) -> dict[str, float | None | li
             title = _extract_title(item)
             if title is not None:
                 titles.append(title)
-        return {"price": _median_price(prices), "titles": titles}
+            if top_image is None:
+                top_image = _extract_image_url(item)
+        return {"price": _median_price(prices), "titles": titles, "top_image": top_image}
 
     LOGGER.warning("eBay Browse API rate limit retries exhausted.")
-    return {"price": None, "titles": []}
+    return {"price": None, "titles": [], "top_image": None}
 
 
 def _is_cache_fresh(entry: dict[str, float | None | list[str]], now: float) -> bool:
@@ -328,7 +372,7 @@ def _has_direct_part_number(part_number: str | None, ebay_title: str | None) -> 
 def enrich_entries(
     entries: list[dict[str, Any]],
     max_queries: int,
-) -> tuple[list[dict[str, Any]], dict[str, dict[str, float | None | list[str]]]]:
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, float | None | list[str] | str]]]:
     token = get_valid_token()
     if not token:
         LOGGER.warning("Skipping eBay enrichment: missing OAuth token.")
@@ -361,21 +405,27 @@ def enrich_entries(
 
         ebay_price = None
         titles: list[str] = []
+        ebay_image: str | None = None
         if query:
             cache_entry = cache.get(query)
             if cache_entry and _is_cache_fresh(cache_entry, time.time()):
                 ebay_price = cache_entry.get("price")
                 cached_titles = cache_entry.get("titles")
                 titles = cached_titles if isinstance(cached_titles, list) else []
+                cached_image = cache_entry.get("top_image")
+                ebay_image = cached_image if isinstance(cached_image, str) else None
             elif queries_made < resolved_max_queries:
                 summary = _fetch_browse_summary(query, token)
                 cache[query] = {
                     "price": summary.get("price"),
                     "titles": summary.get("titles", []),
+                    "top_image": summary.get("top_image"),
                     "ts": time.time(),
                 }
                 ebay_price = summary.get("price")
                 titles = summary.get("titles", []) if isinstance(summary, dict) else []
+                top_image = summary.get("top_image") if isinstance(summary, dict) else None
+                ebay_image = top_image if isinstance(top_image, str) else None
                 queries_made += 1
         market_payload["ebay_price"] = ebay_price
 
@@ -386,8 +436,13 @@ def enrich_entries(
         is_confirmed = False
         has_model_match = _has_direct_model_number(model_number_norm, ebay_title)
         has_part_match = _has_direct_part_number(part_number_value, ebay_title)
+        deal_image = deal_payload.get("image") if isinstance(deal_payload.get("image"), str) else None
+        brand_value = deal_payload.get("brand") if isinstance(deal_payload.get("brand"), str) else None
+        has_image_match = _images_look_similar(deal_image, ebay_image, brand_value)
 
         market_payload["ebay_title"] = ebay_title
+        market_payload["ebay_image"] = ebay_image
+        market_payload["has_image_match"] = has_image_match
         current_confidence = market_payload.get("match_confidence") or 0.0
         match_confidence = max(current_confidence, float(base_confidence or 0.0))
 
@@ -397,6 +452,13 @@ def enrich_entries(
         elif not model_number_norm and has_part_match:
             is_confirmed = True
             match_confidence = max(match_confidence, 0.70)
+
+        if deal_image and ebay_image:
+            if has_image_match:
+                match_confidence = min(1.0, match_confidence + 0.10)
+            elif is_confirmed:
+                is_confirmed = False
+                match_confidence = min(match_confidence, 0.55)
 
         if match_method == "title" and not has_model_match and not has_part_match:
             match_confidence = min(match_confidence, 0.60)
