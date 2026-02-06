@@ -73,6 +73,24 @@ def normalize_source(value: str | None) -> str:
 
 def resolve_input_path(path: Path, source: str) -> Path:
     """Resolve the input path, allowing directory shortcuts."""
+    if source == "bestbuy" and path.as_posix().rstrip("/") == "output/marketplace.json":
+        raise ValueError("BestBuy ROI must use the BestBuy deals file, not output/marketplace.json.")
+
+    if source == "bestbuy" and path.as_posix().rstrip("/") == "econoplus/public":
+        candidates = [
+            path / "bestbuy" / "index" / "deals-80.json",
+            path / "bestbuy" / "deals-80.json",
+            path / "bestbuy" / "index" / "deals.json",
+        ]
+        for candidate in candidates:
+            if candidate.exists():
+                return candidate
+        candidate_list = ", ".join(str(candidate) for candidate in candidates)
+        raise FileNotFoundError(
+            "No BestBuy deals file found under econoplus/public. "
+            f"Tried: {candidate_list}"
+        )
+
     if path.is_dir():
         normalized_source = normalize_source(source)
         candidates = [
@@ -516,12 +534,18 @@ def main() -> None:
     if not normalized_source:
         raise ValueError("--source must be a non-empty string.")
     input_path = resolve_input_path(Path(args.input), normalized_source)
+    print("input_path resolved:", input_path)
     output_path = Path(args.output)
     roi_output_path = Path("output/roi_results.json")
     roi_confirmed_path = Path("output/roi_confirmed.json")
     roi_watchlist_path = Path("output/roi_watchlist.json")
 
     items = load_deals(input_path)
+    print("items loaded:", len(items))
+    if items:
+        print("first item keys:", list(items[0].keys()))
+    if len(items) == 0:
+        raise Exception(f"No items loaded from {input_path}")
     detected_source = detect_input_source(items)
     if detected_source and detected_source != normalized_source:
         detected_label = SOURCE_LABELS.get(detected_source, detected_source)
