@@ -21,7 +21,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Recompute ROI outputs from JSON input.")
     parser.add_argument(
         "--input",
-        default="input/market_ready.json",
+        default="econoplus/public/index/deals-80.json",
         help="Path to input JSON file.",
     )
     parser.add_argument(
