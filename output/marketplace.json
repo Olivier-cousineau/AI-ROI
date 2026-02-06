@@ -1,10 +1,54 @@
 {
-  "generated_at": "2026-02-06T03:19:41.027895+00:00",
+  "generated_at": "2026-02-06T05:17:49.375830+00:00",
   "source": "Canadian Tire",
   "count_total": 1000,
-  "count_scored": 227,
-  "top": 140,
+  "count_scored": 226,
+  "top": 139,
   "results": [
+    {
+      "key": "ct|sku:1519515",
+      "title": "Tasses thé Le Gourmet et biscuits sablés Walkers",
+      "part_number": "151-9515-2",
+      "model_number": "01LGX22070",
+      "model_number_norm": "01LGX22070",
+      "url": "https://www.canadiantire.ca/fr/pdp/tasses-the-le-gourmet-et-biscuits-sables-walkers-1519515p.html",
+      "image": "https://media-www.canadiantire.ca/product/living/food-drink/seasonal-confectionery/1519515/walkers-shortbread-cookies-and-le-gourmet-tea-mug-set-9e72e726-6e22-4f5e-873a-49c3c7cce3ea-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 5.99,
+      "price_regular": null,
+      "discount_pct": null,
+      "profit_est": 99.19,
+      "roi_pct": 1440.19,
+      "fees_est": 22.15,
+      "shipping_est": 14.77,
+      "profit_net": 104.75,
+      "roi_pct_net": 1748.71,
+      "low_cost_outlier": false,
+      "score": 57,
+      "revenue_source": "ebay",
+      "sell_price": 147.65,
+      "keepa_sales_per_month": null,
+      "match_confidence": 0.85,
+      "is_confirmed": false,
+      "match_method": "model_number",
+      "query_used": "Walkers 01LGX22070",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Walkers-GWP-RSEM",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/kh8AAeSwumNphVqN/s-l225.jpg",
+        "price": 147.65,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
+    },
     {
       "key": "ct|sku:1427973",
       "title": "Poêle à frire T-Fal StoneShield avec technologie DefenseShield, 6 couches, texture rocheuse, compatibilité avec l'induction, 26 cm/10 po",
@@ -30,7 +74,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "T-Fal E52705DI"
+      "query_used": "T-Fal E52705DI",
+      "ebay_match": {
+        "item_id": null,
+        "title": "T-FAL with removable handle t18_0124",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/kgoAAeSwufNpdMiZ/s-l225.jpg",
+        "price": 213.26,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
     },
     {
       "key": "ct|sku:2421186",
@@ -43,21 +104,38 @@
       "price_sale": 1.93,
       "price_regular": null,
       "discount_pct": null,
-      "profit_est": 156.5,
-      "roi_pct": 7052.58,
-      "fees_est": 31.78,
-      "shipping_est": 21.19,
-      "profit_net": 156.96,
+      "profit_est": 183.46,
+      "roi_pct": 8267.42,
+      "fees_est": 36.71,
+      "shipping_est": 24.47,
+      "profit_net": 181.61,
       "roi_pct_net": 500,
       "low_cost_outlier": true,
       "score": 54,
       "revenue_source": "ebay",
-      "sell_price": 211.85,
+      "sell_price": 244.725,
       "keepa_sales_per_month": null,
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "24211866"
+      "query_used": "24211866",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Parts Genuine 24251431 Automatic Transmission Lower Control Valve Body",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/1OgAAeSwid5pMfx3/s-l225.jpg",
+        "price": 244.725,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0821088",
@@ -84,7 +162,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "08210880"
+      "query_used": "08210880",
+      "ebay_match": {
+        "item_id": null,
+        "title": "UNITED TECHNOLOGIES 08216075 / 08216075 (BRAND NEW)",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/cHoAAeSw7QlpHAAU/s-l225.jpg",
+        "price": 2671.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0821116",
@@ -111,7 +206,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "08211164"
+      "query_used": "08211164",
+      "ebay_match": {
+        "item_id": null,
+        "title": "MOTOR 08216216 - Genuine OEM Replacement Part",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/Tl8AAeSw-ctpRDb2/s-l225.jpg",
+        "price": 608.655,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1517036",
@@ -138,7 +250,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "15170364"
+      "query_used": "15170364",
+      "ebay_match": {
+        "item_id": null,
+        "title": "For GM Escalade Suburban Tahoe Yukon 07-08, Hybrid 08-13 Part# 15173619",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/yy8AAOSwwR9fDMhc/s-l225.jpg",
+        "price": 217.41,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1426646",
@@ -165,7 +294,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Joie 35122"
+      "query_used": "Joie 35122",
+      "ebay_match": {
+        "item_id": null,
+        "title": "NWOT Joie Sage Cropped Shaket",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/IjkAAeSwbVho1V0f/s-l225.jpg",
+        "price": 76.37,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0778953",
@@ -192,7 +338,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Xcalibur 077-8953-2"
+      "query_used": "Xcalibur 077-8953-2",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Xcalibur XR75 3/4 oz . New never opened.  LAST ONE!! Original Plastic Box!!!",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/68UAAOSwwdRmHeDr/s-l225.jpg",
+        "price": 75.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
     },
     {
       "key": "ct|sku:1534439",
@@ -219,7 +382,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "McCafe 5000375192"
+      "query_used": "McCafe 5000375192",
+      "ebay_match": {
+        "item_id": null,
+        "title": "McCafé premium medium 94CT",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/o6cAAeSwDJFpXHo-/s-l225.jpg",
+        "price": 81.55,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.09
+        }
+      }
     },
     {
       "key": "ct|sku:0788058",
@@ -246,7 +426,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Rapala TEHO-90"
+      "query_used": "Rapala TEHO-90",
+      "ebay_match": {
+        "item_id": null,
+        "title": "(3) Rapala 100th Anniversary Limited Edition...EIR, PER, ARR...NIB!!!",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/EWMAAeSw3B5pUHTf/s-l225.jpg",
+        "price": 93.94999999999999,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.07
+        }
+      }
     },
     {
       "key": "ct|sku:0766329",
@@ -273,7 +470,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Remington Heaters REMASM0038"
+      "query_used": "Remington Heaters REMASM0038",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Remington 32000 Btu Double Head Tank Top Heater",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/vTsAAeSwIVNpcrW1/s-l225.jpg",
+        "price": 120.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0604577",
@@ -300,7 +514,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Certified 55421"
+      "query_used": "Certified 55421",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Delta H2Okinetic Handheld Shower Head 1S Matte Black-Certified Refurbished",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/yjgAAOSwIxFmR5dO/s-l225.jpg",
+        "price": 136.325,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:2421152",
@@ -313,21 +544,38 @@
       "price_sale": 4.93,
       "price_regular": null,
       "discount_pct": null,
-      "profit_est": 58.46,
-      "roi_pct": 1031.39,
-      "fees_est": 14.47,
-      "shipping_est": 9.65,
-      "profit_net": 67.44,
+      "profit_est": 61.33,
+      "roi_pct": 1082.02,
+      "fees_est": 15.0,
+      "shipping_est": 10.0,
+      "profit_net": 70.07,
       "roi_pct_net": 500,
       "low_cost_outlier": true,
       "score": 47,
       "revenue_source": "ebay",
-      "sell_price": 96.5,
+      "sell_price": 100.0,
       "keepa_sales_per_month": null,
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "24211526"
+      "query_used": "24211526",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Filter Element 24241960 NON OEM FREE SHIPPING",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/J~MAAOSwx~hkbGMc/s-l225.jpg",
+        "price": 100.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1513923",
@@ -354,7 +602,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "15139236"
+      "query_used": "15139236",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Nissan 350Z 3.5L RWD Drivers LH Spring Support Lower Control Arm 2003-2009 AR1",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/ajUAAOSwnGBmO~SH/s-l225.jpg",
+        "price": 99.95,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1592368",
@@ -381,7 +646,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "15923688"
+      "query_used": "15923688",
+      "ebay_match": {
+        "item_id": null,
+        "title": "(2pcs)15921430",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/7SEAAOSwCWVm9UOt/s-l225.jpg",
+        "price": 81.595,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0786846",
@@ -408,7 +690,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Xcalibur 60201-4-X"
+      "query_used": "Xcalibur 60201-4-X",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Xcalibur XR 50  Gold /Black 5/8oz Discontinued! Ships Fast USA!",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/D8IAAOSwrdFnpxg6/s-l225.jpg",
+        "price": 64.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.07
+        }
+      }
     },
     {
       "key": "ct|sku:0773787",
@@ -435,7 +734,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Xcalibur MZRSJ14-109X"
+      "query_used": "Xcalibur MZRSJ14-109X",
+      "ebay_match": {
+        "item_id": null,
+        "title": "XCalibur Chr Blue Org XKR 25",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/ocIAAeSwl1JpRtgO/s-l225.jpg",
+        "price": 47.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0528260",
@@ -462,7 +778,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Leviton 05231-742"
+      "query_used": "Leviton 05231-742",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Lot Of 12 Leviton 05241-I  3-Way Combinations Single Pole Switch, 15 Amp, Ivory",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/V5oAAeSwaZFpdnet/s-l225.jpg",
+        "price": 64.92999999999999,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
     },
     {
       "key": "ct|sku:0793926",
@@ -489,7 +822,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Battery Tender ZS38"
+      "query_used": "Battery Tender ZS38",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Battery Tender Junior 12V, 750mA Charger and 12V @ 750mA, Black/Green",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/9B0AAeSw7clphNUE/s-l225.jpg",
+        "price": 75.62,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0771245",
@@ -516,7 +866,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Xcalibur XTRLCB06"
+      "query_used": "Xcalibur XTRLCB06",
+      "ebay_match": {
+        "item_id": null,
+        "title": "XCalibur Gold Black XRK 75",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/-J4AAeSw7jRpRvps/s-l225.jpg",
+        "price": 49.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0475116",
@@ -543,7 +910,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Dupli-Color CAGM0521"
+      "query_used": "Dupli-Color CAGM0521",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Dupli-Color 32 Oz. Red Finishing System Performance Paint (Bsp203)",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/BIUAAeSwt0BpA~8j/s-l225.jpg",
+        "price": 58.275,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0380212",
@@ -570,7 +954,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "Bardahl 038-0212-8"
+      "query_used": "Bardahl 038-0212-8",
+      "ebay_match": {
+        "item_id": null,
+        "title": "2 Liters Bardahl KTS Competition Racing Oil 2 Stroke Motorcycle Blend Pack",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/EtcAAOSwmGdmppkR/s-l225.jpg",
+        "price": 65.89,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.06
+        }
+      }
     },
     {
       "key": "ct|sku:1274104",
@@ -597,7 +998,68 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "BikeMaster 101922"
+      "query_used": "BikeMaster 101922",
+      "ebay_match": {
+        "item_id": null,
+        "title": "BikeMaster Heated Grip Kit - 7/8 AM10902E",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/kBgAAeSwWUZpVaAg/s-l225.jpg",
+        "price": 88.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.11
+        }
+      }
+    },
+    {
+      "key": "ct|sku:0514277",
+      "title": "Chocolat au lait Lindt Lindor, paq. 3",
+      "part_number": "051-4277-6",
+      "model_number": "6067",
+      "model_number_norm": "6067",
+      "url": "https://www.canadiantire.ca/fr/pdp/chocolat-au-lait-lindt-lindor-paq-3-0514277p.html",
+      "image": "https://media-www.canadiantire.ca/product/living/food-drink/seasonal-confectionery/0514277/lindor-milk-chocolates-pkg-3-8fb49e05-e5f6-4469-a254-3095f4142572-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 1.49,
+      "price_regular": null,
+      "discount_pct": null,
+      "profit_est": 10.83,
+      "roi_pct": 631.98,
+      "fees_est": 5.04,
+      "shipping_est": 8.99,
+      "profit_net": 18.07,
+      "roi_pct_net": 500,
+      "low_cost_outlier": true,
+      "score": 23,
+      "revenue_source": "ebay",
+      "sell_price": 33.585,
+      "keepa_sales_per_month": null,
+      "match_confidence": 0.85,
+      "is_confirmed": false,
+      "match_method": "model_number",
+      "query_used": "Lindt 6067",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Lindt Swiss Classic White Chocolate 100g FREE SHIPPING WORLD WIDE",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/2~UAAOSwHbNoAziQ/s-l225.jpg",
+        "price": 33.585,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.06
+        }
+      }
     },
     {
       "key": "ct|sku:0778945",
@@ -624,7 +1086,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Xcalibur 077-8945-2"
+      "query_used": "Xcalibur 077-8945-2",
+      "ebay_match": {
+        "item_id": null,
+        "title": "V8787 F XCALIBUR XS4 FISHING LURE",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/6tgAAeSwjL9owMor/s-l225.jpg",
+        "price": 46.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.08
+        }
+      }
     },
     {
       "key": "ct|sku:0771229",
@@ -651,7 +1130,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Xcalibur XTRFJBL03"
+      "query_used": "Xcalibur XTRFJBL03",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Xcalibur 1/4 Oz. Floating Jerkbait Fishing Lures PERCH Color XTRFJBS03",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/DpEAAeSwUXtpWtIZ/s-l225.jpg",
+        "price": 46.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0771213",
@@ -678,7 +1174,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Xcalibur XTRCB06"
+      "query_used": "Xcalibur XTRCB06",
+      "ebay_match": {
+        "item_id": null,
+        "title": "XCalibur Chr Blue Org XKR 25",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/ocIAAeSwl1JpRtgO/s-l225.jpg",
+        "price": 46.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0304217",
@@ -691,48 +1204,38 @@
       "price_sale": 2.93,
       "price_regular": null,
       "discount_pct": null,
-      "profit_est": 10.08,
-      "roi_pct": 299.25,
-      "fees_est": 5.2,
+      "profit_est": 10.1,
+      "roi_pct": 299.74,
+      "fees_est": 5.21,
       "shipping_est": 8.99,
-      "profit_net": 17.57,
+      "profit_net": 17.59,
       "roi_pct_net": 500,
       "low_cost_outlier": true,
       "score": 23,
       "revenue_source": "ebay",
-      "sell_price": 34.695,
+      "sell_price": 34.715,
       "keepa_sales_per_month": null,
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Karcher 5.352-024.3"
-    },
-    {
-      "key": "ct|sku:1519515",
-      "title": "Tasses thé Le Gourmet et biscuits sablés Walkers",
-      "part_number": "151-9515-2",
-      "model_number": "01LGX22070",
-      "model_number_norm": "01LGX22070",
-      "url": "https://www.canadiantire.ca/fr/pdp/tasses-the-le-gourmet-et-biscuits-sables-walkers-1519515p.html",
-      "image": "https://media-www.canadiantire.ca/product/living/food-drink/seasonal-confectionery/1519515/walkers-shortbread-cookies-and-le-gourmet-tea-mug-set-9e72e726-6e22-4f5e-873a-49c3c7cce3ea-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 5.99,
-      "price_regular": null,
-      "discount_pct": null,
-      "profit_est": 17.88,
-      "roi_pct": 259.66,
-      "fees_est": 7.27,
-      "shipping_est": 8.99,
-      "profit_net": 26.24,
-      "roi_pct_net": 438.15,
-      "low_cost_outlier": false,
-      "score": 23,
-      "revenue_source": "ebay",
-      "sell_price": 48.5,
-      "keepa_sales_per_month": null,
-      "match_confidence": 0.85,
-      "is_confirmed": false,
-      "match_method": "model_number",
-      "query_used": "Walkers 01LGX22070"
+      "query_used": "Karcher 5.352-024.3",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Karcher 9.175-005.0 Unloader Valve or Spill Valve Assembly Complete OEM",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/yAsAAOSwBZBnL7~k/s-l225.jpg",
+        "price": 34.715,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.06
+        }
+      }
     },
     {
       "key": "ct|sku:1429246",
@@ -759,7 +1262,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Joie 29141"
+      "query_used": "Joie 29141",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Joie Reusable Produce Bags 5pc Set Sustainable, Nylon, Mesh, Machine Washable",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/nWwAAeSwIwdpaiBf/s-l225.jpg",
+        "price": 42.405,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.04
+        }
+      }
     },
     {
       "key": "ct|sku:0783276",
@@ -786,7 +1306,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Xcalibur MHS-146-X"
+      "query_used": "Xcalibur MHS-146-X",
+      "ebay_match": {
+        "item_id": null,
+        "title": "XCALIBUR",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/geAAAOSwy81m~hA~/s-l225.jpg",
+        "price": 47.995000000000005,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0632569",
@@ -813,34 +1350,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Oatey Canada 48049"
-    },
-    {
-      "key": "ct|sku:0514277",
-      "title": "Chocolat au lait Lindt Lindor, paq. 3",
-      "part_number": "051-4277-6",
-      "model_number": "6067",
-      "model_number_norm": "6067",
-      "url": "https://www.canadiantire.ca/fr/pdp/chocolat-au-lait-lindt-lindor-paq-3-0514277p.html",
-      "image": "https://media-www.canadiantire.ca/product/living/food-drink/seasonal-confectionery/0514277/lindor-milk-chocolates-pkg-3-8fb49e05-e5f6-4469-a254-3095f4142572-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 1.49,
-      "price_regular": null,
-      "discount_pct": null,
-      "profit_est": 8.81,
-      "roi_pct": 514.23,
-      "fees_est": 4.67,
-      "shipping_est": 8.99,
-      "profit_net": 15.98,
-      "roi_pct_net": 500,
-      "low_cost_outlier": true,
-      "score": 20,
-      "revenue_source": "ebay",
-      "sell_price": 31.125,
-      "keepa_sales_per_month": null,
-      "match_confidence": 0.85,
-      "is_confirmed": false,
-      "match_method": "model_number",
-      "query_used": "Lindt 6067"
+      "query_used": "Oatey Canada 48049",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Oatey 819-1",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/WQ8AAeSwzzVntnMb/s-l225.jpg",
+        "price": 26.16,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0381003",
@@ -867,7 +1394,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Eppco 5555"
+      "query_used": "Eppco 5555",
+      "ebay_match": {
+        "item_id": null,
+        "title": "EPPCO Heavy Duty Two-Sided Hand and Nail Scrub Brush Fingernail Scrubber Brushes",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/dd8AAeSw78lomPWC/s-l225.jpg",
+        "price": 27.174999999999997,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0522621",
@@ -894,7 +1438,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Laser 62211"
+      "query_used": "Laser 62211",
+      "ebay_match": {
+        "item_id": null,
+        "title": "1.5\" Round White Adhesive Labels - 30 per Sheet - Printable with Inkjet/Laser...",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/-wUAAeSwjtVpQZjp/s-l225.jpg",
+        "price": 36.91,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0607549",
@@ -921,7 +1482,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Atlas AT-0180"
+      "query_used": "Atlas AT-0180",
+      "ebay_match": {
+        "item_id": null,
+        "title": "ATLAS AT10    \"NEW\"",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/~wUAAOSwCU1Yvs2e/s-l225.jpg",
+        "price": 30.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0515491",
@@ -948,7 +1526,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "05154918"
+      "query_used": "05154918",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Chrysler Voyager 05144580AB 05144580ABA Control Unit P8-105",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/uTEAAOSwXNtnEnuI/s-l225.jpg",
+        "price": 46.39,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0788539",
@@ -975,7 +1570,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "SuperFly FLY1213-08P"
+      "query_used": "SuperFly FLY1213-08P",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Superfly elite 2 with spikes (comes in bag)",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/2AIAAeSwphBoZFhQ/s-l225.jpg",
+        "price": 28.5,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.07
+        }
+      }
     },
     {
       "key": "ct|sku:0784291",
@@ -1002,34 +1614,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Xcalibur MTZNL-SPSHTX"
-    },
-    {
-      "key": "ct|sku:3750941",
-      "title": "Bloc-piles au lithium SPYPOINT LIT-C-8 et chargeur pour caméra de sentier/de chasse",
-      "part_number": "375-0941-8",
-      "model_number": "LIT-C-8",
-      "model_number_norm": "LITC8",
-      "url": "https://www.canadiantire.ca/fr/pdp/bloc-piles-au-lithium-spypoint-lit-c-8-et-chargeur-pour-camera-de-sentier-de-chasse-3750941p.html",
-      "image": "https://media-www.canadiantire.ca/product/playing/hunting/hunting-equipment/3750941/spypoint-lit-c-8-battery-3a039cc2-4259-4af4-992b-56307b92c41c-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 32.93,
-      "price_regular": null,
-      "discount_pct": null,
-      "profit_est": 20.93,
-      "roi_pct": 55.29,
-      "fees_est": 13.5,
-      "shipping_est": 9.0,
-      "profit_net": 34.57,
-      "roi_pct_net": 104.97,
-      "low_cost_outlier": false,
-      "score": 19,
-      "revenue_source": "ebay",
-      "sell_price": 89.995,
-      "keepa_sales_per_month": null,
-      "match_confidence": 0.85,
-      "is_confirmed": false,
-      "match_method": "model_number",
-      "query_used": "Spypoint LIT-C-8"
+      "query_used": "Xcalibur MTZNL-SPSHTX",
+      "ebay_match": {
+        "item_id": null,
+        "title": "XCalibur Chr Blue Org XKR 25",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/ocIAAeSwl1JpRtgO/s-l225.jpg",
+        "price": 35.5,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0781748",
@@ -1056,7 +1658,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Red Wolf 3014"
+      "query_used": "Red Wolf 3014",
+      "ebay_match": {
+        "item_id": null,
+        "title": "3156 3157 Pre-Wired Harness Pigtail Socket Connector Plug Install LED Bulbs F",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/R7YAAeSwiBRou1BM/s-l225.jpg",
+        "price": 30.37,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0773594",
@@ -1083,7 +1702,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Berkley PBBSF3-GRP"
+      "query_used": "Berkley PBBSF3-GRP",
+      "ebay_match": {
+        "item_id": null,
+        "title": "2 Packs Berkley PowerBait Soft Fishing Lures 3\" Sick Fish Green Penny Color",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/lvkAAOSwjsxf6qAp/s-l225.jpg",
+        "price": 27.95,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.18
+        }
+      }
     },
     {
       "key": "ct|sku:0670055",
@@ -1110,7 +1746,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "DAP 7079874913"
+      "query_used": "DAP 7079874913",
+      "ebay_match": {
+        "item_id": null,
+        "title": "DAP DAP-7079800525, 32 OZ, Natural, 32 Ounce 1",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/JqEAAeSw3~podYxv/s-l225.jpg",
+        "price": 26.43,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.04
+        }
+      }
     },
     {
       "key": "ct|sku:0601896",
@@ -1137,34 +1790,68 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Troy-Bilt 19A30013OEM"
+      "query_used": "Troy-Bilt 19A30013OEM",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Original Equipment Mulch Cover for Cub Cadet, Troy-Bilt and Craftsman 30 In. Rea",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/zlAAAOSwYr9mCFBz/s-l225.jpg",
+        "price": 53.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.03
+        }
+      }
     },
     {
-      "key": "ct|sku:1840928",
-      "title": "Cap Barbell - Support de rangement noir pour disque de musculation",
-      "part_number": "184-0928-6",
-      "model_number": "RK-CS1",
-      "model_number_norm": "RKCS1",
-      "url": "https://www.canadiantire.ca/fr/pdp/cap-barbell-support-de-rangement-noir-pour-disque-de-musculation-1840928p.html",
-      "image": "https://media-www.canadiantire.ca/product/playing/exercise/exercise-accessories/1840928/cap-1-plate-tree-black-b506b40f-eea5-4a1a-aba2-36b19ee6ac28-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 39.93,
+      "key": "ct|sku:3750941",
+      "title": "Bloc-piles au lithium SPYPOINT LIT-C-8 et chargeur pour caméra de sentier/de chasse",
+      "part_number": "375-0941-8",
+      "model_number": "LIT-C-8",
+      "model_number_norm": "LITC8",
+      "url": "https://www.canadiantire.ca/fr/pdp/bloc-piles-au-lithium-spypoint-lit-c-8-et-chargeur-pour-camera-de-sentier-de-chasse-3750941p.html",
+      "image": "https://media-www.canadiantire.ca/product/playing/hunting/hunting-equipment/3750941/spypoint-lit-c-8-battery-3a039cc2-4259-4af4-992b-56307b92c41c-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 32.93,
       "price_regular": null,
       "discount_pct": null,
-      "profit_est": 10.09,
-      "roi_pct": 21.97,
-      "fees_est": 12.99,
+      "profit_est": 14.37,
+      "roi_pct": 37.97,
+      "fees_est": 12.3,
       "shipping_est": 8.99,
-      "profit_net": 24.67,
-      "roi_pct_net": 61.79,
+      "profit_net": 27.78,
+      "roi_pct_net": 84.35,
       "low_cost_outlier": false,
       "score": 1,
       "revenue_source": "ebay",
-      "sell_price": 86.58,
+      "sell_price": 81.995,
       "keepa_sales_per_month": null,
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Cap Barbell RK-CS1"
+      "query_used": "Spypoint LIT-C-8",
+      "ebay_match": {
+        "item_id": null,
+        "title": "BIG SALE SPYPOINT FLEX-M-TWIN Trail Camera 129.99",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/i9IAAeSwNn9pgsWV/s-l225.jpg",
+        "price": 81.995,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.06
+        }
+      }
     },
     {
       "key": "ct|sku:0514962",
@@ -1191,7 +1878,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "05149624"
+      "query_used": "05149624",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Chrysler Voyager 05144580AB 05144580ABA Control Unit P8-105",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/uTEAAOSwXNtnEnuI/s-l225.jpg",
+        "price": 46.39,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:2511109",
@@ -1218,7 +1922,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "25111090"
+      "query_used": "25111090",
+      "ebay_match": {
+        "item_id": null,
+        "title": "25112608 Official",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/y20AAeSw7dNpcm9h/s-l225.jpg",
+        "price": 107.48,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0390770",
@@ -1245,7 +1966,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Meguiars 0390770"
+      "query_used": "Meguiars 0390770",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Meguiars Mirror Glaze Quick Detailer - 1 Gallon [M6601]",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/770AAeSwk8poiNkh/s-l225.jpg",
+        "price": 42.92,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0771261",
@@ -1272,7 +2010,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Xcalibur XTRSBCB04"
+      "query_used": "Xcalibur XTRSBCB04",
+      "ebay_match": {
+        "item_id": null,
+        "title": "XCALIBUR",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/geAAAOSwy81m~hA~/s-l225.jpg",
+        "price": 25.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0497018",
@@ -1299,7 +2054,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Scotch 7100185013"
+      "query_used": "Scotch 7100185013",
+      "ebay_match": {
+        "item_id": null,
+        "title": "NIB 3M Scotch Long Lasting Moving & Packaging Tape with Dispensers - Box of 6",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/NhUAAeSwCYNpIxZT/s-l225.jpg",
+        "price": 25.795,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.03
+        }
+      }
     },
     {
       "key": "ct|sku:0356214",
@@ -1326,7 +2098,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Belkin CAA002bt1MWH"
+      "query_used": "Belkin CAA002bt1MWH",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Unused White Belkin Boost Charge Braided USB-A to Lightng Cable 3.3ft/1M",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/WzAAAOSwEa1mqq~l/s-l225.jpg",
+        "price": 28.485,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
     },
     {
       "key": "ct|sku:1871145",
@@ -1353,7 +2142,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Woods 6110"
+      "query_used": "Woods 6110",
+      "ebay_match": {
+        "item_id": null,
+        "title": "iRobot Braava Jet M6 Ultimate Wi-Fi Connected Robot Mop - Black (M601220)",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/6oAAAeSw1L1pg4bh/s-l225.jpg",
+        "price": 66.18,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1424995",
@@ -1380,7 +2186,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Paderno 42514.52.CT"
+      "query_used": "Paderno 42514.52.CT",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Paderno -Puree Master BPA Free Detachable Parts Dishwasher Safe NIB",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/iIcAAOSwa7ZkmLtX/s-l225.jpg",
+        "price": 60.934999999999995,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0788104",
@@ -1393,21 +2216,38 @@
       "price_sale": 8.93,
       "price_regular": null,
       "discount_pct": null,
-      "profit_est": -0.71,
-      "roi_pct": -6.9,
-      "fees_est": 4.49,
+      "profit_est": -0.69,
+      "roi_pct": -6.74,
+      "fees_est": 4.5,
       "shipping_est": 8.99,
-      "profit_net": 7.54,
-      "roi_pct_net": 84.41,
+      "profit_net": 7.55,
+      "roi_pct_net": 84.6,
       "low_cost_outlier": false,
       "score": 0,
       "revenue_source": "ebay",
-      "sell_price": 29.95,
+      "sell_price": 29.97,
       "keepa_sales_per_month": null,
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Rapala IS-20"
+      "query_used": "Rapala IS-20",
+      "ebay_match": {
+        "item_id": null,
+        "title": "4 lures rapala ogs-6 ogs06 dcw dives to 6' crankbait  2 3/4\" 1/2oz assortment",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/BDAAAeSw25JokkI5/s-l225.jpg",
+        "price": 29.97,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
     },
     {
       "key": "ct|sku:0522803",
@@ -1434,7 +2274,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Broan Nutone K4KBL"
+      "query_used": "Broan Nutone K4KBL",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Broan NuTone Product S97014094",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/NegAAOSw~mxmqUKP/s-l225.jpg",
+        "price": 19.5,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.14
+        }
+      }
     },
     {
       "key": "ct|sku:0529878",
@@ -1461,7 +2318,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Globe 50023"
+      "query_used": "Globe 50023",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Globe Electric Wi-Fi Smart Dimmer Switch No Hub Required Voice Activated White",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/mwwAAOSwRyBjl9PK/s-l225.jpg",
+        "price": 49.95,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.13
+        }
+      }
     },
     {
       "key": "ct|sku:0183051",
@@ -1488,34 +2362,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Champion Spark Plug QL16VMSP1"
-    },
-    {
-      "key": "ct|sku:0442405",
-      "title": "Réveil inclinable en bois Crosley",
-      "part_number": "044-2405-2",
-      "model_number": "CR37022CN",
-      "model_number_norm": "CR37022CN",
-      "url": "https://www.canadiantire.ca/fr/pdp/reveil-inclinable-en-bois-crosley-0442405p.html",
-      "image": "https://media-www.canadiantire.ca/product/automotive/electronics/home-electronics/0442405/crosley-wood-tilt-alarm-clock-7f495143-b5e5-49c2-ad5e-275150873cfe-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 9.93,
-      "price_regular": null,
-      "discount_pct": null,
-      "profit_est": -1.83,
-      "roi_pct": -15.99,
-      "fees_est": 4.5,
-      "shipping_est": 8.99,
-      "profit_net": 6.57,
-      "roi_pct_net": 66.18,
-      "low_cost_outlier": false,
-      "score": 0,
-      "revenue_source": "ebay",
-      "sell_price": 29.99,
-      "keepa_sales_per_month": null,
-      "match_confidence": 0.85,
-      "is_confirmed": false,
-      "match_method": "model_number",
-      "query_used": "Crosley CR37022CN"
+      "query_used": "Champion Spark Plug QL16VMSP1",
+      "ebay_match": {
+        "item_id": null,
+        "title": "CHAMPION SPARK PLUG QL16V*",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/hsIAAeSw~85pd4Q-/s-l225.jpg",
+        "price": 21.985,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.12
+        }
+      }
     },
     {
       "key": "ct|sku:1841186",
@@ -1542,34 +2406,68 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Aqua Training Bag AP75BBRET"
+      "query_used": "Aqua Training Bag AP75BBRET",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Aqua Training Bag Sensor",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/w7YAAeSwSIRpLusN/s-l225.jpg",
+        "price": 117.49000000000001,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.27
+        }
+      }
     },
     {
-      "key": "ct|sku:1422649",
-      "title": "Plaque à pizza ronde antiadhésive Lagostina Diamond, 14,8 po",
-      "part_number": "142-2649-8",
-      "model_number": "D608.2310.00",
-      "model_number_norm": "D608231000",
-      "url": "https://www.canadiantire.ca/fr/pdp/plaque-a-pizza-ronde-antiadhesive-lagostina-diamond-14-8-po-1422649p.html",
-      "image": "https://media-www.canadiantire.ca/product/living/kitchen/bakeware-baking-prep/1422649/lagostina-diamond-pizza-pan-f8b11a46-c828-4894-b82f-2475069920fa-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 19.93,
+      "key": "ct|sku:0396097",
+      "title": "Bandes lave-auto prémesurées biodégradables Nature Clean, paq. 36",
+      "part_number": "039-6097-4",
+      "model_number": "10-28700",
+      "model_number_norm": "1028700",
+      "url": "https://www.canadiantire.ca/fr/pdp/bandes-lave-auto-premesurees-biodegradables-nature-clean-paq-36-0396097p.html",
+      "image": "https://media-www.canadiantire.ca/product/automotive/car-care-accessories/auto-cleaning-chemicals/0396097/nature-clean-car-wash-strips-178be73a-215b-4d50-9b8c-8801de11a125-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 6.93,
       "price_regular": null,
       "discount_pct": null,
-      "profit_est": -5.29,
-      "roi_pct": -23.07,
-      "fees_est": 5.97,
+      "profit_est": -1.91,
+      "roi_pct": -24.03,
+      "fees_est": 3.85,
       "shipping_est": 8.99,
-      "profit_net": 4.9,
-      "roi_pct_net": 24.59,
+      "profit_net": 5.9,
+      "roi_pct_net": 85.19,
       "low_cost_outlier": false,
       "score": 0,
       "revenue_source": "ebay",
-      "sell_price": 39.790000000000006,
+      "sell_price": 25.675,
       "keepa_sales_per_month": null,
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Lagostina D608.2310.00"
+      "query_used": "Nature Clean 10-28700",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Nature Clean Non-Toxic & Plastic-Free Foaming Car Wash Soap Strips 36 count. ...",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/v~QAAeSwYCVpHpxr/s-l225.jpg",
+        "price": 25.675,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.11
+        }
+      }
     },
     {
       "key": "ct|sku:2511082",
@@ -1596,7 +2494,68 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "25110820"
+      "query_used": "25110820",
+      "ebay_match": {
+        "item_id": null,
+        "title": "25112608 Official",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/y20AAeSw7dNpcm9h/s-l225.jpg",
+        "price": 198.46,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
+    },
+    {
+      "key": "ct|sku:1422649",
+      "title": "Plaque à pizza ronde antiadhésive Lagostina Diamond, 14,8 po",
+      "part_number": "142-2649-8",
+      "model_number": "D608.2310.00",
+      "model_number_norm": "D608231000",
+      "url": "https://www.canadiantire.ca/fr/pdp/plaque-a-pizza-ronde-antiadhesive-lagostina-diamond-14-8-po-1422649p.html",
+      "image": "https://media-www.canadiantire.ca/product/living/kitchen/bakeware-baking-prep/1422649/lagostina-diamond-pizza-pan-f8b11a46-c828-4894-b82f-2475069920fa-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 19.93,
+      "price_regular": null,
+      "discount_pct": null,
+      "profit_est": -6.21,
+      "roi_pct": -27.1,
+      "fees_est": 5.8,
+      "shipping_est": 8.99,
+      "profit_net": 3.95,
+      "roi_pct_net": 19.8,
+      "low_cost_outlier": false,
+      "score": 0,
+      "revenue_source": "ebay",
+      "sell_price": 38.665000000000006,
+      "keepa_sales_per_month": null,
+      "match_confidence": 0.85,
+      "is_confirmed": false,
+      "match_method": "model_number",
+      "query_used": "Lagostina D608.2310.00",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Lagostina Nera Hard Anodized Nonstick 12-Pc Cookware Set-Hammered Stainless Lids",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/UZQAAOSwrIVjZaCp/s-l225.jpg",
+        "price": 38.665000000000006,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.06
+        }
+      }
     },
     {
       "key": "ct|sku:0442407",
@@ -1623,34 +2582,68 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "JLab IFCHBASTUDIO"
+      "query_used": "JLab IFCHBASTUDIO",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Jlab",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/f7kAAeSwvAFn7tKB/s-l225.jpg",
+        "price": 35.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.14
+        }
+      }
     },
     {
-      "key": "ct|sku:0396097",
-      "title": "Bandes lave-auto prémesurées biodégradables Nature Clean, paq. 36",
-      "part_number": "039-6097-4",
-      "model_number": "10-28700",
-      "model_number_norm": "1028700",
-      "url": "https://www.canadiantire.ca/fr/pdp/bandes-lave-auto-premesurees-biodegradables-nature-clean-paq-36-0396097p.html",
-      "image": "https://media-www.canadiantire.ca/product/automotive/car-care-accessories/auto-cleaning-chemicals/0396097/nature-clean-car-wash-strips-178be73a-215b-4d50-9b8c-8801de11a125-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 6.93,
+      "key": "ct|sku:0442405",
+      "title": "Réveil inclinable en bois Crosley",
+      "part_number": "044-2405-2",
+      "model_number": "CR37022CN",
+      "model_number_norm": "CR37022CN",
+      "url": "https://www.canadiantire.ca/fr/pdp/reveil-inclinable-en-bois-crosley-0442405p.html",
+      "image": "https://media-www.canadiantire.ca/product/automotive/electronics/home-electronics/0442405/crosley-wood-tilt-alarm-clock-7f495143-b5e5-49c2-ad5e-275150873cfe-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 9.93,
       "price_regular": null,
       "discount_pct": null,
-      "profit_est": -3.0,
-      "roi_pct": -37.71,
-      "fees_est": 3.65,
+      "profit_est": -4.65,
+      "roi_pct": -40.69,
+      "fees_est": 3.98,
       "shipping_est": 8.99,
-      "profit_net": 4.77,
-      "roi_pct_net": 68.88,
+      "profit_net": 3.65,
+      "roi_pct_net": 36.73,
       "low_cost_outlier": false,
       "score": 0,
       "revenue_source": "ebay",
-      "sell_price": 24.345,
+      "sell_price": 26.549999999999997,
       "keepa_sales_per_month": null,
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Nature Clean 10-28700"
+      "query_used": "Crosley CR37022CN",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Crosley Model CR8005A-OG Excellent Condition + Power Cord Tested Works",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/spQAAeSw~l9pDWHK/s-l225.jpg",
+        "price": 26.549999999999997,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.07
+        }
+      }
     },
     {
       "key": "ct|sku:0430335",
@@ -1677,7 +2670,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Zwilling 1022465"
+      "query_used": "Zwilling 1022465",
+      "ebay_match": {
+        "item_id": null,
+        "title": "ZWILLING TWIN Signature 6” Utility Sandwich Knife 30723-163 Brand New!",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/DKsAAeSwDoZowE8r/s-l225.jpg",
+        "price": 55.144999999999996,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.04
+        }
+      }
     },
     {
       "key": "ct|sku:0529899",
@@ -1704,7 +2714,68 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "NOMA 3G25D3W"
+      "query_used": "NOMA 3G25D3W",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Noma Stay lit 100 Multi bulbs indoor/outdoor worry-free lighting NOS",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/kFUAAOSwNDFnfXdH/s-l225.jpg",
+        "price": 24.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.04
+        }
+      }
+    },
+    {
+      "key": "ct|sku:0430336",
+      "title": "Pompe à dépression pour conservation et entreposage des aliments avec bouchon Fresh & Save de Zwilling, blanc",
+      "part_number": "043-0336-0",
+      "model_number": "1020951",
+      "model_number_norm": "1020951",
+      "url": "https://www.canadiantire.ca/fr/pdp/pompe-a-depression-pour-conservation-et-entreposage-des-aliments-avec-bouchon-fresh-save-de-zwilling-blanc-0430336p.html",
+      "image": "https://media-www.canadiantire.ca/product/living/kitchen/food-storage/0430336/zwilling-food-storage-vacuum-pump-0578384a-c2af-49bd-85a1-42a3c965e9c9-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 49.93,
+      "price_regular": null,
+      "discount_pct": null,
+      "profit_est": -29.25,
+      "roi_pct": -50.95,
+      "fees_est": 7.9,
+      "shipping_est": 8.99,
+      "profit_net": -14.18,
+      "roi_pct_net": -28.4,
+      "low_cost_outlier": false,
+      "score": 0,
+      "revenue_source": "ebay",
+      "sell_price": 52.635,
+      "keepa_sales_per_month": null,
+      "match_confidence": 0.85,
+      "is_confirmed": false,
+      "match_method": "model_number",
+      "query_used": "Zwilling 1020951",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Zwilling Henckels Twin Gourmet 15 Piece Knife w/ Acacia Block Set... FREE S&H!",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/sckAAeSwWkxowPH~/s-l225.jpg",
+        "price": 52.635,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1531872",
@@ -1731,7 +2802,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Hoover AH37011CA"
+      "query_used": "Hoover AH37011CA",
+      "ebay_match": {
+        "item_id": null,
+        "title": "9 Hoover Type I #AH10005 Platinum Canister Vacuum Cleaner Allergen HEPA Bag",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/RXcAAOSwgmtaRVH8/s-l225.jpg",
+        "price": 25.11,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0891528",
@@ -1758,7 +2846,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "PowerBilt PWSTG712"
+      "query_used": "PowerBilt PWSTG712",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Rare Powerbilt Pro-Sonic 3-10",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/BHMAAeSwYolpensO/s-l225.jpg",
+        "price": 33.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.07
+        }
+      }
     },
     {
       "key": "ct|sku:0702246",
@@ -1785,34 +2890,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Smart Tiles SM1188G04QG"
-    },
-    {
-      "key": "ct|sku:0430336",
-      "title": "Pompe à dépression pour conservation et entreposage des aliments avec bouchon Fresh & Save de Zwilling, blanc",
-      "part_number": "043-0336-0",
-      "model_number": "1020951",
-      "model_number_norm": "1020951",
-      "url": "https://www.canadiantire.ca/fr/pdp/pompe-a-depression-pour-conservation-et-entreposage-des-aliments-avec-bouchon-fresh-save-de-zwilling-blanc-0430336p.html",
-      "image": "https://media-www.canadiantire.ca/product/living/kitchen/food-storage/0430336/zwilling-food-storage-vacuum-pump-0578384a-c2af-49bd-85a1-42a3c965e9c9-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 49.93,
-      "price_regular": null,
-      "discount_pct": null,
-      "profit_est": -31.44,
-      "roi_pct": -54.77,
-      "fees_est": 7.49,
-      "shipping_est": 8.99,
-      "profit_net": -16.45,
-      "roi_pct_net": -32.95,
-      "low_cost_outlier": false,
-      "score": 0,
-      "revenue_source": "ebay",
-      "sell_price": 49.96,
-      "keepa_sales_per_month": null,
-      "match_confidence": 0.85,
-      "is_confirmed": false,
-      "match_method": "model_number",
-      "query_used": "Zwilling 1020951"
+      "query_used": "Smart Tiles SM1188G04QG",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Smart Tiles SM1188 8.95\" W X 8.97\" L Gray Glazed Vinyl Adhesive Wall Tile 4 pc",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/wzIAAOSwd-lnuL2a/s-l225.jpg",
+        "price": 24.79,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.03
+        }
+      }
     },
     {
       "key": "ct|sku:0691921",
@@ -1839,7 +2934,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Sylvania SWCM230"
+      "query_used": "Sylvania SWCM230",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Sylvania 1080p HD Web Camera With Built-in Mic",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/B~AAAeSwxEpo3B-h/s-l225.jpg",
+        "price": 21.92,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.08
+        }
+      }
     },
     {
       "key": "ct|sku:0797165",
@@ -1866,7 +2978,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Hydro-Force 43407"
+      "query_used": "Hydro-Force 43407",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Hydro Force Sunny 5 Person Inflatable Floating Island Raft (Open Box)",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/jugAAeSwJo5obZBy/s-l225.jpg",
+        "price": 92.82,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.04
+        }
+      }
     },
     {
       "key": "ct|sku:0383766",
@@ -1893,7 +3022,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Permatex 19986"
+      "query_used": "Permatex 19986",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Permatex 51813 Anaerobic Gasket Maker - Each",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/h20AAOSwXFhg8Har/s-l225.jpg",
+        "price": 20.745,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.07
+        }
+      }
     },
     {
       "key": "ct|sku:0374953",
@@ -1920,7 +3066,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Febreze 003077206915"
+      "query_used": "Febreze 003077206915",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Febreze 33032EA 1 gal Professional Fabric Refresher Deep Penetrating New",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/5MsAAeSw2MpphW79/s-l225.jpg",
+        "price": 20.244999999999997,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.04
+        }
+      }
     },
     {
       "key": "ct|sku:0397071",
@@ -1947,7 +3110,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Turtle Wax 53859"
+      "query_used": "Turtle Wax 53859",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Turtle Wax High Gloss Spray Wax 16oz Brand New Ships Fast",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/EFsAAeSwE8tokhOc/s-l225.jpg",
+        "price": 24.655,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.08
+        }
+      }
     },
     {
       "key": "ct|sku:0634827",
@@ -1974,7 +3154,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "DANZE E1210000BL"
+      "query_used": "DANZE E1210000BL",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Danze Mid-Town D300962T",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/wmoAAOSw4L9nZZ0H/s-l225.jpg",
+        "price": 99.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.09
+        }
+      }
     },
     {
       "key": "ct|sku:0733034",
@@ -2001,7 +3198,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "RALEIGH BR120502"
+      "query_used": "RALEIGH BR120502",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Raleigh RSW14 set",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/b94AAOSwi21mayYL/s-l225.jpg",
+        "price": 21.54,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.08
+        }
+      }
     },
     {
       "key": "ct|sku:0702247",
@@ -2028,7 +3242,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Smart Tiles SM1183G04QG"
+      "query_used": "Smart Tiles SM1183G04QG",
+      "ebay_match": {
+        "item_id": null,
+        "title": "11.56 in. x 8.38 in. Vinyl Metro Fiona Dark Green Tile (2.21 sq. ft./ 4-Pack)",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/4G4AAeSw3Ixod3DL/s-l225.jpg",
+        "price": 22.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.07
+        }
+      }
     },
     {
       "key": "ct|sku:0788016",
@@ -2055,34 +3286,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Rapala XRS06FT"
-    },
-    {
-      "key": "ct|sku:0463297",
-      "title": "Sonnette avec caméra vidéo Wi-Fi Arlo, noir",
-      "part_number": "046-3297-8",
-      "model_number": "6523410",
-      "model_number_norm": "6523410",
-      "url": "https://www.canadiantire.ca/fr/pdp/sonnette-avec-camera-video-wi-fi-arlo-noir-0463297p.html",
-      "image": "https://media-www.canadiantire.ca/product/fixing/hardware/home-safety/0463297/arlo-wi-fi-video-doorbell-d2a3ca31-3e68-4bbf-9f97-c4260407affc-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 69.93,
-      "price_regular": null,
-      "discount_pct": null,
-      "profit_est": -59.74,
-      "roi_pct": -74.3,
-      "fees_est": 6.52,
-      "shipping_est": 8.99,
-      "profit_net": -41.95,
-      "roi_pct_net": -59.99,
-      "low_cost_outlier": false,
-      "score": 0,
-      "revenue_source": "ebay",
-      "sell_price": 43.495000000000005,
-      "keepa_sales_per_month": null,
-      "match_confidence": 0.85,
-      "is_confirmed": false,
-      "match_method": "model_number",
-      "query_used": "Arlo 6523410"
+      "query_used": "Rapala XRS06FT",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Rapala X-Rap Shad XRS-06 Suspending Olive Green Fishing Lure",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/sJ4AAeSwvBtpOcTo/s-l225.jpg",
+        "price": 22.185000000000002,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.27
+        }
+      }
     },
     {
       "key": "ct|sku:0778330",
@@ -2109,7 +3330,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Lunkerhunt LHPSTS5030"
+      "query_used": "Lunkerhunt LHPSTS5030",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Lunkerhunt Lunker Sticks 5 inch Soft Plastic Stickbait 10 pack",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/mPYAAOSw3FleYt1g/s-l225.jpg",
+        "price": 19.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.08
+        }
+      }
     },
     {
       "key": "ct|sku:0112521",
@@ -2136,7 +3374,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Coleman 38181"
+      "query_used": "Coleman 38181",
+      "ebay_match": {
+        "item_id": null,
+        "title": "COLEMAN 9726",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/V04AAeSwvKFpG1ks/s-l225.jpg",
+        "price": 109.21,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.07
+        }
+      }
     },
     {
       "key": "ct|sku:1426396",
@@ -2163,7 +3418,112 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Henckels 17500-001"
+      "query_used": "Henckels 17500-001",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Zwilling J A Henckels No Stain 5 1/2\" Knife 31060-140 Friodur  Solingen Germany",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/TFIAAeSwT7ppegUR/s-l225.jpg",
+        "price": 43.995000000000005,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
+    },
+    {
+      "key": "ct|sku:0463297",
+      "title": "Sonnette avec caméra vidéo Wi-Fi Arlo, noir",
+      "part_number": "046-3297-8",
+      "model_number": "6523410",
+      "model_number_norm": "6523410",
+      "url": "https://www.canadiantire.ca/fr/pdp/sonnette-avec-camera-video-wi-fi-arlo-noir-0463297p.html",
+      "image": "https://media-www.canadiantire.ca/product/fixing/hardware/home-safety/0463297/arlo-wi-fi-video-doorbell-d2a3ca31-3e68-4bbf-9f97-c4260407affc-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 69.93,
+      "price_regular": null,
+      "discount_pct": null,
+      "profit_est": -62.61,
+      "roi_pct": -77.87,
+      "fees_est": 6.0,
+      "shipping_est": 8.99,
+      "profit_net": -44.92,
+      "roi_pct_net": -64.24,
+      "low_cost_outlier": false,
+      "score": 0,
+      "revenue_source": "ebay",
+      "sell_price": 39.995000000000005,
+      "keepa_sales_per_month": null,
+      "match_confidence": 0.85,
+      "is_confirmed": false,
+      "match_method": "model_number",
+      "query_used": "Arlo 6523410",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Arlo Essential VMC2030 Spotlight Single Wireless Camera w/Mount",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/mwgAAeSwdLppBTLU/s-l225.jpg",
+        "price": 39.995000000000005,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
+    },
+    {
+      "key": "ct|sku:1781242",
+      "title": "Hameçon Gamakatsu Single-Egg, doré",
+      "part_number": null,
+      "model_number": "4205",
+      "model_number_norm": "4205",
+      "url": "https://www.canadiantire.ca/fr/pdp/hamecon-gamakatsu-single-egg-dore-1781242p.html",
+      "image": "https://media-www.canadiantire.ca/product/playing/fishing/fishing-lures/1781244/gamakatsu-single-egg-hook-gold-10-pack-size-8-b263878d-a5f9-4a46-8a0a-2efb0642a804-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 3.73,
+      "price_regular": null,
+      "discount_pct": null,
+      "profit_est": -3.4,
+      "roi_pct": -79.21,
+      "fees_est": 2.91,
+      "shipping_est": 8.99,
+      "profit_net": 3.75,
+      "roi_pct_net": 100.62,
+      "low_cost_outlier": true,
+      "score": 0,
+      "revenue_source": "ebay",
+      "sell_price": 19.38,
+      "keepa_sales_per_month": null,
+      "match_confidence": 0.85,
+      "is_confirmed": false,
+      "match_method": "model_number",
+      "query_used": "Gamakatsu 4205",
+      "ebay_match": {
+        "item_id": null,
+        "title": "GAMAKATSU #054 Baitholder Hooks- 25 Pack FREE USA SHIPPING! PICK YOUR SIZE!",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/aiQAAOSw~HFcRjqM/s-l225.jpg",
+        "price": 19.38,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.07
+        }
+      }
     },
     {
       "key": "ct|sku:1784380",
@@ -2190,7 +3550,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Water Gremlin PSS-B"
+      "query_used": "Water Gremlin PSS-B",
+      "ebay_match": {
+        "item_id": null,
+        "title": "10 Packs Water Gremlin The Original Rubbercor  3/8 oz.",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/eQcAAeSwi-do2Ey~/s-l225.jpg",
+        "price": 18.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.06
+        }
+      }
     },
     {
       "key": "ct|sku:0641571",
@@ -2217,7 +3594,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Rust-Oleum 322045"
+      "query_used": "Rust-Oleum 322045",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Rust-Oleum 344763 Automotive 2-In-1 Rust Reform & Seal, Quart, Black",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/-R0AAeSwUxxpbBBH/s-l225.jpg",
+        "price": 36.230000000000004,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.04
+        }
+      }
     },
     {
       "key": "ct|sku:0482380",
@@ -2230,21 +3624,38 @@
       "price_sale": 14.93,
       "price_regular": null,
       "discount_pct": null,
-      "profit_est": -14.09,
-      "roi_pct": -82.1,
+      "profit_est": -14.05,
+      "roi_pct": -81.84,
       "fees_est": 3.31,
       "shipping_est": 8.99,
-      "profit_net": -5.19,
-      "roi_pct_net": -34.74,
+      "profit_net": -5.14,
+      "roi_pct_net": -34.42,
       "low_cost_outlier": false,
       "score": 0,
       "revenue_source": "ebay",
-      "sell_price": 22.04,
+      "sell_price": 22.095,
       "keepa_sales_per_month": null,
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Rust-Oleum Stone Accents N7988830"
+      "query_used": "Rust-Oleum Stone Accents N7988830",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Rust-Oleum 7992830 Stone Creations Spray, 12 oz, Gray Stone",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/YZoAAOSwmqdkSCVo/s-l225.jpg",
+        "price": 22.095,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
     },
     {
       "key": "ct|sku:0355290",
@@ -2271,7 +3682,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Scosche BTFMi"
+      "query_used": "Scosche BTFMi",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Scosche 4-in-1 Mounting Kit",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/4DoAAeSwkw1pgNOK/s-l225.jpg",
+        "price": 25.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.08
+        }
+      }
     },
     {
       "key": "ct|sku:0430385",
@@ -2298,61 +3726,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Mr. Coffee 2168820"
-    },
-    {
-      "key": "ct|sku:0529611",
-      "title": "Ampoules à filament à DEL à intensité variable à culot E26 NOMA B10, blanc chaud, 40 W",
-      "part_number": "052-9611-8",
-      "model_number": "31402",
-      "model_number_norm": "31402",
-      "url": "https://www.canadiantire.ca/fr/pdp/ampoules-a-filament-a-del-a-intensite-variable-a-culot-e26-noma-b10-blanc-chaud-40-w-0529611p.html",
-      "image": "https://media-www.canadiantire.ca/product/fixing/electrical/light-bulbs/0529611/noma-40w-b10-warm-white-led-bulbs-2-pack-d8ccbe5a-899c-490e-b5f8-348c1c9af633-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 4.93,
-      "price_regular": null,
-      "discount_pct": null,
-      "profit_est": -4.81,
-      "roi_pct": -84.78,
-      "fees_est": 2.9,
-      "shipping_est": 8.99,
-      "profit_net": 2.52,
-      "roi_pct_net": 51.18,
-      "low_cost_outlier": true,
-      "score": 0,
-      "revenue_source": "ebay",
-      "sell_price": 19.345,
-      "keepa_sales_per_month": null,
-      "match_confidence": 0.85,
-      "is_confirmed": false,
-      "match_method": "model_number",
-      "query_used": "NOMA 31402"
-    },
-    {
-      "key": "ct|sku:1781242",
-      "title": "Hameçon Gamakatsu Single-Egg, doré",
-      "part_number": null,
-      "model_number": "4205",
-      "model_number_norm": "4205",
-      "url": "https://www.canadiantire.ca/fr/pdp/hamecon-gamakatsu-single-egg-dore-1781242p.html",
-      "image": "https://media-www.canadiantire.ca/product/playing/fishing/fishing-lures/1781244/gamakatsu-single-egg-hook-gold-10-pack-size-8-b263878d-a5f9-4a46-8a0a-2efb0642a804-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 3.73,
-      "price_regular": null,
-      "discount_pct": null,
-      "profit_est": -3.72,
-      "roi_pct": -86.67,
-      "fees_est": 2.85,
-      "shipping_est": 8.99,
-      "profit_net": 3.42,
-      "roi_pct_net": 91.73,
-      "low_cost_outlier": true,
-      "score": 0,
-      "revenue_source": "ebay",
-      "sell_price": 18.99,
-      "keepa_sales_per_month": null,
-      "match_confidence": 0.85,
-      "is_confirmed": false,
-      "match_method": "model_number",
-      "query_used": "Gamakatsu 4205"
+      "query_used": "Mr. Coffee 2168820",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Mr. Coffee Programmable 3-Way Brewing System 12-Cup Drip Coffee Maker New Sealed",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/c4cAAeSwL15pWYlw/s-l225.jpg",
+        "price": 62.239999999999995,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.1
+        }
+      }
     },
     {
       "key": "ct|sku:0323960",
@@ -2379,7 +3770,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Treksafe Automotive 12115"
+      "query_used": "Treksafe Automotive 12115",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Treksafe Automotive 12v Heated Travel Blanket Black & Red NEW - FREE SHIPPING",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/EwAAAOSwg9Bid~CD/s-l225.jpg",
+        "price": 20.994999999999997,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.08
+        }
+      }
     },
     {
       "key": "ct|sku:0489018",
@@ -2406,7 +3814,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Rust-Oleum 355964"
+      "query_used": "Rust-Oleum 355964",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Rust-Oleum 344763 Automotive 2-In-1 Rust Reform & Seal, Quart, Black",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/-R0AAeSwUxxpbBBH/s-l225.jpg",
+        "price": 27.77,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.04
+        }
+      }
     },
     {
       "key": "ct|sku:0526124",
@@ -2433,7 +3858,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "NOMA 2019014"
+      "query_used": "NOMA 2019014",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Old Noma Christmas Lights",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/~8cAAeSwwsNphRcy/s-l225.jpg",
+        "price": 23.494999999999997,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1513294",
@@ -2460,7 +3902,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "15132942"
+      "query_used": "15132942",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Front Right Passenger Side Door Lock Actuator Motor Fit For Acura MDX TL TSX",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/mlUAAOSwW1dmvKej/s-l225.jpg",
+        "price": 18.89,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
     },
     {
       "key": "ct|sku:0480937",
@@ -2487,7 +3946,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Minwax CM1082000"
+      "query_used": "Minwax CM1082000",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Minwax 785004444 Paste Finishing Wax, 1 lb, Natural",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/nrsAAOSwotVi90TC/s-l225.jpg",
+        "price": 19.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0528002",
@@ -2514,7 +3990,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "NOMA 56913"
+      "query_used": "NOMA 56913",
+      "ebay_match": {
+        "item_id": null,
+        "title": "2 Noma 15 Indoor/Outdoor Lite Set C7 1/2 Bulbs.NIB 1989",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/eKcAAeSwQrJo--2o/s-l225.jpg",
+        "price": 24.95,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
     },
     {
       "key": "ct|sku:1783881",
@@ -2541,7 +4034,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Lunkerhunt CBJ201"
+      "query_used": "Lunkerhunt CBJ201",
+      "ebay_match": {
+        "item_id": null,
+        "title": "FREE SHIPPING Lunkerhunt Topwater Bait - Ghost 28853 88177",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/zxwAAOSwUmFoWa3I/s-l225.jpg",
+        "price": 18.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.06
+        }
+      }
     },
     {
       "key": "ct|sku:1518403",
@@ -2568,7 +4078,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "15184034"
+      "query_used": "15184034",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Part 15179643 Seal",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/-moAAOSw9eVXXJqX/s-l225.jpg",
+        "price": 26.77,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1783868",
@@ -2595,7 +4122,68 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Lunkerhunt FLTJ303"
+      "query_used": "Lunkerhunt FLTJ303",
+      "ebay_match": {
+        "item_id": null,
+        "title": "LUNKERHUNT FINESSE BAITS",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/aWIAAOSwB19nMS3H/s-l225.jpg",
+        "price": 18.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.12
+        }
+      }
+    },
+    {
+      "key": "ct|sku:0524847",
+      "title": "Rail d'éclairage à 3 lampes abat-jour en verre blanc dégradé NOMA Madrid, nickel mat",
+      "part_number": "052-4847-8",
+      "model_number": "59186",
+      "model_number_norm": "59186",
+      "url": "https://www.canadiantire.ca/fr/pdp/rail-d-eclairage-a-3-lampes-abat-jour-en-verre-blanc-degrade-noma-madrid-nickel-mat-0524847p.html",
+      "image": "https://media-www.canadiantire.ca/product/living/home-decor/lighting/0524847/3-light-madrid-matte-nickel-track-fixture-e4e05163-1cc3-488b-b1ef-9eec6183eed6-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 49.93,
+      "price_regular": null,
+      "discount_pct": null,
+      "profit_est": -54.0,
+      "roi_pct": -94.06,
+      "fees_est": 3.37,
+      "shipping_est": 8.99,
+      "profit_net": -39.84,
+      "roi_pct_net": -79.79,
+      "low_cost_outlier": false,
+      "score": 0,
+      "revenue_source": "ebay",
+      "sell_price": 22.45,
+      "keepa_sales_per_month": null,
+      "match_confidence": 0.85,
+      "is_confirmed": false,
+      "match_method": "model_number",
+      "query_used": "NOMA 59186",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Noma Double Lights 100 Christmas 35' Light Set~Red Clear & Clear Blue Bulbs {18}",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/4UQAAeSwZjppQuxE/s-l225.jpg",
+        "price": 22.45,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.04
+        }
+      }
     },
     {
       "key": "ct|sku:0529514",
@@ -2622,34 +4210,68 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Globe 89797"
+      "query_used": "Globe 89797",
+      "ebay_match": {
+        "item_id": null,
+        "title": "globe Himalayan Salt Lamp (brand new)",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/fZQAAOSwTKdoWv8C/s-l225.jpg",
+        "price": 19.95,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
-      "key": "ct|sku:0524847",
-      "title": "Rail d'éclairage à 3 lampes abat-jour en verre blanc dégradé NOMA Madrid, nickel mat",
-      "part_number": "052-4847-8",
-      "model_number": "59186",
-      "model_number_norm": "59186",
-      "url": "https://www.canadiantire.ca/fr/pdp/rail-d-eclairage-a-3-lampes-abat-jour-en-verre-blanc-degrade-noma-madrid-nickel-mat-0524847p.html",
-      "image": "https://media-www.canadiantire.ca/product/living/home-decor/lighting/0524847/3-light-madrid-matte-nickel-track-fixture-e4e05163-1cc3-488b-b1ef-9eec6183eed6-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 49.93,
+      "key": "ct|sku:0526115",
+      "title": "Applique murale d'extérieur abat-jour martelé transparent NOMA, fini noir mat",
+      "part_number": "052-6115-8",
+      "model_number": "44764",
+      "model_number_norm": "44764",
+      "url": "https://www.canadiantire.ca/fr/pdp/applique-murale-d-exterieur-abat-jour-martele-transparent-noma-fini-noir-mat-0526115p.html",
+      "image": "https://media-www.canadiantire.ca/product/living/home-decor/lighting/0526115/noma-rockwell-outdoor-down-light-25e5bdd1-b21c-4e28-9133-81ccbde1ef3c-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 24.93,
       "price_regular": null,
       "discount_pct": null,
-      "profit_est": -55.19,
-      "roi_pct": -96.14,
-      "fees_est": 3.15,
+      "profit_est": -27.27,
+      "roi_pct": -95.13,
+      "fees_est": 3.0,
       "shipping_est": 8.99,
-      "profit_net": -41.07,
-      "roi_pct_net": -82.26,
+      "profit_net": -16.92,
+      "roi_pct_net": -67.89,
       "low_cost_outlier": false,
       "score": 0,
       "revenue_source": "ebay",
-      "sell_price": 20.994999999999997,
+      "sell_price": 19.994999999999997,
       "keepa_sales_per_month": null,
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "NOMA 59186"
+      "query_used": "NOMA 44764",
+      "ebay_match": {
+        "item_id": null,
+        "title": "2 Noma 15 Indoor/Outdoor Lite Set C7 1/2 Bulbs.NIB 1989",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/eKcAAeSwQrJo--2o/s-l225.jpg",
+        "price": 19.994999999999997,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0529503",
@@ -2662,21 +4284,38 @@
       "price_sale": 34.93,
       "price_regular": null,
       "discount_pct": null,
-      "profit_est": -38.77,
-      "roi_pct": -96.53,
+      "profit_est": -38.76,
+      "roi_pct": -96.52,
       "fees_est": 3.0,
       "shipping_est": 8.99,
-      "profit_net": -26.93,
-      "roi_pct_net": -77.09,
+      "profit_net": -26.92,
+      "roi_pct_net": -77.08,
       "low_cost_outlier": false,
       "score": 0,
       "revenue_source": "ebay",
-      "sell_price": 19.99,
+      "sell_price": 19.994999999999997,
       "keepa_sales_per_month": null,
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "NOMA 59095"
+      "query_used": "NOMA 59095",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Noma Battery Operated 10 Lite Set Christmas Multi Color String Lights New NOS",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/5RwAAeSw9OJo7c6b/s-l225.jpg",
+        "price": 19.994999999999997,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0529874",
@@ -2703,34 +4342,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "NOMA 79747"
-    },
-    {
-      "key": "ct|sku:0526115",
-      "title": "Applique murale d'extérieur abat-jour martelé transparent NOMA, fini noir mat",
-      "part_number": "052-6115-8",
-      "model_number": "44764",
-      "model_number_norm": "44764",
-      "url": "https://www.canadiantire.ca/fr/pdp/applique-murale-d-exterieur-abat-jour-martele-transparent-noma-fini-noir-mat-0526115p.html",
-      "image": "https://media-www.canadiantire.ca/product/living/home-decor/lighting/0526115/noma-rockwell-outdoor-down-light-25e5bdd1-b21c-4e28-9133-81ccbde1ef3c-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 24.93,
-      "price_regular": null,
-      "discount_pct": null,
-      "profit_est": -28.09,
-      "roi_pct": -98.01,
-      "fees_est": 2.85,
-      "shipping_est": 8.99,
-      "profit_net": -17.78,
-      "roi_pct_net": -71.31,
-      "low_cost_outlier": false,
-      "score": 0,
-      "revenue_source": "ebay",
-      "sell_price": 18.99,
-      "keepa_sales_per_month": null,
-      "match_confidence": 0.85,
-      "is_confirmed": false,
-      "match_method": "model_number",
-      "query_used": "NOMA 44764"
+      "query_used": "NOMA 79747",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Vintage 1950s Box of NOMA Decorative Lighting Products Christmas Lights WORKS",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/7e8AAeSwMjFpMdqN/s-l225.jpg",
+        "price": 19.994999999999997,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0203820",
@@ -2757,7 +4386,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Alpena 77279"
+      "query_used": "Alpena 77279",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Alpena 78234 alpena toughpods 78234",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/V-AAAeSwnRVpXTQA/s-l225.jpg",
+        "price": 18.85,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.12
+        }
+      }
     },
     {
       "key": "ct|sku:0402965",
@@ -2784,7 +4430,68 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Richelieu 7234BLBC"
+      "query_used": "Richelieu 7234BLBC",
+      "ebay_match": {
+        "item_id": null,
+        "title": "30 Pack - Richelieu Contemporary Metal Pull 128mm Stainless Steel BP13101128170",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/XioAAOSwgQ5nksob/s-l225.jpg",
+        "price": 18.86,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
+    },
+    {
+      "key": "ct|sku:0529611",
+      "title": "Ampoules à filament à DEL à intensité variable à culot E26 NOMA B10, blanc chaud, 40 W",
+      "part_number": "052-9611-8",
+      "model_number": "31402",
+      "model_number_norm": "31402",
+      "url": "https://www.canadiantire.ca/fr/pdp/ampoules-a-filament-a-del-a-intensite-variable-a-culot-e26-noma-b10-blanc-chaud-40-w-0529611p.html",
+      "image": "https://media-www.canadiantire.ca/product/fixing/electrical/light-bulbs/0529611/noma-40w-b10-warm-white-led-bulbs-2-pack-d8ccbe5a-899c-490e-b5f8-348c1c9af633-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 4.93,
+      "price_regular": null,
+      "discount_pct": null,
+      "profit_est": -5.63,
+      "roi_pct": -99.24,
+      "fees_est": 2.75,
+      "shipping_est": 8.99,
+      "profit_net": 1.67,
+      "roi_pct_net": 33.94,
+      "low_cost_outlier": true,
+      "score": 0,
+      "revenue_source": "ebay",
+      "sell_price": 18.345,
+      "keepa_sales_per_month": null,
+      "match_confidence": 0.85,
+      "is_confirmed": false,
+      "match_method": "model_number",
+      "query_used": "NOMA 31402",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Vintage 3851 Noma Italian Style 50 Mini-Lites Flashing Or Non Flashing New.",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/g5YAAOSwdV9kN-tM/s-l225.jpg",
+        "price": 18.345,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.04
+        }
+      }
     },
     {
       "key": "ct|sku:0711932",
@@ -2811,7 +4518,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "RALEIGH K522700992"
+      "query_used": "RALEIGH K522700992",
+      "ebay_match": {
+        "item_id": null,
+        "title": "1972 Raleigh Sports.  Original One Owner Garaged.  Sturmey Archer 3 Spd SW Hub",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/T-kAAeSwgTFpflGP/s-l225.jpg",
+        "price": 23.08,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
     },
     {
       "key": "ct|sku:0370124",
@@ -2838,7 +4562,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Mobicool MT45W AC/DC"
+      "query_used": "Mobicool MT45W AC/DC",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Mobicool Y50 AC/DC 220-240v AC/12v DC",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/-y0AAOSwkTNi3Jkx/s-l225.jpg",
+        "price": 14.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0479388",
@@ -2865,7 +4606,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Bondo 7100199953"
+      "query_used": "Bondo 7100199953",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Bondo",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/MbMAAeSwvQ5pYTKC/s-l225.jpg",
+        "price": 17.85,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.2
+        }
+      }
     },
     {
       "key": "ct|sku:0437126",
@@ -2892,7 +4650,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "04371268"
+      "query_used": "04371268",
+      "ebay_match": {
+        "item_id": null,
+        "title": "(2pcs)043333",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/NWQAAOSwRa5m8-3q/s-l225.jpg",
+        "price": 8.43,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1427725",
@@ -2919,7 +4694,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Interdesign 70077C"
+      "query_used": "Interdesign 70077C",
+      "ebay_match": {
+        "item_id": null,
+        "title": "InterDesign 3 in. H x 4 in. W x 12 in. L Clear Plastic Drawer Organizer",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/SrgAAeSwsaBpg-V0/s-l225.jpg",
+        "price": 16.66,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0777636",
@@ -2946,7 +4738,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "LiveTarget YPS113MS714"
+      "query_used": "LiveTarget YPS113MS714",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Live Target Yellow Perch Swimbait 4.5 Inches (YPS113MS) Pick from 2 Colors",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/7ooAAOSwhHlkWMUM/s-l225.jpg",
+        "price": 16.98,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.06
+        }
+      }
     },
     {
       "key": "ct|sku:1757085",
@@ -2973,7 +4782,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Quaker Boy 11131"
+      "query_used": "Quaker Boy 11131",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Quaker Boy 11104 Pro III,Multi",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/tLIAAeSwcVxpdvzb/s-l225.jpg",
+        "price": 14.19,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.17
+        }
+      }
     },
     {
       "key": "ct|sku:0497083",
@@ -3000,7 +4826,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Scotch 7100110921"
+      "query_used": "Scotch 7100110921",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Scotch - Multi Purpose - 8in - Blue - New",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/B00AAOSw2ydnZJv3/s-l225.jpg",
+        "price": 15.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0390494",
@@ -3027,7 +4870,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Meguiars G14024C"
+      "query_used": "Meguiars G14024C",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Meguiars MGL-G180724",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/U2UAAeSwdBxpS6LO/s-l225.jpg",
+        "price": 12.77,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0577234",
@@ -3054,7 +4914,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Irwin IWHT36626"
+      "query_used": "Irwin IWHT36626",
+      "ebay_match": {
+        "item_id": null,
+        "title": "IRWIN",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/HGQAAeSwbdppg8Tx/s-l225.jpg",
+        "price": 15.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.11
+        }
+      }
     },
     {
       "key": "ct|sku:0355191",
@@ -3081,7 +4958,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Fuse 6069C"
+      "query_used": "Fuse 6069C",
+      "ebay_match": {
+        "item_id": null,
+        "title": "SPECIALTY HARDWARE 60690 Bussmann GMA Cartridge Fast Acting Fuse with Indicator,",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/EUoAAeSwvcFpfKpW/s-l225.jpg",
+        "price": 15.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0770273",
@@ -3108,7 +5002,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Berkley Gulp! GMI2-BS"
+      "query_used": "Berkley Gulp! GMI2-BS",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Berkley Gulp! Minnow (2.5\" - 4\")",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/AEsAAeSwdwxpc6PF/s-l225.jpg",
+        "price": 13.620000000000001,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.09
+        }
+      }
     },
     {
       "key": "ct|sku:0397080",
@@ -3135,7 +5046,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Armor All E303984900"
+      "query_used": "Armor All E303984900",
+      "ebay_match": {
+        "item_id": null,
+        "title": "armor all 203659b 1 each",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/gisAAeSwlhJpQcGE/s-l225.jpg",
+        "price": 10.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.08
+        }
+      }
     },
     {
       "key": "ct|sku:0787782",
@@ -3162,7 +5090,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Berkley Gulp! GMI4-BS"
+      "query_used": "Berkley Gulp! GMI4-BS",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Berkley Gulp Black Shad 4 Inch Minnow Bait 8 Pack Ideal For All Species Fishing",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/zNIAAeSwxZpov0tf/s-l225.jpg",
+        "price": 12.4,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.11
+        }
+      }
     },
     {
       "key": "ct|sku:0785391",
@@ -3189,7 +5134,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Berkley Gulp! GMI3-BS"
+      "query_used": "Berkley Gulp! GMI3-BS",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Berkley Gulp! Minnow (2.5\" - 4\")",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/AEsAAeSwdwxpc6PF/s-l225.jpg",
+        "price": 12.4,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.09
+        }
+      }
     },
     {
       "key": "ct|sku:0778517",
@@ -3216,7 +5178,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "HT Enterprises PKA-16"
+      "query_used": "HT Enterprises PKA-16",
+      "ebay_match": {
+        "item_id": null,
+        "title": "HT Ice Fish'n Kit",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/O~IAAOSwhZpZ3WsS/s-l225.jpg",
+        "price": 11.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0545579",
@@ -3243,7 +5222,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "3M 7100200065"
+      "query_used": "3M 7100200065",
+      "ebay_match": {
+        "item_id": null,
+        "title": "3M Ultra Durable Detail Sanding Sheets, 60 grit, Mouse4pk60, 4/pk",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/Er0AAOSwj9Nl45zs/s-l225.jpg",
+        "price": 11.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.07
+        }
+      }
     },
     {
       "key": "ct|sku:1429201",
@@ -3270,7 +5266,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "The Home Edit 04334CA"
+      "query_used": "The Home Edit 04334CA",
+      "ebay_match": {
+        "item_id": null,
+        "title": "The Home Edit",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/YCkAAeSwuKNolpCS/s-l225.jpg",
+        "price": 15.565000000000001,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.23
+        }
+      }
     },
     {
       "key": "ct|sku:0259110",
@@ -3297,7 +5310,24 @@
       "match_confidence": 0.7,
       "is_confirmed": false,
       "match_method": "part_number",
-      "query_used": "Haynes 72070"
+      "query_used": "Haynes 72070",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Haynes TECHBOOK Automotive Reference Manual & Illustrated Dictionary MN303",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/odMAAOSwzJ5lcLUe/s-l225.jpg",
+        "price": 13.57,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "MED",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0528225",
@@ -3324,7 +5354,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Leviton 05603-768"
+      "query_used": "Leviton 05603-768",
+      "ebay_match": {
+        "item_id": null,
+        "title": "🔥(AN) ***QTY 10*** Leviton 05603-2IS Ivory ***FREE SHIPPING***",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/VCQAAeSwn0Fo7odZ/s-l225.jpg",
+        "price": 15.0,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0492544",
@@ -3351,7 +5398,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Handy 1700-CC"
+      "query_used": "Handy 1700-CC",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Handy Snap Paint Cup",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/9wUAAOSwos5ksT8J/s-l225.jpg",
+        "price": 9.71,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0782627",
@@ -3378,7 +5442,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Northland PJ2-6"
+      "query_used": "Northland PJ2-6",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Northland Float 'n Head or  Gumdrop Phelps Floater Soft Floatn Jig Trout Walleye",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/~tAAAOSwwYdnxeKo/s-l225.jpg",
+        "price": 11.6,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.12
+        }
+      }
     },
     {
       "key": "ct|sku:0774437",
@@ -3405,7 +5486,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Danielson EQSWW"
+      "query_used": "Danielson EQSWW",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Danielson Weight Steel Sinker Selection 35-Pc",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/pC8AAeSwyV5phNCt/s-l225.jpg",
+        "price": 9.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1426449",
@@ -3432,34 +5530,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "TRUDEAU 450894560"
-    },
-    {
-      "key": "ct|sku:0779573",
-      "title": "Hameçons à mouche Mustad Streamer 5XL, paq. 25",
-      "part_number": null,
-      "model_number": "R75NP",
-      "model_number_norm": "R75NP",
-      "url": "https://www.canadiantire.ca/fr/pdp/hamecons-a-mouche-mustad-streamer-5xl-paq-25-0779573p.html",
-      "image": "https://media-www.canadiantire.ca/product/playing/fishing/fishing-lures/0779573/mustad-stream-hook-5-times-long-size-10-fd58469a-9d45-4f1b-8205-5c0bfbb2121b-jpgrendition.jpg?im=whresize&wid=200&hei=200",
-      "price_sale": 1.43,
-      "price_regular": null,
-      "discount_pct": null,
-      "profit_est": -3.94,
-      "roi_pct": -239.53,
-      "fees_est": 2.32,
-      "shipping_est": 8.99,
-      "profit_net": 2.75,
-      "roi_pct_net": 192.36,
-      "low_cost_outlier": true,
-      "score": 0,
-      "revenue_source": "ebay",
-      "sell_price": 15.495000000000001,
-      "keepa_sales_per_month": null,
-      "match_confidence": 0.85,
-      "is_confirmed": false,
-      "match_method": "model_number",
-      "query_used": "Mustad R75NP"
+      "query_used": "TRUDEAU 450894560",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Trudeau",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/DWcAAeSwqDtpg85q/s-l225.jpg",
+        "price": 15.56,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0545588",
@@ -3486,7 +5574,68 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "3M 7100188469"
+      "query_used": "3M 7100188469",
+      "ebay_match": {
+        "item_id": null,
+        "title": "3M Rapid Removal 3 x 18 inch Power Sanding Belt, 60 grit,Belt3x181pk60, 1 pk",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/8xYAAOSwD~Vnlzw0/s-l225.jpg",
+        "price": 9.99,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.1
+        }
+      }
+    },
+    {
+      "key": "ct|sku:0779573",
+      "title": "Hameçons à mouche Mustad Streamer 5XL, paq. 25",
+      "part_number": null,
+      "model_number": "R75NP",
+      "model_number_norm": "R75NP",
+      "url": "https://www.canadiantire.ca/fr/pdp/hamecons-a-mouche-mustad-streamer-5xl-paq-25-0779573p.html",
+      "image": "https://media-www.canadiantire.ca/product/playing/fishing/fishing-lures/0779573/mustad-stream-hook-5-times-long-size-10-fd58469a-9d45-4f1b-8205-5c0bfbb2121b-jpgrendition.jpg?im=whresize&wid=200&hei=200",
+      "price_sale": 1.43,
+      "price_regular": null,
+      "discount_pct": null,
+      "profit_est": -4.75,
+      "roi_pct": -289.16,
+      "fees_est": 2.17,
+      "shipping_est": 8.99,
+      "profit_net": 1.9,
+      "roi_pct_net": 133.22,
+      "low_cost_outlier": true,
+      "score": 0,
+      "revenue_source": "ebay",
+      "sell_price": 14.5,
+      "keepa_sales_per_month": null,
+      "match_confidence": 0.85,
+      "is_confirmed": false,
+      "match_method": "model_number",
+      "query_used": "Mustad R75NP",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Mustad DRY SIGNATURE FLY HOOK - 3X LONG R43NP-BR Choose Size + Qty",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/7WMAAOSwKNFjl2e0/s-l225.jpg",
+        "price": 14.5,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
     },
     {
       "key": "ct|sku:0779520",
@@ -3513,7 +5662,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Mustad R50NP-BR-1"
+      "query_used": "Mustad R50NP-BR-1",
+      "ebay_match": {
+        "item_id": null,
+        "title": "50 MUSTAD SIGNATURE DRY FLY HOOKS R50NPBR",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/HCQAAOSwnSBetloy/s-l225.jpg",
+        "price": 15.7,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1780640",
@@ -3540,7 +5706,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Northland JJ2-10"
+      "query_used": "Northland JJ2-10",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Northland  1/16 Tackle Gypsi Jigs  (Lot of 4-Packs-Chartreuse-2 per pack)",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/K4oAAOSwH1xoW1Ye/s-l225.jpg",
+        "price": 11.4,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.15
+        }
+      }
     },
     {
       "key": "ct|sku:0784909",
@@ -3567,7 +5750,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Red Wolf WS-1"
+      "query_used": "Red Wolf WS-1",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Red Wolf",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/~SoAAeSwCBdpX-Xl/s-l225.jpg",
+        "price": 11.5,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0772567",
@@ -3594,7 +5794,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Northland WJ3-22"
+      "query_used": "Northland WJ3-22",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Northland Fishing, Weed-Weasel®, 1/8 oz. x #2 Hook, Firetiger",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/vIIAAOSwZd1k81ul/s-l225.jpg",
+        "price": 4.49,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.18
+        }
+      }
     },
     {
       "key": "ct|sku:0789628",
@@ -3621,7 +5838,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Mustad 77121-BR-9-3"
+      "query_used": "Mustad 77121-BR-9-3",
+      "ebay_match": {
+        "item_id": null,
+        "title": "36-Mustad Needle Power Point 39117BR 3/0 Fishing Bronze Worm Hooks 6 Packs of 6",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/scQAAeSwzz5pWpdP/s-l225.jpg",
+        "price": 14.475,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0528222",
@@ -3648,7 +5882,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Leviton 05601-738"
+      "query_used": "Leviton 05601-738",
+      "ebay_match": {
+        "item_id": null,
+        "title": "LEVITON 05601-2 BROWN DECORA SWITCH 15A-130/277VAC NOS NEW",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/hroAAeSw1uJova7O/s-l225.jpg",
+        "price": 14.275,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:1513573",
@@ -3675,7 +5926,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Kinder XCA01080"
+      "query_used": "Kinder XCA01080",
+      "ebay_match": {
+        "item_id": null,
+        "title": "9 Kinder Italia Complete K03 Ale 3",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/5D0AAOSwaF5eqWeY/s-l225.jpg",
+        "price": 7.8950000000000005,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.05
+        }
+      }
     },
     {
       "key": "ct|sku:0508449",
@@ -3702,7 +5970,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Hasbro Games F1699"
+      "query_used": "Hasbro Games F1699",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Monopoly Hasbro Gaming Bid Game",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/xmEAAeSwELNpFiCy/s-l225.jpg",
+        "price": 5.5,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.0
+        }
+      }
     },
     {
       "key": "ct|sku:0528287",
@@ -3729,7 +6014,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Leviton RE151-742"
+      "query_used": "Leviton RE151-742",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Leviton RE153-GC Switches",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/PeMAAOSwEQdn9Hgu/s-l225.jpg",
+        "price": 5.155,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.04
+        }
+      }
     },
     {
       "key": "ct|sku:0528070",
@@ -3756,7 +6058,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Feit Electric BP35JCD830LE"
+      "query_used": "Feit Electric BP35JCD830LE",
+      "ebay_match": {
+        "item_id": null,
+        "title": "Feit 35 Watt Clear Light Bulb Bi Pin BPQ35T4/JCD",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/oJ4AAOSwO4VnPOWa/s-l225.jpg",
+        "price": 11.95,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": false,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.09
+        }
+      }
     },
     {
       "key": "ct|sku:0789013",
@@ -3783,7 +6102,24 @@
       "match_confidence": 0.85,
       "is_confirmed": false,
       "match_method": "model_number",
-      "query_used": "Mustad MACKEREL4-1"
+      "query_used": "Mustad MACKEREL4-1",
+      "ebay_match": {
+        "item_id": null,
+        "title": "3 - 100 CT. BOXES OF MUSTAD ALL AROUND HOOKS,   1 EACH OF 3/0 4/0 5/0 300 TOTAL!",
+        "item_web_url": null,
+        "image": "https://i.ebayimg.com/images/g/Fx8AAeSwfTVohWFp/s-l225.jpg",
+        "price": 10.49,
+        "shipping": null,
+        "condition": null,
+        "seller": null,
+        "match_confidence": "HIGH",
+        "match_signals": {
+          "brand_match": true,
+          "model_match": false,
+          "part_number_match": false,
+          "title_similarity": 0.09
+        }
+      }
     }
   ]
 }
