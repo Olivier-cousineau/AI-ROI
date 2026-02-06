@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -90,16 +91,52 @@ def _title_similarity(left: object, right: object) -> float:
     return round(overlap / union, 2)
 
 
-def _confidence_label(match_confidence: object) -> str:
-    try:
-        confidence = float(match_confidence)
-    except (TypeError, ValueError):
-        confidence = 0.0
-    if confidence >= 0.85:
+def _tokenize_image_url(url: object) -> set[str]:
+    if not isinstance(url, str):
+        return set()
+    return {
+        token
+        for token in re.split(r"[^a-z0-9]+", url.lower())
+        if len(token) >= 3 and token not in {"https", "http", "www", "com", "jpg", "jpeg", "png", "webp", "img", "image"}
+    }
+
+
+def _image_match_score(deal_image: object, ebay_image: object) -> float:
+    deal_tokens = _tokenize_image_url(deal_image)
+    ebay_tokens = _tokenize_image_url(ebay_image)
+    if not deal_tokens or not ebay_tokens:
+        return 0.0
+    overlap = len(deal_tokens & ebay_tokens)
+    union = len(deal_tokens | ebay_tokens)
+    if union == 0:
+        return 0.0
+    return round(overlap / union, 2)
+
+
+def _confidence_label_from_signals(
+    *,
+    brand_match: bool,
+    model_match: bool,
+    part_match: bool,
+    image_match: bool,
+    title_similarity: float,
+) -> str:
+    core = [model_match, part_match, image_match]
+    core_count = sum(1 for signal in core if signal)
+    mid = brand_match and title_similarity >= 0.55
+
+    if ((model_match or part_match) and image_match) or (image_match and mid):
         return "HIGH"
-    if confidence >= 0.65:
+    if (image_match and (model_match or part_match)) or (model_match or part_match) or (core_count >= 2):
         return "MED"
-    return "LOW"
+    if core_count == 1 or mid:
+        return "LOW"
+    return "NONE"
+
+
+def _confidence_rank(label: str | None) -> int:
+    mapping = {"NONE": 0, "LOW": 1, "MED": 2, "HIGH": 3}
+    return mapping.get((label or "").upper(), 0)
 
 
 def _build_ebay_match(deal_payload: dict[str, object], market_payload: dict[str, object]) -> dict[str, object] | None:
@@ -131,6 +168,19 @@ def _build_ebay_match(deal_payload: dict[str, object], market_payload: dict[str,
             "feedback_percent": _to_number(seller_payload.get("feedback_percent")),
         }
 
+    image_match_score = _to_number(market_payload.get("image_match_score"))
+    if image_match_score is None:
+        image_match_score = _image_match_score(deal_payload.get("image"), ebay_image)
+    image_match_score = max(0.0, min(1.0, image_match_score))
+    image_match = image_match_score >= 0.80
+    confidence_label = _confidence_label_from_signals(
+        brand_match=brand_match,
+        model_match=model_match,
+        part_match=part_match,
+        image_match=image_match,
+        title_similarity=title_similarity,
+    )
+
     return {
         "item_id": item_id,
         "title": ebay_title,
@@ -140,11 +190,13 @@ def _build_ebay_match(deal_payload: dict[str, object], market_payload: dict[str,
         "shipping": _to_number(market_payload.get("ebay_shipping")),
         "condition": market_payload.get("ebay_condition"),
         "seller": seller,
-        "match_confidence": _confidence_label(market_payload.get("match_confidence")),
+        "match_confidence": confidence_label,
         "match_signals": {
             "brand_match": brand_match,
             "model_match": model_match,
             "part_number_match": part_match,
+            "image_match": image_match,
+            "image_match_score": image_match_score,
             "title_similarity": title_similarity,
         },
     }
@@ -174,6 +226,11 @@ def compute_results(
 
         deal = DealInput.model_validate(deal_payload)
         keepa = KeepaManualInput.model_validate(keepa_payload)
+
+        ebay_match = _build_ebay_match(deal_payload, market_payload)
+        match_label = ebay_match.get("match_confidence") if isinstance(ebay_match, dict) else None
+        if _confidence_rank(str(match_label) if match_label is not None else None) < _confidence_rank("MED"):
+            continue
 
         roi_output = compute_roi(deal, market, keepa)
         sell_price = (
@@ -234,7 +291,7 @@ def compute_results(
                 "is_confirmed": is_confirmed,
                 "match_method": market_payload.get("match_method"),
                 "query_used": market_payload.get("query_used"),
-                "ebay_match": _build_ebay_match(deal_payload, market_payload),
+                "ebay_match": ebay_match,
             }
         )
 
