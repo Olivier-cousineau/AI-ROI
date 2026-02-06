@@ -81,6 +81,9 @@ Variables d'environnement utiles:
 - `MAX_MARKETPLACE_ITEMS` (défaut: 25)
 - `EBAY_CONCURRENCY` (défaut: 1)
 - `EBAY_MIN_DELAY_MS` (défaut: 1200)
+- `EBAY_ACCESS_TOKEN` (optionnel, prioritaire pour `/api/ebay/item`; sinon rafraîchissement via `.cache/ebay_token.json`)
+- `EBAY_ITEM_CACHE_DIR` (défaut: `/tmp/ai_roi_ebay_item_cache`)
+- `AI_ROI_RESULTS_PATH` (défaut: `output/roi_results.json`, utilisé par `/api/ai-roi/results`)
 
 ## Output principal
 

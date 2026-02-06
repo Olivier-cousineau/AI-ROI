@@ -61,6 +61,94 @@ def load_deals(path: Path) -> list[dict[str, object]]:
     return payload
 
 
+
+
+def _to_number(value: object) -> float | None:
+    try:
+        if value is None:
+            return None
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _normalize_token_text(value: object) -> str:
+    if not isinstance(value, str):
+        return ""
+    return " ".join(value.lower().split())
+
+
+def _title_similarity(left: object, right: object) -> float:
+    left_tokens = {token for token in _normalize_token_text(left).split(" ") if token}
+    right_tokens = {token for token in _normalize_token_text(right).split(" ") if token}
+    if not left_tokens or not right_tokens:
+        return 0.0
+    overlap = len(left_tokens & right_tokens)
+    union = len(left_tokens | right_tokens)
+    if union == 0:
+        return 0.0
+    return round(overlap / union, 2)
+
+
+def _confidence_label(match_confidence: object) -> str:
+    try:
+        confidence = float(match_confidence)
+    except (TypeError, ValueError):
+        confidence = 0.0
+    if confidence >= 0.85:
+        return "HIGH"
+    if confidence >= 0.65:
+        return "MED"
+    return "LOW"
+
+
+def _build_ebay_match(deal_payload: dict[str, object], market_payload: dict[str, object]) -> dict[str, object] | None:
+    item_id = market_payload.get("ebay_item_id") or market_payload.get("item_id")
+    ebay_title = market_payload.get("ebay_title")
+    ebay_price = market_payload.get("ebay_price")
+    ebay_image = market_payload.get("ebay_image")
+    ebay_url = market_payload.get("ebay_item_web_url") or market_payload.get("item_web_url")
+
+    if not any([item_id, ebay_title, ebay_price, ebay_image, ebay_url]):
+        return None
+
+    brand = deal_payload.get("brand") if isinstance(deal_payload.get("brand"), str) else None
+    part_number = deal_payload.get("part_number") if isinstance(deal_payload.get("part_number"), str) else None
+    model_number = deal_payload.get("model_number") if isinstance(deal_payload.get("model_number"), str) else None
+    ebay_title_str = ebay_title if isinstance(ebay_title, str) else ""
+
+    brand_match = bool(brand and brand.lower() in ebay_title_str.lower())
+    model_match = bool(model_number and str(model_number).lower() in ebay_title_str.lower())
+    part_match = bool(part_number and str(part_number).lower() in ebay_title_str.lower())
+
+    title_similarity = _title_similarity(deal_payload.get("title"), ebay_title)
+
+    seller_payload = market_payload.get("ebay_seller")
+    seller = None
+    if isinstance(seller_payload, dict):
+        seller = {
+            "username": seller_payload.get("username"),
+            "feedback_percent": _to_number(seller_payload.get("feedback_percent")),
+        }
+
+    return {
+        "item_id": item_id,
+        "title": ebay_title,
+        "item_web_url": ebay_url,
+        "image": ebay_image,
+        "price": _to_number(ebay_price),
+        "shipping": _to_number(market_payload.get("ebay_shipping")),
+        "condition": market_payload.get("ebay_condition"),
+        "seller": seller,
+        "match_confidence": _confidence_label(market_payload.get("match_confidence")),
+        "match_signals": {
+            "brand_match": brand_match,
+            "model_match": model_match,
+            "part_number_match": part_match,
+            "title_similarity": title_similarity,
+        },
+    }
+
 def compute_results(
     items: list[dict[str, object]],
     shipping_floor: float,
@@ -146,6 +234,7 @@ def compute_results(
                 "is_confirmed": is_confirmed,
                 "match_method": market_payload.get("match_method"),
                 "query_used": market_payload.get("query_used"),
+                "ebay_match": _build_ebay_match(deal_payload, market_payload),
             }
         )
 

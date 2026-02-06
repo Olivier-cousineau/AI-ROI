@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 
 from api.routes import router as api_router
+from api.web_routes import router as web_router
 from config.settings import Settings
 
 
@@ -27,6 +28,7 @@ def create_app() -> FastAPI:
 
     app = FastAPI(title=settings.app_name)
     app.include_router(api_router, prefix="/v1")
+    app.include_router(web_router)
     return app
 
 
