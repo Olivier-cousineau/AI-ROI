@@ -56,10 +56,22 @@ jobs:
           mkdir -p input/bestbuy
           cp -R econoplus/public/bestbuy/* input/bestbuy/
 
+      - name: Validate BestBuy deals input
+        run: |
+          ls -la econoplus/public/bestbuy
+          test -f econoplus/public/bestbuy/online.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path("econoplus/public/bestbuy/online.json").read_text(encoding="utf-8"))
+          print(f"BestBuy deals count: {len(payload)}")
+          PY
+
       - name: Build market-ready input
         run: >-
           python scripts/build_market_ready.py
-          --deals input/bestbuy/index/deals-80.json
+          --deals econoplus/public/bestbuy/online.json
           --out input/market_ready.json
           --max-marketplace-items ${MAX_MARKETPLACE_ITEMS}
 
@@ -76,8 +88,6 @@ jobs:
 
       - name: Recompute ROI
         run: |
-          ls -la econoplus/public/bestbuy
-          test -f econoplus/public/bestbuy/online.json
           python scripts/recompute_roi.py --source bestbuy --input econoplus/public/bestbuy/online.json --output output/roi_results.json --top 300
 
       - name: Commit results
