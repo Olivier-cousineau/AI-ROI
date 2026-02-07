@@ -60,10 +60,12 @@ jobs:
               exit 1
             fi
             echo "DEALS_FILE=${deals_file}" >> "$GITHUB_ENV"
+            echo "IS_TESTRUN=true" >> "$GITHUB_ENV"
             echo "MAX_MARKETPLACE_ITEMS=20" >> "$GITHUB_ENV"
             echo "MAX_EBAY_QUERIES=20" >> "$GITHUB_ENV"
           else
             echo "DEALS_FILE=econoplus/public/bestbuy/online.json" >> "$GITHUB_ENV"
+            echo "IS_TESTRUN=false" >> "$GITHUB_ENV"
             echo "MAX_EBAY_QUERIES=${MAX_MARKETPLACE_ITEMS}" >> "$GITHUB_ENV"
           fi
 
@@ -133,9 +135,42 @@ jobs:
           --output output/marketplace.json
           --max-ebay-queries ${MAX_EBAY_QUERIES}
 
+      - name: Validate marketplace output sample
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          marketplace_path = Path("output/marketplace.json")
+          payload = json.loads(marketplace_path.read_text(encoding="utf-8"))
+          print(f"Marketplace count: {len(payload)}")
+          print("Marketplace sample:", json.dumps(payload[0] if payload else {}, ensure_ascii=False))
+          PY
+
+      - name: Validate market-ready input sample keys
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          market_ready_path = Path("input/market_ready.json")
+          payload = json.loads(market_ready_path.read_text(encoding="utf-8"))
+          sample_keys = list(payload[0].keys()) if payload else []
+          print(f"Market-ready count: {len(payload)}")
+          print("Market-ready sample keys:", sample_keys)
+          PY
+
+      - name: Select ROI input
+        run: |
+          if [ "${IS_TESTRUN}" = "true" ]; then
+            echo "ROI_INPUT=input/market_ready.json" >> "$GITHUB_ENV"
+          else
+            echo "ROI_INPUT=${DEALS_FILE}" >> "$GITHUB_ENV"
+          fi
+
       - name: Recompute ROI
         run: |
-          python scripts/recompute_roi.py --source ${ROI_SOURCE} --input ${DEALS_FILE} --output output/roi_results.json --top ${ROI_TOP}
+          python scripts/recompute_roi.py --source ${ROI_SOURCE} --input ${ROI_INPUT} --output output/roi_results.json --top ${ROI_TOP}
 
       - name: Commit results
         env:
