@@ -1,0 +1,158 @@
+[
+  {
+    "title": "Sony WH-1000XM4 Wireless Noise Cancelling Headphones",
+    "price": 249.99,
+    "regularPrice": 399.99,
+    "url": "https://www.bestbuy.ca/en-ca/product/sony-wh-1000xm4-wireless-noise-cancelling-headphones/14631241",
+    "image": "https://example.com/images/sony-wh-1000xm4.jpg",
+    "sku": "14631241",
+    "brand": "Sony",
+    "model_number": "WH-1000XM4",
+    "store_slug": "online",
+    "deal": {
+      "title": "Sony WH-1000XM4 Wireless Noise Cancelling Headphones",
+      "price_sale": 249.99,
+      "price_regular": 399.99,
+      "source": "BestBuy",
+      "sku": "14631241",
+      "brand": "Sony",
+      "model_number": "WH-1000XM4",
+      "url": "https://www.bestbuy.ca/en-ca/product/sony-wh-1000xm4-wireless-noise-cancelling-headphones/14631241",
+      "image": "https://example.com/images/sony-wh-1000xm4.jpg"
+    },
+    "market": {
+      "amazon_price": null,
+      "ebay_price": 329.99,
+      "match_confidence": 0.88,
+      "is_confirmed": false,
+      "ebay_title": "Sony WH-1000XM4 Wireless Noise Cancelling Headphones",
+      "ebay_item_id": "1234567890",
+      "ebay_item_web_url": "https://www.ebay.com/itm/1234567890",
+      "ebay_image": "https://example.com/images/sony-wh-1000xm4-ebay.jpg",
+      "match_method": "model_number",
+      "query_used": "Sony WH-1000XM4"
+    },
+    "keepa": {
+      "sales_per_month": 120,
+      "avg_price": 349.99,
+      "rank": 850
+    }
+  },
+  {
+    "title": "Samsung 55\" QLED 4K TV Q70C",
+    "price": 799.99,
+    "regularPrice": 1199.99,
+    "url": "https://www.bestbuy.ca/en-ca/product/samsung-55-qled-4k-tv-q70c/17012345",
+    "image": "https://example.com/images/samsung-q70c.jpg",
+    "sku": "17012345",
+    "brand": "Samsung",
+    "model_number": "QN55Q70C",
+    "store_slug": "online",
+    "deal": {
+      "title": "Samsung 55\" QLED 4K TV Q70C",
+      "price_sale": 799.99,
+      "price_regular": 1199.99,
+      "source": "BestBuy",
+      "sku": "17012345",
+      "brand": "Samsung",
+      "model_number": "QN55Q70C",
+      "url": "https://www.bestbuy.ca/en-ca/product/samsung-55-qled-4k-tv-q70c/17012345",
+      "image": "https://example.com/images/samsung-q70c.jpg"
+    },
+    "market": {
+      "amazon_price": null,
+      "ebay_price": 999.99,
+      "match_confidence": 0.82,
+      "is_confirmed": false,
+      "ebay_title": "Samsung QN55Q70C 55-inch QLED 4K Smart TV",
+      "ebay_item_id": "2233445566",
+      "ebay_item_web_url": "https://www.ebay.com/itm/2233445566",
+      "ebay_image": "https://example.com/images/samsung-q70c-ebay.jpg",
+      "match_method": "model_number",
+      "query_used": "Samsung QN55Q70C"
+    },
+    "keepa": {
+      "sales_per_month": 42,
+      "avg_price": 1099.0,
+      "rank": 2100
+    }
+  },
+  {
+    "title": "Nintendo Switch OLED Console",
+    "price": 349.99,
+    "regularPrice": 449.99,
+    "url": "https://www.bestbuy.ca/en-ca/product/nintendo-switch-oled-console/15494025",
+    "image": "https://example.com/images/switch-oled.jpg",
+    "sku": "15494025",
+    "brand": "Nintendo",
+    "model_number": "HEG-001",
+    "store_slug": "online",
+    "deal": {
+      "title": "Nintendo Switch OLED Console",
+      "price_sale": 349.99,
+      "price_regular": 449.99,
+      "source": "BestBuy",
+      "sku": "15494025",
+      "brand": "Nintendo",
+      "model_number": "HEG-001",
+      "url": "https://www.bestbuy.ca/en-ca/product/nintendo-switch-oled-console/15494025",
+      "image": "https://example.com/images/switch-oled.jpg"
+    },
+    "market": {
+      "amazon_price": null,
+      "ebay_price": 399.99,
+      "match_confidence": 0.79,
+      "is_confirmed": false,
+      "ebay_title": "Nintendo Switch OLED Model HEG-001 White",
+      "ebay_item_id": "9988776655",
+      "ebay_item_web_url": "https://www.ebay.com/itm/9988776655",
+      "ebay_image": "https://example.com/images/switch-oled-ebay.jpg",
+      "match_method": "model_number",
+      "query_used": "Nintendo HEG-001"
+    },
+    "keepa": {
+      "sales_per_month": 75,
+      "avg_price": 429.0,
+      "rank": 1200
+    }
+  },
+  {
+    "title": "Dyson V8 Cordless Vacuum",
+    "price": 299.99,
+    "regularPrice": 449.99,
+    "url": "https://www.bestbuy.ca/en-ca/product/dyson-v8-cordless-vacuum/10293847",
+    "image": "https://example.com/images/dyson-v8.jpg",
+    "sku": "10293847",
+    "brand": "Dyson",
+    "model_number": "V8",
+    "store_slug": "online",
+    "deal": {
+      "title": "Dyson V8 Cordless Vacuum",
+      "price_sale": 299.99,
+      "price_regular": 449.99,
+      "source": "BestBuy",
+      "sku": "10293847",
+      "brand": "Dyson",
+      "model_number": "V8",
+      "url": "https://www.bestbuy.ca/en-ca/product/dyson-v8-cordless-vacuum/10293847",
+      "image": "https://example.com/images/dyson-v8.jpg"
+    },
+    "market": {
+      "amazon_price": null,
+      "ebay_price": 379.99,
+      "match_confidence": 0.8,
+      "is_confirmed": false,
+      "ebay_title": "Dyson V8 Cordless Vacuum Cleaner",
+      "ebay_item_id": "5566778899",
+      "ebay_item_web_url": "https://www.ebay.com/itm/5566778899",
+      "ebay_image": "https://example.com/images/dyson-v8-ebay.jpg",
+      "match_method": "model_number",
+      "query_used": "Dyson V8"
+    },
+    "keepa": {
+      "sales_per_month": 60,
+      "avg_price": 399.0,
+      "rank": 1750
+    }
+  }
+]
