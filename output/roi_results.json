@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-02-06T14:16:49.222905+00:00",
+  "generated_at": "2026-02-07T16:16:28.983677+00:00",
   "source": "BestBuy",
-  "input_file": "output/marketplace.json",
+  "input_file": "econoplus/public/bestbuy/online.json",
   "count_scored": 0,
   "count_filtered": 0,
   "results": []
