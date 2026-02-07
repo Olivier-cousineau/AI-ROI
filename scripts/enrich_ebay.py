@@ -7,6 +7,7 @@ import logging
 import os
 import re
 import time
+from statistics import median
 from pathlib import Path
 from typing import Any
 
@@ -183,6 +184,7 @@ def enrich_entries(
 
         plan = build_search_plan(deal_payload)
         best_result = None
+        sold_prices: list[float] = []
         for context in plan:
             query = context.get("query")
             pass_label = context.get("pass") or "C"
@@ -200,13 +202,18 @@ def enrich_entries(
                 stats["searched"] += 1
                 if EBAY_THROTTLE_SECONDS:
                     time.sleep(EBAY_THROTTLE_SECONDS)
-                raw_candidates = browse_client.search_items(query, limit=20, condition="NEW")
+                raw_candidates = browse_client.search_sold_items(query, limit=20, days=30)
                 candidates = [candidate.__dict__ for candidate in raw_candidates]
                 cache[query] = {"items": candidates, "ts": time.time()}
                 queries_made += 1
 
             result = match_ebay_candidates(deal_payload, candidates, pass_label, query)
             best_result = result
+            sold_prices = [
+                price
+                for price in (candidate.get("price") for candidate in candidates)
+                if isinstance(price, (int, float))
+            ]
             if result.status == "matched":
                 break
             if result.status == "ambiguous":
@@ -214,6 +221,13 @@ def enrich_entries(
 
         if best_result is None:
             continue
+        if sold_prices:
+            market_payload["ebay_sold_count_30d"] = len(sold_prices)
+            market_payload["ebay_median_sold_price"] = round(median(sold_prices), 2)
+            market_payload["ebay_price"] = market_payload["ebay_median_sold_price"]
+        else:
+            market_payload["ebay_sold_count_30d"] = 0
+            market_payload["ebay_median_sold_price"] = None
 
         market_payload["match_confidence"] = best_result.confidence
         market_payload["match_reason_codes"] = best_result.reason_codes
@@ -221,6 +235,7 @@ def enrich_entries(
             "brand_match": best_result.signals.brand_match,
             "model_match": best_result.signals.model_match,
             "model_exact": best_result.signals.model_exact,
+            "part_number_match": best_result.signals.part_number_match,
             "title_similarity": best_result.signals.title_similarity,
             "upc_match": best_result.signals.upc_match,
             "image_match": best_result.signals.image_match,
@@ -233,7 +248,7 @@ def enrich_entries(
             market_payload["ebay_item_id"] = candidate.get("item_id")
             market_payload["ebay_item_web_url"] = candidate.get("item_web_url")
             market_payload["ebay_title"] = candidate.get("title")
-            market_payload["ebay_price"] = candidate.get("price")
+            market_payload["ebay_price"] = market_payload.get("ebay_median_sold_price") or candidate.get("price")
             market_payload["ebay_shipping"] = candidate.get("shipping")
             market_payload["ebay_condition"] = candidate.get("condition")
             market_payload["ebay_image"] = candidate.get("image")
@@ -245,7 +260,7 @@ def enrich_entries(
             market_payload["is_confirmed"] = False
             reason = best_result.reason_codes[0] if best_result.reason_codes else "unmatched"
             stats["unmatched_by_reason"][reason] = stats["unmatched_by_reason"].get(reason, 0) + 1
-            market_payload["ebay_price"] = None
+            market_payload["ebay_price"] = market_payload.get("ebay_median_sold_price")
 
     _write_cache(cache)
     LOGGER.info(
@@ -255,6 +270,14 @@ def enrich_entries(
         stats["matched"],
         stats["ambiguous"],
         stats["unmatched_by_reason"],
+    )
+    unmatched_total = stats["total"] - stats["matched"] - stats["ambiguous"]
+    print(
+        "ebay_match totals matched={matched} unmatched={unmatched} reasons={reasons}".format(
+            matched=stats["matched"],
+            unmatched=unmatched_total,
+            reasons=stats["unmatched_by_reason"],
+        )
     )
     return entries, cache
 

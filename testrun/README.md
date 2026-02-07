@@ -9,12 +9,12 @@ This folder contains a small BestBuy-like input file used when running the
 2. Click **Run workflow**.
 3. Set the inputs:
    - `testrun`: `true`
-   - `testrun_file`: `testrun/input.json`
+   - `testrun_file`: `input/testrun/deals.json`
    - `source`: `bestbuy`
    - `top`: `300`
 
 The workflow will skip cloning EconoPlus, and it will use
-`testrun/input.json` as the deals input.
+`input/testrun/deals.json` as the deals input.
 
 ## Notes
 

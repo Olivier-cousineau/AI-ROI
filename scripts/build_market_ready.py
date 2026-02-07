@@ -87,6 +87,56 @@ def _coerce_discount_pct(price_sale: float | None, price_regular: float | None) 
     return round((1 - price_sale / price_regular) * 100, 2)
 
 
+def _resolve_source_label(deal: dict[str, Any], fallback: str = "Canadian Tire") -> str:
+    candidates = [
+        deal.get("source"),
+        deal.get("retailer"),
+        deal.get("retailer_name"),
+        deal.get("store"),
+    ]
+    for value in candidates:
+        if isinstance(value, str) and value.strip():
+            lowered = value.lower()
+            if "bestbuy" in lowered or "best buy" in lowered:
+                return "BestBuy"
+            if "canadian tire" in lowered:
+                return "Canadian Tire"
+    return fallback
+
+
+def _build_prefixed_key(
+    prefix: str,
+    deal: dict[str, Any],
+    index: int,
+    normalized_title: str,
+    sku: str | None,
+    url: str | None,
+) -> str:
+    candidates = [
+        deal.get("id"),
+        deal.get("deal_id"),
+        sku,
+        deal.get("product_id"),
+        deal.get("productId"),
+        deal.get("productID"),
+        deal.get("part_number"),
+        deal.get("model_number"),
+        url,
+        normalized_title,
+    ]
+    identifier = None
+    for value in candidates:
+        if isinstance(value, str) and value.strip():
+            identifier = value.strip()
+            break
+        if isinstance(value, (int, float)):
+            identifier = str(value).strip()
+            break
+    if not identifier:
+        identifier = f"row{index}"
+    return f"{prefix}|{identifier}"
+
+
 DEFAULT_MAX_MARKETPLACE_ITEMS = 3000
 
 
@@ -184,6 +234,8 @@ def build_market_ready(
     deals: list[dict[str, Any]],
     max_marketplace_items: int | None = DEFAULT_MAX_MARKETPLACE_ITEMS,
     store_slug: str | None = None,
+    source_label: str | None = None,
+    key_prefix: str | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Build the market-ready list and stats."""
     max_items = _resolve_max_marketplace_items(max_marketplace_items)
@@ -192,7 +244,7 @@ def build_market_ready(
     output: list[dict[str, Any]] = []
     dropped = Counter()
 
-    for deal in deals:
+    for index, deal in enumerate(deals):
         if not isinstance(deal, dict):
             dropped["invalid_entry"] += 1
             continue
@@ -260,7 +312,11 @@ def build_market_ready(
             or store_payload.get("city")
         )
         normalized_title = normalize_title(title) if isinstance(title, str) else ""
-        key = make_deal_key("Canadian Tire", sku, url, normalized_title)
+        resolved_source = source_label or _resolve_source_label(deal)
+        if key_prefix:
+            key = _build_prefixed_key(key_prefix, deal, index, normalized_title, sku, url)
+        else:
+            key = make_deal_key(resolved_source, sku, url, normalized_title)
 
         brand_value = deal.get("brand")
         brand_value = brand_value.strip() if isinstance(brand_value, str) and brand_value.strip() else None
@@ -288,7 +344,7 @@ def build_market_ready(
                     "price_sale": price_sale_float,
                     "price_regular": price_regular_float,
                     "discount_pct": discount_pct,
-                    "source": "Canadian Tire",
+                    "source": resolved_source,
                     "sku": sku,
                     "product_id": product_id,
                     "url": url,
@@ -335,10 +391,15 @@ def main() -> None:
     output_path = Path(args.out)
 
     deals = _load_json_list(deals_path)
+    is_testrun = deals_path.as_posix().startswith("input/testrun/")
+    source_label = "BestBuy" if is_testrun else None
+    key_prefix = "testrun" if is_testrun else None
     market_ready, stats = build_market_ready(
         deals,
         args.max_marketplace_items,
         store_slug=args.store_slug,
+        source_label=source_label,
+        key_prefix=key_prefix,
     )
     write_output(output_path, market_ready)
 
