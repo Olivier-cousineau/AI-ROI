@@ -75,12 +75,10 @@ jobs:
           --max-ebay-queries ${MAX_MARKETPLACE_ITEMS}
 
       - name: Recompute ROI
-        run: >-
-          python scripts/recompute_roi.py
-          --source bestbuy
-          --input econoplus/public/bestbuy/index/deals-80.json
-          --output output/roi_results.json
-          --top 300
+        run: |
+          ls -la econoplus/public/bestbuy
+          test -f econoplus/public/bestbuy/online.json
+          python scripts/recompute_roi.py --source bestbuy --input econoplus/public/bestbuy/online.json --output output/roi_results.json --top 300
 
       - name: Commit results
         env:
