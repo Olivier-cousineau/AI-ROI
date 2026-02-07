@@ -2,6 +2,23 @@ name: Recompute ROI
 
 on:
   workflow_dispatch:
+    inputs:
+      testrun:
+        description: "Run workflow with local test input instead of cloning EconoPlus."
+        required: false
+        default: "false"
+      testrun_file:
+        description: "Path to the local test input file."
+        required: false
+        default: "testrun/input.json"
+      source:
+        description: "Source to pass to recompute_roi.py."
+        required: false
+        default: "bestbuy"
+      top:
+        description: "Top N results to keep."
+        required: false
+        default: "300"
   schedule:
     - cron: '5 8 * * *'
 
@@ -45,7 +62,24 @@ jobs:
       - name: Echo MAX_MARKETPLACE_ITEMS
         run: echo "MAX_MARKETPLACE_ITEMS=${MAX_MARKETPLACE_ITEMS}"
 
+      - name: Select deals input
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.testrun }}" = "true" ]; then
+            echo "DEALS_FILE=${{ inputs.testrun_file }}" >> "$GITHUB_ENV"
+          else
+            echo "DEALS_FILE=econoplus/public/bestbuy/online.json" >> "$GITHUB_ENV"
+          fi
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "ROI_SOURCE=${{ inputs.source }}" >> "$GITHUB_ENV"
+            echo "ROI_TOP=${{ inputs.top }}" >> "$GITHUB_ENV"
+          else
+            echo "ROI_SOURCE=bestbuy" >> "$GITHUB_ENV"
+            echo "ROI_TOP=300" >> "$GITHUB_ENV"
+          fi
+
       - name: Fetch BestBuy deals from EconoPlus
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.testrun == 'true') }}
         env:
           ECONOPLUS_TOKEN: ${{ secrets.ECONOPLUS }}
         run: |
@@ -58,20 +92,22 @@ jobs:
 
       - name: Validate BestBuy deals input
         run: |
-          ls -la econoplus/public/bestbuy
-          test -f econoplus/public/bestbuy/online.json
+          ls -la "$(dirname "${DEALS_FILE}")"
+          test -f "${DEALS_FILE}"
           python - <<'PY'
+          import os
           import json
           from pathlib import Path
 
-          payload = json.loads(Path("econoplus/public/bestbuy/online.json").read_text(encoding="utf-8"))
+          deals_path = Path(os.environ["DEALS_FILE"])
+          payload = json.loads(deals_path.read_text(encoding="utf-8"))
           print(f"BestBuy deals count: {len(payload)}")
           PY
 
       - name: Build market-ready input
         run: >-
           python scripts/build_market_ready.py
-          --deals econoplus/public/bestbuy/online.json
+          --deals ${DEALS_FILE}
           --out input/market_ready.json
           --max-marketplace-items ${MAX_MARKETPLACE_ITEMS}
 
@@ -88,7 +124,7 @@ jobs:
 
       - name: Recompute ROI
         run: |
-          python scripts/recompute_roi.py --source bestbuy --input econoplus/public/bestbuy/online.json --output output/roi_results.json --top 300
+          python scripts/recompute_roi.py --source ${ROI_SOURCE} --input ${DEALS_FILE} --output output/roi_results.json --top ${ROI_TOP}
 
       - name: Commit results
         env:
