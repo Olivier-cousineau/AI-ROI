@@ -13,8 +13,10 @@ from ai.match_utils import (
     normalize_model,
     normalize_title,
     normalize_upc,
+    normalize_part_number,
     score_candidate,
     title_similarity,
+    has_part_match,
 )
 
 
@@ -31,18 +33,22 @@ class MatchResult:
 def build_search_plan(deal_payload: dict[str, Any]) -> list[dict[str, str | None]]:
     brand = normalize_brand(deal_payload.get("brand") if isinstance(deal_payload, dict) else None)
     model_number = normalize_model(deal_payload.get("model_number") if isinstance(deal_payload, dict) else None)
+    model_number_norm = normalize_model(deal_payload.get("model_number_norm") if isinstance(deal_payload, dict) else None)
+    part_number = normalize_part_number(deal_payload.get("part_number") if isinstance(deal_payload, dict) else None)
     upc = normalize_upc(deal_payload.get("upc") if isinstance(deal_payload, dict) else None)
     title = deal_payload.get("title") if isinstance(deal_payload, dict) else None
     title_norm = normalize_title(title or "") if title else ""
 
     plan: list[dict[str, str | None]] = []
-    if upc:
-        plan.append({"pass": "A", "query": upc})
+    if brand and model_number_norm:
+        plan.append({"pass": "MODEL_NORM", "query": f"{brand} {model_number_norm}".strip()})
     if brand and model_number:
-        plan.append({"pass": "B", "query": f"{brand} {model_number}".strip()})
+        plan.append({"pass": "MODEL", "query": f"{brand} {model_number}".strip()})
+    if brand and part_number:
+        plan.append({"pass": "PART", "query": f"{brand} {part_number}".strip()})
     if title_norm:
         query = f"{brand} {title_norm}".strip() if brand else title_norm
-        plan.append({"pass": "C", "query": query})
+        plan.append({"pass": "TITLE", "query": query})
     return plan
 
 
@@ -67,6 +73,7 @@ def _build_signals(
 ) -> MatchSignals:
     deal_brand = normalize_brand(deal_payload.get("brand") if isinstance(deal_payload, dict) else None)
     deal_model = normalize_model(deal_payload.get("model_number") if isinstance(deal_payload, dict) else None)
+    deal_part = normalize_part_number(deal_payload.get("part_number") if isinstance(deal_payload, dict) else None)
     deal_upc = normalize_upc(deal_payload.get("upc") if isinstance(deal_payload, dict) else None)
     deal_title = deal_payload.get("title") if isinstance(deal_payload, dict) else None
     deal_image = deal_payload.get("image") if isinstance(deal_payload, dict) else None
@@ -74,10 +81,12 @@ def _build_signals(
     candidate_title = candidate.get("title")
     candidate_brand = candidate.get("brand")
     candidate_upc = normalize_upc(candidate.get("upc") if isinstance(candidate, dict) else None)
+    candidate_mpn = candidate.get("mpn") if isinstance(candidate, dict) else None
     candidate_image = candidate.get("image")
 
     brand_match = has_brand_match(deal_brand, candidate_title, candidate_brand)
     model_exact, model_partial = has_model_match(deal_model, candidate_title)
+    part_exact, part_partial = has_part_match(deal_part, candidate_title, candidate_mpn)
     similarity = title_similarity(str(deal_title or ""), str(candidate_title or ""))
     upc_match = bool(deal_upc and candidate_upc and deal_upc == candidate_upc)
     image_score = _image_match_score(
@@ -89,6 +98,7 @@ def _build_signals(
         brand_match=brand_match,
         model_match=model_partial,
         model_exact=model_exact,
+        part_number_match=part_partial or part_exact,
         title_similarity=similarity,
         upc_match=upc_match,
         image_match=image_score >= 0.8,
@@ -107,7 +117,7 @@ def match_ebay_candidates(
             status="unmatched",
             confidence=0.0,
             reason_codes=["NO_CANDIDATES"],
-            signals=MatchSignals(False, False, False, 0.0, False, False, 0.0),
+            signals=MatchSignals(False, False, False, False, 0.0, False, False, 0.0),
             query_used=query_used,
             candidate=None,
         )
@@ -116,24 +126,30 @@ def match_ebay_candidates(
     scored: list[tuple[float, MatchSignals, dict[str, Any], list[str]]] = []
     deal_brand = normalize_brand(deal_payload.get("brand") if isinstance(deal_payload, dict) else None)
     deal_model = normalize_model(deal_payload.get("model_number") if isinstance(deal_payload, dict) else None)
+    deal_part = normalize_part_number(deal_payload.get("part_number") if isinstance(deal_payload, dict) else None)
     for candidate in candidates:
         signals = _build_signals(deal_payload, candidate)
         candidate_reasons: list[str] = []
 
-        if pass_label == "A" and not signals.upc_match:
-            candidate_reasons.append("REJECT_UPC_MISMATCH")
-            continue
-        if deal_brand and not signals.brand_match and not signals.upc_match:
+        if deal_brand and not signals.brand_match:
             candidate_reasons.append("REJECT_BRAND_MISMATCH")
             continue
-        if deal_model and not (signals.model_match or signals.model_exact) and not signals.upc_match:
-            candidate_reasons.append("REJECT_MODEL_MISSING")
+        if deal_model or deal_part:
+            has_required_id = signals.model_match or signals.model_exact or signals.part_number_match or signals.upc_match
+            if not has_required_id:
+                candidate_reasons.append("REJECT_ID_MISSING")
+                continue
+        if not (signals.model_match or signals.model_exact or signals.part_number_match or signals.upc_match):
+            candidate_reasons.append("REJECT_ID_MISSING")
             continue
-        if signals.title_similarity < 0.72 and not signals.upc_match:
+        if signals.title_similarity < 0.72:
             candidate_reasons.append("REJECT_TITLE_LOW")
             continue
+        if not signals.brand_match:
+            candidate_reasons.append("REJECT_BRAND_MISMATCH")
+            continue
 
-        require_brand = pass_label in {"B", "C"}
+        require_brand = True
         score = score_candidate(signals, require_brand=require_brand)
         if score <= 0:
             candidate_reasons.append("REJECT_SCORE_LOW")
@@ -141,9 +157,9 @@ def match_ebay_candidates(
 
         if signals.upc_match:
             candidate_reasons.append("UPC_EXACT")
-        elif signals.brand_match and signals.model_exact:
-            candidate_reasons.append("BRAND_MODEL_EXACT")
-        elif pass_label == "C" and signals.title_similarity >= 0.72:
+        elif signals.brand_match and (signals.model_exact or signals.part_number_match):
+            candidate_reasons.append("BRAND_ID_EXACT")
+        elif signals.title_similarity >= 0.72:
             candidate_reasons.append("FUZZY_TITLE_OK")
 
         scored.append((score, signals, candidate, candidate_reasons))
@@ -154,7 +170,7 @@ def match_ebay_candidates(
             status="unmatched",
             confidence=0.0,
             reason_codes=reasons,
-            signals=MatchSignals(False, False, False, 0.0, False, False, 0.0),
+            signals=MatchSignals(False, False, False, False, 0.0, False, False, 0.0),
             query_used=query_used,
             candidate=None,
         )
@@ -166,19 +182,6 @@ def match_ebay_candidates(
             status="ambiguous",
             confidence=top_score,
             reason_codes=["AMBIGUOUS_MATCH"],
-            signals=top_signals,
-            query_used=query_used,
-            candidate=None,
-        )
-
-    is_perfect = top_signals.upc_match or (
-        top_signals.brand_match and top_signals.model_exact and top_signals.title_similarity >= 0.80
-    )
-    if not is_perfect:
-        return MatchResult(
-            status="unmatched",
-            confidence=top_score,
-            reason_codes=top_reasons + ["NOT_PERFECT_MATCH"],
             signals=top_signals,
             query_used=query_used,
             candidate=None,

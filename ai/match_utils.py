@@ -126,6 +126,12 @@ def normalize_model(model: str | None) -> str | None:
     return normalize_model_number(model)
 
 
+def normalize_part_number(value: str | None) -> str | None:
+    if not value:
+        return None
+    return normalize_model_number(value)
+
+
 def normalize_upc(upc: str | None) -> str | None:
     if not upc:
         return None
@@ -207,11 +213,22 @@ def has_brand_match(brand_norm: str | None, title: str | None, brand_field: str 
     return False
 
 
+def has_part_match(part_norm: str | None, title: str | None, mpn: str | None = None) -> tuple[bool, bool]:
+    if not part_norm:
+        return False, False
+    if mpn:
+        normalized_mpn = normalize_part_number(mpn)
+        if normalized_mpn and normalized_mpn == part_norm:
+            return True, True
+    return has_model_match(part_norm, title)
+
+
 @dataclass
 class MatchSignals:
     brand_match: bool
     model_match: bool
     model_exact: bool
+    part_number_match: bool
     title_similarity: float
     upc_match: bool
     image_match: bool
@@ -224,12 +241,13 @@ def score_candidate(
 ) -> float:
     if signals.upc_match:
         return 0.98
-    if signals.brand_match and signals.model_exact:
+    if signals.brand_match and (signals.model_exact or signals.part_number_match):
         return 0.92
     if require_brand and not signals.brand_match:
         return 0.0
     score = (
-        (0.45 if signals.model_match else 0.0)
+        (0.35 if signals.model_match else 0.0)
+        + (0.35 if signals.part_number_match else 0.0)
         + (0.25 if signals.brand_match else 0.0)
         + (0.25 * signals.title_similarity)
         + (0.05 * signals.image_match_score)

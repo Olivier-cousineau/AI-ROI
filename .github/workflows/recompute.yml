@@ -10,7 +10,7 @@ on:
       testrun_file:
         description: "Path to the local test input file."
         required: false
-        default: "testrun/input.json"
+        default: "input/testrun/deals.json"
       source:
         description: "Source to pass to recompute_roi.py."
         required: false
@@ -55,8 +55,8 @@ jobs:
           echo "inputs.testrun=${{ inputs.testrun }}"
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.testrun }}" = "true" ]; then
             deals_file="${{ inputs.testrun_file }}"
-            if [[ "${deals_file}" != testrun/* ]]; then
-              echo "testrun_file must start with testrun/. Got: ${deals_file}" >&2
+            if [[ "${deals_file}" != input/testrun/* ]]; then
+              echo "testrun_file must start with input/testrun/. Got: ${deals_file}" >&2
               exit 1
             fi
             echo "DEALS_FILE=${deals_file}" >> "$GITHUB_ENV"
@@ -123,6 +123,25 @@ jobs:
           --deals ${DEALS_FILE}
           --out input/market_ready.json
           --max-marketplace-items ${MAX_MARKETPLACE_ITEMS}
+
+      - name: Log testrun market-ready sample
+        if: ${{ env.IS_TESTRUN == 'true' }}
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path("input/market_ready.json").read_text(encoding="utf-8"))
+          for entry in payload[:4]:
+              deal = entry.get("deal", {})
+              print(f"title={deal.get('title')} source={deal.get('source')} key={deal.get('key')}")
+          PY
+
+      - name: Cleanup testrun cache
+        if: ${{ env.IS_TESTRUN == 'true' }}
+        run: |
+          rm -f output/marketplace.json output/roi_results.json
+          rm -rf cache/ebay .cache
 
       - name: Fetch eBay OAuth token
         continue-on-error: true
