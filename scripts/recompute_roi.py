@@ -81,6 +81,7 @@ def resolve_input_path(path: Path, source: str) -> Path:
             path / "bestbuy" / "index" / "deals-80.json",
             path / "bestbuy" / "deals-80.json",
             path / "bestbuy" / "index" / "deals.json",
+            path / "bestbuy" / "online.json",
         ]
         for candidate in candidates:
             if candidate.exists():
@@ -96,6 +97,7 @@ def resolve_input_path(path: Path, source: str) -> Path:
         candidates = [
             path / normalized_source / "index" / "deals-80.json",
             path / normalized_source / "deals-80.json",
+            path / normalized_source / "online.json",
             path / "index" / "deals-80.json",
             path / "deals-80.json",
         ]
