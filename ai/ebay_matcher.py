@@ -127,12 +127,17 @@ def match_ebay_candidates(
     deal_brand = normalize_brand(deal_payload.get("brand") if isinstance(deal_payload, dict) else None)
     deal_model = normalize_model(deal_payload.get("model_number") if isinstance(deal_payload, dict) else None)
     deal_part = normalize_part_number(deal_payload.get("part_number") if isinstance(deal_payload, dict) else None)
+    deal_upc = normalize_upc(deal_payload.get("upc") if isinstance(deal_payload, dict) else None)
+    not_perfect_match = False
     for candidate in candidates:
         signals = _build_signals(deal_payload, candidate)
         candidate_reasons: list[str] = []
 
-        if deal_brand and not signals.brand_match:
+        if deal_brand and not signals.brand_match and not signals.upc_match:
             candidate_reasons.append("REJECT_BRAND_MISMATCH")
+            continue
+        if pass_label == "A" and deal_upc and not signals.upc_match:
+            candidate_reasons.append("REJECT_UPC_MISMATCH")
             continue
         if deal_model or deal_part:
             has_required_id = signals.model_match or signals.model_exact or signals.part_number_match or signals.upc_match
@@ -142,11 +147,22 @@ def match_ebay_candidates(
         if not (signals.model_match or signals.model_exact or signals.part_number_match or signals.upc_match):
             candidate_reasons.append("REJECT_ID_MISSING")
             continue
-        if signals.title_similarity < 0.72:
-            candidate_reasons.append("REJECT_TITLE_LOW")
-            continue
-        if not signals.brand_match:
+        if not (pass_label == "A" and signals.upc_match):
+            if signals.title_similarity < 0.72:
+                candidate_reasons.append("REJECT_TITLE_LOW")
+                continue
+        if not signals.brand_match and not signals.upc_match:
             candidate_reasons.append("REJECT_BRAND_MISMATCH")
+            continue
+
+        if (
+            pass_label == "C"
+            and signals.brand_match
+            and signals.model_exact
+            and signals.title_similarity < 0.8
+        ):
+            candidate_reasons.append("NOT_PERFECT_MATCH")
+            not_perfect_match = True
             continue
 
         require_brand = True
@@ -157,7 +173,9 @@ def match_ebay_candidates(
 
         if signals.upc_match:
             candidate_reasons.append("UPC_EXACT")
-        elif signals.brand_match and (signals.model_exact or signals.part_number_match):
+        elif signals.brand_match and signals.model_exact:
+            candidate_reasons.append("BRAND_MODEL_EXACT")
+        elif signals.brand_match and signals.part_number_match:
             candidate_reasons.append("BRAND_ID_EXACT")
         elif signals.title_similarity >= 0.72:
             candidate_reasons.append("FUZZY_TITLE_OK")
@@ -165,7 +183,10 @@ def match_ebay_candidates(
         scored.append((score, signals, candidate, candidate_reasons))
 
     if not scored:
-        reasons.extend(["NO_VALID_CANDIDATES"])
+        if not_perfect_match:
+            reasons.extend(["NOT_PERFECT_MATCH"])
+        else:
+            reasons.extend(["NO_VALID_CANDIDATES"])
         return MatchResult(
             status="unmatched",
             confidence=0.0,
