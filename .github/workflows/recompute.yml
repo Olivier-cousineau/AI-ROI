@@ -49,6 +49,24 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Select deals input
+        run: |
+          echo "event_name=${{ github.event_name }}"
+          echo "inputs.testrun=${{ inputs.testrun }}"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.testrun }}" = "true" ]; then
+            deals_file="${{ inputs.testrun_file }}"
+            if [[ "${deals_file}" != testrun/* ]]; then
+              echo "testrun_file must start with testrun/. Got: ${deals_file}" >&2
+              exit 1
+            fi
+            echo "DEALS_FILE=${deals_file}" >> "$GITHUB_ENV"
+            echo "MAX_MARKETPLACE_ITEMS=20" >> "$GITHUB_ENV"
+            echo "MAX_EBAY_QUERIES=20" >> "$GITHUB_ENV"
+          else
+            echo "DEALS_FILE=econoplus/public/bestbuy/online.json" >> "$GITHUB_ENV"
+            echo "MAX_EBAY_QUERIES=${MAX_MARKETPLACE_ITEMS}" >> "$GITHUB_ENV"
+          fi
+
       - name: Set marketplace defaults
         run: |
           if [ -z "${MAX_MARKETPLACE_ITEMS}" ]; then
@@ -61,15 +79,8 @@ jobs:
 
       - name: Echo MAX_MARKETPLACE_ITEMS
         run: echo "MAX_MARKETPLACE_ITEMS=${MAX_MARKETPLACE_ITEMS}"
-
-      - name: Select deals input
+      - name: Select ROI defaults
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.testrun }}" = "true" ]; then
-            echo "DEALS_FILE=${{ inputs.testrun_file }}" >> "$GITHUB_ENV"
-          else
-            echo "DEALS_FILE=econoplus/public/bestbuy/online.json" >> "$GITHUB_ENV"
-          fi
-
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "ROI_SOURCE=${{ inputs.source }}" >> "$GITHUB_ENV"
             echo "ROI_TOP=${{ inputs.top }}" >> "$GITHUB_ENV"
@@ -120,7 +131,7 @@ jobs:
           python scripts/enrich_ebay.py
           --input input/market_ready.json
           --output output/marketplace.json
-          --max-ebay-queries ${MAX_MARKETPLACE_ITEMS}
+          --max-ebay-queries ${MAX_EBAY_QUERIES}
 
       - name: Recompute ROI
         run: |
