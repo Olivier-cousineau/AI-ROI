@@ -26,3 +26,9 @@ def test_matcher_confidence_upc() -> None:
     title = "ACME 18V Impact Driver"
     result = build_queries(title, brand="ACME", upc="123456789012")
     assert result["confidence"] >= 0.7
+
+
+def test_matcher_ebay_query_prefers_lego_set_number() -> None:
+    title = "Classic Building Set 12345 with extras"
+    result = build_queries(title)
+    assert result["ebay_query"] == "lego 12345"
