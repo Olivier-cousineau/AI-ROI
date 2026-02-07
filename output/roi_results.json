@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-02-07T19:08:29.200518+00:00",
+  "generated_at": "2026-02-07T19:13:34.102515+00:00",
   "source": "BestBuy",
-  "input_file": "testrun/input.json",
-  "count_scored": 4,
+  "input_file": "input/market_ready.json",
+  "count_scored": 0,
   "count_filtered": 0,
   "results": []
 }
