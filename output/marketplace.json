@@ -2,14 +2,14 @@
   {
     "deal": {
       "title": "Sony WH-1000XM4 Wireless Noise Cancelling Headphones",
-      "key": "ct|sku:14631241",
+      "key": "testrun|14631241",
       "part_number": null,
       "model_number": "WH-1000XM4",
       "model_number_norm": "WH1000XM4",
       "price_sale": 249.99,
       "price_regular": 399.99,
       "discount_pct": 37.5,
-      "source": "Canadian Tire",
+      "source": "BestBuy",
       "sku": "14631241",
       "product_id": null,
       "url": "https://www.bestbuy.ca/en-ca/product/sony-wh-1000xm4-wireless-noise-cancelling-headphones/14631241",
@@ -23,35 +23,38 @@
     "market": {
       "amazon_price": null,
       "ebay_price": null,
-      "match_confidence": 0.91,
+      "match_confidence": 0.0,
       "is_confirmed": false,
-      "match_method": "B",
-      "query_used": "sony WH1000XM4",
+      "match_method": "TITLE",
+      "query_used": "sony sony wh 1000xm4 wireless noise cancelling headphones",
+      "ebay_sold_count_30d": 0,
+      "ebay_median_sold_price": null,
       "match_reason_codes": [
-        "AMBIGUOUS_MATCH"
+        "NO_CANDIDATES"
       ],
       "match_signals": {
-        "brand_match": true,
-        "model_match": true,
+        "brand_match": false,
+        "model_match": false,
         "model_exact": false,
-        "title_similarity": 0.8222,
+        "part_number_match": false,
+        "title_similarity": 0.0,
         "upc_match": false,
         "image_match": false,
-        "image_match_score": 0.3077
+        "image_match_score": 0.0
       }
     }
   },
   {
     "deal": {
       "title": "Samsung 55\" QLED 4K TV Q70C",
-      "key": "ct|sku:17012345",
+      "key": "testrun|17012345",
       "part_number": null,
       "model_number": "QN55Q70C",
       "model_number_norm": "QN55Q70C",
       "price_sale": 799.99,
       "price_regular": 1199.99,
       "discount_pct": 33.33,
-      "source": "Canadian Tire",
+      "source": "BestBuy",
       "sku": "17012345",
       "product_id": null,
       "url": "https://www.bestbuy.ca/en-ca/product/samsung-55-qled-4k-tv-q70c/17012345",
@@ -67,15 +70,18 @@
       "ebay_price": null,
       "match_confidence": 0.0,
       "is_confirmed": false,
-      "match_method": "C",
+      "match_method": "TITLE",
       "query_used": "samsung samsung 55 qled 4k tv q70c",
+      "ebay_sold_count_30d": 0,
+      "ebay_median_sold_price": null,
       "match_reason_codes": [
-        "NO_VALID_CANDIDATES"
+        "NO_CANDIDATES"
       ],
       "match_signals": {
         "brand_match": false,
         "model_match": false,
         "model_exact": false,
+        "part_number_match": false,
         "title_similarity": 0.0,
         "upc_match": false,
         "image_match": false,
@@ -86,14 +92,14 @@
   {
     "deal": {
       "title": "Nintendo Switch OLED Console",
-      "key": "ct|sku:15494025",
+      "key": "testrun|15494025",
       "part_number": null,
       "model_number": "HEG-001",
       "model_number_norm": "HEG001",
       "price_sale": 349.99,
       "price_regular": 449.99,
       "discount_pct": 22.22,
-      "source": "Canadian Tire",
+      "source": "BestBuy",
       "sku": "15494025",
       "product_id": null,
       "url": "https://www.bestbuy.ca/en-ca/product/nintendo-switch-oled-console/15494025",
@@ -109,15 +115,18 @@
       "ebay_price": null,
       "match_confidence": 0.0,
       "is_confirmed": false,
-      "match_method": "C",
+      "match_method": "TITLE",
       "query_used": "nintendo nintendo switch oled console",
+      "ebay_sold_count_30d": 0,
+      "ebay_median_sold_price": null,
       "match_reason_codes": [
-        "NO_VALID_CANDIDATES"
+        "NO_CANDIDATES"
       ],
       "match_signals": {
         "brand_match": false,
         "model_match": false,
         "model_exact": false,
+        "part_number_match": false,
         "title_similarity": 0.0,
         "upc_match": false,
         "image_match": false,
@@ -128,14 +137,14 @@
   {
     "deal": {
       "title": "Dyson V8 Cordless Vacuum",
-      "key": "ct|sku:10293847",
+      "key": "testrun|10293847",
       "part_number": null,
       "model_number": "V8",
       "model_number_norm": "V8",
       "price_sale": 299.99,
       "price_regular": 449.99,
       "discount_pct": 33.33,
-      "source": "Canadian Tire",
+      "source": "BestBuy",
       "sku": "10293847",
       "product_id": null,
       "url": "https://www.bestbuy.ca/en-ca/product/dyson-v8-cordless-vacuum/10293847",
@@ -151,15 +160,18 @@
       "ebay_price": null,
       "match_confidence": 0.0,
       "is_confirmed": false,
-      "match_method": "C",
+      "match_method": "TITLE",
       "query_used": "dyson dyson v8 cordless vacuum",
+      "ebay_sold_count_30d": 0,
+      "ebay_median_sold_price": null,
       "match_reason_codes": [
-        "NO_VALID_CANDIDATES"
+        "NO_CANDIDATES"
       ],
       "match_signals": {
         "brand_match": false,
         "model_match": false,
         "model_exact": false,
+        "part_number_match": false,
         "title_similarity": 0.0,
         "upc_match": false,
         "image_match": false,
