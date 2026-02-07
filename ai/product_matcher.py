@@ -26,6 +26,16 @@ def _unique_tokens(tokens: list[str]) -> list[str]:
     return unique
 
 
+def _find_five_digit_number(*values: str | None) -> str | None:
+    for value in values:
+        if not value:
+            continue
+        match = re.search(r"\b\d{5}\b", str(value))
+        if match:
+            return match.group(0)
+    return None
+
+
 def build_queries(
     title: str,
     brand: str | None = None,
@@ -48,6 +58,10 @@ def build_queries(
     base_tokens.extend(important_tokens)
     base_tokens = _unique_tokens([token for token in base_tokens if token])
     query = " ".join(base_tokens)
+    ebay_query = query
+    lego_set_number = _find_five_digit_number(title, sku, part_number)
+    if lego_set_number:
+        ebay_query = f"lego {lego_set_number}"
 
     confidence = 0.20
     if upc and len(upc.strip()) >= 10:
@@ -67,7 +81,7 @@ def build_queries(
     return {
         "normalized_title": normalized_title,
         "amazon_query": query,
-        "ebay_query": query,
+        "ebay_query": ebay_query,
         "normalized_part": normalized_part or None,
         "key_tokens": key_tokens,
         "confidence": confidence,
