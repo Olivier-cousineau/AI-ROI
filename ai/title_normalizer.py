@@ -2,60 +2,7 @@
 from __future__ import annotations
 
 import re
-import unicodedata
-
-MARKETING_STOPWORDS = [
-    "liquidation",
-    "clearance",
-    "sale",
-    "special",
-    "deal",
-    "rabais",
-    "economisez",
-    "promo",
-    "promotion",
-    "nouveau",
-    "new",
-    "best",
-    "top",
-    "free shipping",
-    "livraison gratuite",
-    "exclusive",
-    "limited",
-    "edition limitee",
-    "bundle",
-    "lot",
-    "pack",
-    "combo",
-    "kit",
-    "set",
-]
-
-MARKETING_WORDS = set(MARKETING_STOPWORDS)
-_MARKETING_PATTERNS = [re.compile(rf"\b{re.escape(word)}\b") for word in MARKETING_WORDS]
-
-
-def _strip_accents(text: str) -> str:
-    return "".join(
-        char for char in unicodedata.normalize("NFKD", text) if not unicodedata.combining(char)
-    )
-
-
-def _basic_normalize(text: str) -> str:
-    cleaned = _strip_accents(text.strip().lower())
-    cleaned = re.sub(r"[^a-z0-9\s]", " ", cleaned)
-    cleaned = re.sub(r"\s+", " ", cleaned)
-    return cleaned.strip()
-
-
-def normalize_title(title: str) -> str:
-    """Normalize a product title for matching."""
-    cleaned = _basic_normalize(title)
-    for pattern in _MARKETING_PATTERNS:
-        cleaned = pattern.sub(" ", cleaned)
-    cleaned = re.sub(r"\s+", " ", cleaned).strip()
-    words = [word for word in cleaned.split() if word not in MARKETING_WORDS]
-    return " ".join(words)
+from ai.match_utils import extract_title_tokens, normalize_brand, normalize_model, normalize_title, normalize_upc
 
 
 def extract_key_tokens(normalized_title: str) -> dict[str, str | list[str] | None]:
@@ -74,6 +21,7 @@ def extract_key_tokens(normalized_title: str) -> dict[str, str | list[str] | Non
             digits = "".join(re.findall(r"\d+", token))
             if digits and digits != token:
                 model_tokens.append(digits)
+    title_tokens = extract_title_tokens(normalized_title)
     size_tokens = [
         token
         for token in tokens
@@ -81,13 +29,8 @@ def extract_key_tokens(normalized_title: str) -> dict[str, str | list[str] | Non
         or re.fullmatch(r"\d+/\d+", token)
         or re.fullmatch(r"\d+(?:pack|pk)", token)
     ]
-    voltage_tokens = [token for token in tokens if re.fullmatch(r"\d{2,3}v", token)]
-    capacity_tokens = [
-        token
-        for token in tokens
-        if re.fullmatch(r"\d+(?:gb|tb|mb)", token)
-        or re.fullmatch(r"\d+(?:l|ah)", token)
-    ]
+    voltage_tokens = title_tokens.get("voltage_tokens") or []
+    capacity_tokens = title_tokens.get("capacity_tokens") or []
 
     return {
         "brand_guess": brand_guess,
@@ -96,3 +39,12 @@ def extract_key_tokens(normalized_title: str) -> dict[str, str | list[str] | Non
         "voltage_tokens": voltage_tokens,
         "capacity_tokens": capacity_tokens,
     }
+
+
+__all__ = [
+    "normalize_title",
+    "normalize_brand",
+    "normalize_model",
+    "normalize_upc",
+    "extract_key_tokens",
+]
