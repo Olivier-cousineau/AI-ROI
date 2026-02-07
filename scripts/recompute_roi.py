@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -15,6 +16,8 @@ from core.roi_engine import compute_roi
 from models.deal_model import DealInput
 from models.keepa_model import KeepaManualInput
 from models.market_model import MarketInput
+
+TEST_MODE = os.getenv("IS_TESTRUN", "").strip().lower() == "true"
 
 
 def parse_args() -> argparse.Namespace:
@@ -301,12 +304,35 @@ def _build_ebay_match(deal_payload: dict[str, object], market_payload: dict[str,
         },
     }
 
+def _append_reject(
+    rejects: list[dict[str, object]] | None,
+    deal_payload: dict[str, object],
+    market_payload: dict[str, object],
+    reason: str | None,
+) -> None:
+    if rejects is None or not reason:
+        return
+    rejects.append(
+        {
+            "title": deal_payload.get("title"),
+            "key": deal_payload.get("key"),
+            "reject_reason": reason,
+            "match_confidence": market_payload.get("match_confidence"),
+            "query_used": market_payload.get("query_used"),
+        }
+    )
+
+
 def compute_results(
     items: list[dict[str, object]],
     shipping_floor: float,
     shipping_rate: float,
+    rejects: list[dict[str, object]] | None = None,
+    test_mode: bool | None = None,
 ) -> list[dict[str, object]]:
     """Compute ROI results for each item."""
+    if test_mode is None:
+        test_mode = TEST_MODE
     results: list[dict[str, object]] = []
     strong_profit_floor = 50
     strong_roi_floor = 50
@@ -322,6 +348,7 @@ def compute_results(
 
         market = MarketInput.model_validate(market_payload)
         if market.amazon_price is None and market.ebay_price is None:
+            _append_reject(rejects, deal_payload, market_payload, "missing_market_price")
             continue
 
         deal = DealInput.model_validate(deal_payload)
@@ -330,7 +357,9 @@ def compute_results(
         ebay_match = _build_ebay_match(deal_payload, market_payload)
         match_label = ebay_match.get("match_confidence") if isinstance(ebay_match, dict) else None
         if _confidence_rank(str(match_label) if match_label is not None else None) < _confidence_rank("MED"):
-            continue
+            if not test_mode:
+                _append_reject(rejects, deal_payload, market_payload, "low_ebay_match_confidence")
+                continue
 
         roi_output = compute_roi(deal, market, keepa)
         sell_price = (
@@ -339,6 +368,7 @@ def compute_results(
             else market.ebay_price
         )
         if sell_price is None:
+            _append_reject(rejects, deal_payload, market_payload, "missing_sell_price")
             continue
         fees_est = sell_price * 0.15
         shipping_est = max(shipping_floor, sell_price * shipping_rate)
@@ -364,6 +394,12 @@ def compute_results(
         discount_pct = deal_payload.get("discount_pct")
         if discount_pct is None and deal.price_regular:
             discount_pct = round((1 - deal.price_sale / deal.price_regular) * 100, 2)
+        reject_reason = market_payload.get("reject_reason")
+        if not isinstance(reject_reason, str):
+            reject_reason = None
+        if test_mode and _confidence_rank(str(match_label) if match_label is not None else None) < _confidence_rank("MED"):
+            reject_reason = reject_reason or "low_ebay_match_confidence"
+        _append_reject(rejects, deal_payload, market_payload, reject_reason)
         results.append(
             {
                 "key": deal_payload.get("key"),
@@ -391,6 +427,7 @@ def compute_results(
                 "is_confirmed": is_confirmed,
                 "match_method": market_payload.get("match_method"),
                 "query_used": market_payload.get("query_used"),
+                "reject_reason": reject_reason,
                 "ebay_match": ebay_match,
             }
         )
@@ -431,14 +468,20 @@ def write_output(
     top: int,
     source: str,
     input_file: str,
+    test_mode: bool | None = None,
 ) -> None:
     """Write output JSON to path."""
+    if test_mode is None:
+        test_mode = TEST_MODE
     deduped_results = dedupe_results(results)
-    filtered_results = [
-        item
-        for item in deduped_results
-        if not ((item.get("match_confidence") or 0) < 0.70 and not item.get("is_confirmed"))
-    ]
+    if test_mode:
+        filtered_results = deduped_results
+    else:
+        filtered_results = [
+            item
+            for item in deduped_results
+            if not ((item.get("match_confidence") or 0) < 0.70 and not item.get("is_confirmed"))
+        ]
     sorted_results = sorted(
         filtered_results,
         key=lambda item: (item["score"], item["roi_pct"], item["profit_est"]),
@@ -465,16 +508,22 @@ def write_roi_output(
     results: list[dict[str, object]],
     source: str,
     input_file: str,
+    test_mode: bool | None = None,
 ) -> None:
     """Write filtered ROI output JSON to path."""
+    if test_mode is None:
+        test_mode = TEST_MODE
     deduped_results = dedupe_results(results)
-    filtered = [
-        item
-        for item in deduped_results
-        if item.get("is_confirmed")
-        and item.get("profit_net", 0) > 20
-        and (item.get("match_confidence") or 0) >= 0.7
-    ]
+    if test_mode:
+        filtered = deduped_results
+    else:
+        filtered = [
+            item
+            for item in deduped_results
+            if item.get("is_confirmed")
+            and item.get("profit_net", 0) > 20
+            and (item.get("match_confidence") or 0) >= 0.7
+        ]
     sorted_results = sorted(
         filtered,
         key=lambda item: (item["profit_net"], item["roi_pct_net"]),
@@ -498,19 +547,26 @@ def write_roi_segments(
     confirmed_path: Path,
     watchlist_path: Path,
     results: list[dict[str, object]],
+    test_mode: bool | None = None,
 ) -> None:
     """Write confirmed and watchlist ROI outputs."""
+    if test_mode is None:
+        test_mode = TEST_MODE
     deduped_results = dedupe_results(results)
-    confirmed = [item for item in deduped_results if item.get("is_confirmed")]
-    watchlist_profit_floor = 30
-    watchlist_roi_floor = 40
-    watchlist = [
-        item
-        for item in deduped_results
-        if not item.get("is_confirmed")
-        and (item.get("profit_net") or 0) >= watchlist_profit_floor
-        and (item.get("roi_pct_net") or 0) >= watchlist_roi_floor
-    ]
+    if test_mode:
+        confirmed = deduped_results
+        watchlist = []
+    else:
+        confirmed = [item for item in deduped_results if item.get("is_confirmed")]
+        watchlist_profit_floor = 30
+        watchlist_roi_floor = 40
+        watchlist = [
+            item
+            for item in deduped_results
+            if not item.get("is_confirmed")
+            and (item.get("profit_net") or 0) >= watchlist_profit_floor
+            and (item.get("roi_pct_net") or 0) >= watchlist_roi_floor
+        ]
     for path, items in ((confirmed_path, confirmed), (watchlist_path, watchlist)):
         sorted_items = sorted(
             items,
@@ -529,6 +585,14 @@ def write_roi_segments(
             handle.write("\n")
 
 
+def write_roi_rejects_debug(path: Path, rejects: list[dict[str, object]]) -> None:
+    """Write debug output for ROI rejects."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        json.dump(rejects, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
+
+
 def main() -> None:
     """CLI entrypoint."""
     args = parse_args()
@@ -541,6 +605,7 @@ def main() -> None:
     roi_output_path = Path("output/roi_results.json")
     roi_confirmed_path = Path("output/roi_confirmed.json")
     roi_watchlist_path = Path("output/roi_watchlist.json")
+    roi_rejects_debug_path = Path("output/roi_rejects_debug.json")
 
     items = load_deals(input_path)
     print("items loaded:", len(items))
@@ -555,7 +620,8 @@ def main() -> None:
             f"Input is {detected_label} but --source={args.source}. Check input path."
         )
     source_label = SOURCE_LABELS.get(normalized_source, args.source)
-    results = compute_results(items, args.shipping_floor, args.shipping_rate)
+    rejects: list[dict[str, object]] = []
+    results = compute_results(items, args.shipping_floor, args.shipping_rate, rejects=rejects)
     write_output(
         output_path,
         results,
@@ -571,6 +637,7 @@ def main() -> None:
         input_file=str(input_path),
     )
     write_roi_segments(roi_confirmed_path, roi_watchlist_path, results)
+    write_roi_rejects_debug(roi_rejects_debug_path, rejects)
 
 
 if __name__ == "__main__":
